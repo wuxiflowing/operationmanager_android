@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="group_padding_style">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="text_theme_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_theme_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_red_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_red</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_primary_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_primary_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_primary_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_secondary_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="text_secondary_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="text_secondary_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="text_white_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+
+    <style name="text_white_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textColorHint">@color/hint_text</item>
+    </style>
+</resources>

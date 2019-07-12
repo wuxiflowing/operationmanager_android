@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/customer_baselist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#00000000"
+                android:dividerHeight="1dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/file_photos" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/base_form_pictures"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

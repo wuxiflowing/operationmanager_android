@@ -1,0 +1,113 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/text_size_title" />
+
+        <ImageButton
+            android:id="@+id/customer_create"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/btn_o_solid_primary"
+            android:src="@mipmap/icon_create" />
+
+        <ImageButton
+            android:id="@+id/customer_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/customer_create"
+            android:background="@drawable/btn_o_solid_primary"
+            android:src="@mipmap/icon_search" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/customer_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector_light">
+
+        <com.bangqu.lib.widget.RoundImageView
+            android:id="@+id/mine_header"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/icon_customer_normal" />
+
+        <TextView
+            style="@style/text_primary_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/mine_header"
+            android:text="@string/customer_normal" />
+
+        <ImageView
+            android:id="@+id/customer_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/arrow_right_gray" />
+
+        <TextView
+            android:id="@+id/customer_count"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/customer_arrow"
+            android:gravity="center"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0.5dp">
+
+        <include layout="@layout/layout_slip_recyclerview" />
+
+        <com.qyt.bm.widget.LetterNavigation
+            android:id="@+id/letter_navi"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/letter_notice"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="64dp"
+            android:layout_toLeftOf="@id/letter_navi"
+            android:background="@drawable/shape_letter_notice"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>
+

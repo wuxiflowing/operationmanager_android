@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="时间区间：" />
+
+                    <TextView
+                        android:id="@+id/devicedetail_startdate"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="至" />
+
+                    <TextView
+                        android:id="@+id/devicedetail_enddate"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/devicedetail_search"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/btn_r5_solid_primary"
+                        android:text="查询"
+                        android:textColor="@color/color_white"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:id="@+id/devicedetail_linetype"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="4dp"
+                        android:drawableRight="@mipmap/arrow_bottom_gray"
+                        android:text="溶氧曲线" />
+
+                    <RadioGroup
+                        android:id="@+id/devicetime_rg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/devicedetail_today"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/radio_date_bg"
+                            android:button="@null"
+                            android:checked="true"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:text="今日"
+                            android:textColor="@color/radio_date"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/devicedetail_five"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:background="@drawable/radio_date_bg"
+                            android:button="@null"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:text="近5日"
+                            android:textColor="@color/radio_date"
+                            android:textSize="12sp" />
+                    </RadioGroup>
+                </RelativeLayout>
+
+                <com.qyt.bm.widget.DeviceDataLine
+                    android:id="@+id/device_data_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:paddingTop="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/fishpond" />
+
+                <TextView
+                    android:id="@+id/devicedetail_fishpond"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:paddingTop="8dp">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_id" />
+
+                <TextView
+                    android:id="@+id/devicedetail_id"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingBottom="8dp"
+                android:paddingTop="4dp">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_state" />
+
+                <TextView
+                    android:id="@+id/devicedetail_state"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sensor_config" />
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/sensor_infos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:divider="@color/color_white"
+                android:dividerHeight="4dp"
+                android:paddingBottom="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/control1_config" />
+
+                <TextView
+                    android:id="@+id/control1_power"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/control1_infos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:divider="@color/color_white"
+                android:dividerHeight="4dp"
+                android:paddingBottom="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/control2_config" />
+
+                <TextView
+                    android:id="@+id/control2_power"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/control2_infos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:divider="@color/color_white"
+                android:dividerHeight="4dp"
+                android:paddingBottom="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

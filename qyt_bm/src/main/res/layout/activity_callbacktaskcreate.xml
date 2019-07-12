@@ -1,0 +1,407 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/base_info" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:id="@+id/install_choice_customer"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/choice_customer" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/install_customer_name"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/color_white"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/arrow_right_gray"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_choice_customer" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/fishpond_count" />
+
+                <TextView
+                    android:id="@+id/callback_fishpond_count"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:id="@+id/address_label"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/customer_address" />
+
+                <TextView
+                    android:id="@+id/install_customer_address"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/address_label"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/contact_mobile" />
+
+                <TextView
+                    android:id="@+id/install_customer_mobile"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <View
+                style="@style/horizontal_line"
+                android:visibility="gone" />
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/files_picture" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/install_pact_pics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/fishpond_device_list" />
+
+                <TextView
+                    android:id="@+id/callback_add_fishpond"
+                    style="@style/text_theme_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/add_fishpond_device" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_device_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="4dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_selector_light"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/recycle_device_count"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:text="0套" />
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@id/recycle_device_count"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/callback_device_count" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/callback_info" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/back_bank_name" />
+
+                <EditText
+                    android:id="@+id/back_bank_name"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_back_bank_name" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/back_bank_person" />
+
+                <EditText
+                    android:id="@+id/back_bank_person"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_back_bank_person" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/back_bank_account" />
+
+                <EditText
+                    android:id="@+id/back_bank_account"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_back_bank_account"
+                    android:inputType="number" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/reason"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:text="@string/callback_reason" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/reason"
+                    android:orientation="vertical">
+
+                    <GridLayout
+                        android:id="@+id/callback_reason_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2" />
+
+                    <EditText
+                        android:id="@+id/callback_reason"
+                        style="@style/text_primary_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_r0_strock_gray"
+                        android:gravity="top|left"
+                        android:hint="@string/hint_question_desc"
+                        android:lines="3"
+                        android:padding="4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/btn_r5_solid_primary"
+                android:text="@string/submit"
+                android:textColor="@color/color_white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

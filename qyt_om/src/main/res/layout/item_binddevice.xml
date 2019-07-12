@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
+
+        <TextView
+            android:id="@+id/device_fishpond"
+            style="@style/text_primary_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="鱼塘A" />
+
+        <TextView
+            android:id="@+id/item_del"
+            style="@style/text_secondary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/delete" />
+
+        <TextView
+            android:id="@+id/item_config"
+            style="@style/text_theme_14"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/item_del"
+            android:gravity="center_vertical"
+            android:text="@string/config" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/fishpond_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View style="@style/horizontal_line" />
+
+        <RelativeLayout
+            style="@style/horizontal_padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/device_id"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="设备ID:170837" />
+
+            <TextView
+                android:id="@+id/device_type"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/device_id"
+                android:text="设备型号:XXXXXX" />
+
+            <TextView
+                android:id="@+id/device_state"
+                style="@style/text_red_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="报警" />
+
+        </RelativeLayout>
+
+        <com.bangqu.lib.widget.UnScrollGridView
+            android:id="@+id/device_grid"
+            style="@style/horizontal_padding_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="3"
+            android:verticalSpacing="8dp" />
+
+    </LinearLayout>
+</LinearLayout>

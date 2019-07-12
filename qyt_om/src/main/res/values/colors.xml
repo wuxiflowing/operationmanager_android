@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4FA8EF</color>
+    <color name="colorPrimaryDark">#4FA8EF</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#EFEFEF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="hint_text">#BBBBBB</color>
+    <color name="divider">#DDDDDD</color>
+    <color name="color_red">#FF4B4B</color>
+    <!--底部导航字体颜色-->
+    <color name="tab_edit_focused">#4FA8EF</color>
+    <color name="tab_edit_normal">#757575</color>
+    <!--按钮点击-->
+    <color name="btn_primary_normal">#4FA8EF</color>
+    <color name="btn_primary_press">#4375C7</color>
+    <color name="btn_primary_disable">#994FA8EF</color>
+</resources>

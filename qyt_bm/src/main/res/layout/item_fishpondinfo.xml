@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/fishpond_expand"
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/color_white"
+        android:descendantFocusability="beforeDescendants">
+
+        <TextView
+            android:id="@+id/fishpond_name"
+            style="@style/text_primary_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/fishpond_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/expand_checkbox"
+            android:clickable="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/fishpond_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.bangqu.lib.widget.UnScrollListView
+            android:id="@+id/device_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/color_white"
+            android:divider="@null" />
+
+        <View style="@style/horizontal_line" />
+
+        <com.bangqu.lib.widget.TextViewPlus
+            android:id="@+id/click_fishpond_detail"
+            style="@style/text_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_selector_light"
+            android:drawableRight="@mipmap/arrow_right_gray"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:text="@string/click_fishpond_detail" />
+
+    </LinearLayout>
+</LinearLayout>

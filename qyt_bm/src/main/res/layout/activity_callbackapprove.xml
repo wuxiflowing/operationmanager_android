@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <TextView
+        style="@style/text_primary_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/color_white"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="@string/device_callback" />
+
+    <View style="@style/horizontal_line" />
+
+    <RelativeLayout
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white">
+
+        <TextView
+            style="@style/text_primary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="8dp"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:text="@string/choice_type" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/callback_approve_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/round_radiobutton"
+                android:checked="true"
+                android:paddingLeft="4dp"
+                android:text="@string/approve_agree"
+                android:textColor="@color/radio_text" />
+
+            <RadioButton
+                android:id="@+id/callback_approve_refuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:button="@drawable/round_radiobutton"
+                android:paddingLeft="4dp"
+                android:text="@string/approve_refuse"
+                android:textColor="@color/radio_text" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <LinearLayout
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/reason"
+            style="@style/text_primary_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/color_white"
+            android:text="@string/callback_reason" />
+
+        <GridLayout
+            android:id="@+id/callback_reason_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/reason"
+            android:columnCount="2" />
+
+    </LinearLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <LinearLayout
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            style="@style/text_primary_14"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/approve_reason" />
+
+        <EditText
+            android:id="@+id/callback_approve_desc"
+            style="@style/text_primary_14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_r0_strock_gray"
+            android:gravity="top|left"
+            android:hint="@string/description"
+            android:lines="3"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/callback_approve_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_r5_solid_primary"
+        android:text="@string/submit"
+        android:textColor="@color/color_white" />
+
+</LinearLayout>

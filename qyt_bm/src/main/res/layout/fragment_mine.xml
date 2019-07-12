@@ -1,0 +1,162 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <RelativeLayout
+        android:id="@+id/lay_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/item_selector_light">
+
+        <com.bangqu.lib.widget.RoundImageView
+            android:id="@+id/mine_header"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/default_header" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/mine_header"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mine_name"
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/mine_mobile"
+                style="@style/text_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/arrow_right_gray" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <com.bangqu.lib.widget.TextViewPlus
+            android:id="@+id/mine_change_pass"
+            style="@style/text_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/item_selector_light"
+            android:drawableLeft="@mipmap/icon_mine_pass"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/arrow_right_gray"
+            android:gravity="center_vertical"
+            android:text="@string/mine_change_pass" />
+
+        <View style="@style/horizontal_line" />
+
+        <com.bangqu.lib.widget.TextViewPlus
+            android:id="@+id/mine_about"
+            style="@style/text_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/item_selector_light"
+            android:drawableLeft="@mipmap/icon_mine_about"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/arrow_right_gray"
+            android:gravity="center_vertical"
+            android:text="@string/mine_about" />
+
+        <View
+            style="@style/horizontal_line"
+            android:visibility="gone" />
+
+        <com.bangqu.lib.widget.TextViewPlus
+            android:id="@+id/mine_question"
+            style="@style/text_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/item_selector_light"
+            android:drawableLeft="@mipmap/icon_mine_question"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/arrow_right_gray"
+            android:gravity="center_vertical"
+            android:text="@string/mine_question"
+            android:visibility="gone" />
+
+        <View style="@style/horizontal_line" />
+
+        <com.bangqu.lib.widget.TextViewPlus
+            android:id="@+id/mine_report"
+            style="@style/text_primary_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@drawable/item_selector_light"
+            android:drawableLeft="@mipmap/icon_mine_report"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/arrow_right_gray"
+            android:gravity="center_vertical"
+            android:text="@string/mine_report" />
+
+        <View style="@style/horizontal_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height">
+
+            <com.bangqu.lib.widget.TextViewPlus
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light"
+                android:drawableLeft="@mipmap/ic_version"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="当前版本" />
+
+            <TextView
+                android:id="@+id/app_version"
+                style="@style/text_secondary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mine_exit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/item_selector_light"
+        android:gravity="center"
+        android:text="@string/mine_exit"
+        android:textColor="@color/color_red"
+        android:textSize="16sp" />
+
+</LinearLayout>
+

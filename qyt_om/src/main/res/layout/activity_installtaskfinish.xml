@@ -1,0 +1,484 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_selector_light"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.bangqu.lib.widget.RoundImageView
+                    android:id="@+id/install_customer_header"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@mipmap/contacts_header" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toLeftOf="@id/install_customer_call"
+                    android:layout_toRightOf="@id/install_customer_header"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/install_customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/primary_text"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/install_customer_adress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/install_customer_call"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/item_selector_light"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_call" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/install_customer_call"
+                    android:background="@color/divider" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/install_order" />
+
+                <TextView
+                    android:id="@+id/install_task_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/color_red"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.TextViewPlus
+                android:id="@+id/install_pond_address"
+                style="@style/text_primary_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/icon_address_blue"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:divider="@color/color_white"
+                android:dividerHeight="4dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <TextView
+                android:id="@+id/install_order_project"
+                style="@style/text_secondary_14"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="计划完成时间：" />
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/device_list" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_device_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/finish_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:text="@string/deal_result" />
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@drawable/item_selector_light">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/confirm_time" />
+
+                    <TextView
+                        android:id="@+id/task_confirm_time"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical|right" />
+                </RelativeLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@drawable/item_selector_light">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/real_done_time" />
+
+                    <TextView
+                        android:id="@+id/task_done_time"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical|right"
+                        android:text="2018-08-08" />
+                </RelativeLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@drawable/item_selector_light">
+
+                    <TextView
+                        android:id="@+id/lab_deposit_cost"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/is_take_deposit_cost" />
+
+                    <TextView
+                        android:id="@+id/task_deposit_cost"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@id/lab_deposit_cost"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical" />
+
+                    <!--  <CheckBox
+                          android:id="@+id/task_deposit_ispay"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_alignParentRight="true"
+                          android:layout_centerVertical="true"
+                          android:button="@drawable/switch_checkbox"
+                          android:clickable="false" />-->
+
+                    <TextView
+                        android:id="@+id/task_deposit_ispay"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/deposit_ispay_info"
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
+
+                    <View style="@style/horizontal_line" />
+
+                    <TextView
+                        android:id="@+id/task_deposit_paymethod"
+                        style="@style/text_primary_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="收款方式：" />
+
+                    <TextView
+                        android:id="@+id/task_deposit_remark"
+                        style="@style/text_primary_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="备注：无" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_primary_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="附件：" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/task_deposit_files"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@drawable/item_selector_light">
+
+                    <TextView
+                        android:id="@+id/lab_service_cost"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/is_take_service_cost" />
+
+                    <TextView
+                        android:id="@+id/task_service_cost"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@id/lab_service_cost"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical" />
+
+                    <!--         <CheckBox
+                                 android:id="@+id/task_service_ispay"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_centerVertical="true"
+                                 android:button="@drawable/switch_checkbox"
+                                 android:checked="true"
+                                 android:clickable="false" />-->
+
+                    <TextView
+                        android:id="@+id/task_service_ispay"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/service_ispay_info"
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
+
+                    <View style="@style/horizontal_line" />
+
+                    <TextView
+                        android:id="@+id/task_service_paymethod"
+                        style="@style/text_primary_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="收款方式：" />
+
+                    <TextView
+                        android:id="@+id/task_service_remark"
+                        style="@style/text_primary_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="备注：无" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_primary_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="附件：" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/task_service_files"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    style="@style/horizontal_line"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_selector_light"
+                    android:minHeight="@dimen/item_height"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/lab_task_remark"
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/remark" />
+
+                    <TextView
+                        android:id="@+id/task_remark"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="64dp"
+                        android:layout_toRightOf="@id/lab_task_remark"
+                        android:gravity="center_vertical|right" />
+                </RelativeLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    style="@style/horizontal_padding_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@color/color_white"
+                        android:gravity="center_vertical"
+                        android:text="@string/files_picture" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/task_files_pics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

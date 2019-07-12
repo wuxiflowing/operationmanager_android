@@ -1,0 +1,84 @@
+package com.bangqu.lib.base;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.bangqu.lib.listener.RecyclerViewItemClickListener;
+import com.bumptech.glide.Glide;
+
+import java.util.HashSet;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2018-5-23 0023.
+ */
+
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    protected List<T> mData;
+    protected LayoutInflater mInflater;
+    protected Context mContext;
+    protected RecyclerViewItemClickListener<T> recyclerViewItemClickListener;
+
+    public void setRecyclerViewItemClickListener(RecyclerViewItemClickListener<T> recyclerViewItemClickListener) {
+        this.recyclerViewItemClickListener = recyclerViewItemClickListener;
+    }
+
+    public BaseRecyclerAdapter(Context mContext, List<T> mData) {
+        this.mData = mData;
+        this.mContext = mContext;
+        mInflater = LayoutInflater.from(mContext);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return initViewHolder(parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        bindingViewHolder(holder, position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position < mData.size() && position >= 0) {
+                    onItemClick(mData.get(position), position);
+                    if (recyclerViewItemClickListener != null) {
+                        recyclerViewItemClickListener.onItemClick(position, mData.get(position));
+                    }
+                } else {
+                    onItemClick(null, position);
+                    if (recyclerViewItemClickListener != null) {
+                        recyclerViewItemClickListener.onItemClick(position, null);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        clearGlideView(holder);
+    }
+
+    @Override
+    public int getItemCount() {
+        return null == mData ? 0 : mData.size();
+    }
+
+    protected abstract RecyclerView.ViewHolder initViewHolder(ViewGroup parent, int viewType);
+
+    protected abstract void bindingViewHolder(RecyclerView.ViewHolder holder, int position);
+
+    protected void onItemClick(T value, int position) {
+    }
+
+    protected void clearGlideView(RecyclerView.ViewHolder holder) {
+    }
+}

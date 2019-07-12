@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.qyt.om"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 26
+        versionName "1.1.4.2"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                GETUI_APP_ID : "8zxWecsMlz6HVGmKqt29N6",
+                GETUI_APP_KEY : "rBJkrQ87lHA8WB8q2KTwg5",
+                GETUI_APP_SECRET : "kEtOeiOFLO9hMgxItwzTb9"
+        ]
+        ndk {
+            abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "x86", "x86_64"
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'qyt'
+            keyPassword 'fishpond'
+            storeFile file('/fishpond.jks')
+            storePassword 'fishpond'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'src/main/jniLibs'
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = defaultConfig.applicationId + "-" + buildType.name + "-V" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk";
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation rootProject.ext.dependencies.appCompat
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies.butterknife_compiler
+    implementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.recyclerView
+    implementation rootProject.ext.dependencies.volley
+    implementation rootProject.ext.dependencies.glide
+    implementation rootProject.ext.dependencies.design
+    implementation rootProject.ext.dependencies.cardView
+    compile 'com.tencent.bugly:crashreport:2.6.6'
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+    implementation project(':bangqulib')
+    implementation project(':photoslib')
+    implementation project(':qrcodelib')
+    implementation project(':downloadlib')
+    compile 'com.getui:sdk:2.12.4.0'
+    implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'top.zibin:Luban:1.1.8'
+}

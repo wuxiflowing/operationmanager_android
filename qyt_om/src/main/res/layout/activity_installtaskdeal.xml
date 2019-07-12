@@ -1,0 +1,573 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_selector_light"
+                android:descendantFocusability="blocksDescendants">
+
+                <com.bangqu.lib.widget.RoundImageView
+                    android:id="@+id/install_customer_header"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@mipmap/contacts_header" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toLeftOf="@id/install_customer_call"
+                    android:layout_toRightOf="@id/install_customer_header"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/install_customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/primary_text"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/install_customer_adress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/install_customer_call"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/item_selector_light"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_call" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/install_customer_call"
+                    android:background="@color/divider" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/install_choice_customer"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/install_order" />
+
+                <TextView
+                    android:id="@+id/install_task_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:text="进行中"
+                    android:textColor="@color/color_red"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.TextViewPlus
+                android:id="@+id/install_pond_address"
+                style="@style/text_primary_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/icon_address_blue"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:divider="@color/color_white"
+                android:dividerHeight="4dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp" />
+
+            <View style="@style/horizontal_line" />
+
+            <TextView
+                android:id="@+id/install_order_project"
+                style="@style/text_secondary_14"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp" />
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/device_list" />
+
+            <View style="@style/horizontal_line" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_device_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.bangqu.lib.widget.UnScrollListView
+                android:id="@+id/install_fishpond_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:divider="#00000000"
+                android:dividerHeight="8dp" />
+
+            <TextView
+                android:id="@+id/install_add_fishpond"
+                style="@style/text_theme_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/item_selector_light"
+                android:gravity="center"
+                android:text="@string/add_fishpond_device" />
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/deal_result" />
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_install_confirm_form" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/take_confirm_files"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="是否收取押金费" />
+
+                <CheckBox
+                    android:id="@+id/install_deal_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/switch_checkbox" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/install_deposit_info"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/pact_pay_type" />
+
+                    <RadioGroup
+                        android:id="@+id/signbill_paytype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/deposit_pay_crash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/round_radiobutton"
+                            android:checked="true"
+                            android:paddingLeft="4dp"
+                            android:text="@string/pay_crash"
+                            android:textColor="@color/radio_text" />
+
+                        <RadioButton
+                            android:id="@+id/deposit_pay_bank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:button="@drawable/round_radiobutton"
+                            android:paddingLeft="4dp"
+                            android:text="@string/pay_bank"
+                            android:textColor="@color/radio_text" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="实收金额" />
+
+                    <TextView
+                        android:id="@+id/install_deposit_amount"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¥"
+                        android:textColor="@color/primary_text"
+                        android:textSize="22sp" />
+
+                    <EditText
+                        android:id="@+id/install_deposit_real"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/primary_text"
+                        android:textSize="28dp" />
+
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <EditText
+                    android:id="@+id/install_deposit_remark"
+                    style="@style/text_primary_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:hint="添加备注" />
+
+                <View style="@style/horizontal_line" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_deposit_take_files" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/take_deposit_files"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="是否收取服务费" />
+
+                <CheckBox
+                    android:id="@+id/install_deal_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/switch_checkbox" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/install_service_info"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/pact_pay_type" />
+
+                    <RadioGroup
+                        android:id="@+id/service_paytype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/service_pay_crash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/round_radiobutton"
+                            android:checked="true"
+                            android:paddingLeft="4dp"
+                            android:text="@string/pay_crash"
+                            android:textColor="@color/radio_text" />
+
+                        <RadioButton
+                            android:id="@+id/service_pay_bank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:button="@drawable/round_radiobutton"
+                            android:paddingLeft="4dp"
+                            android:text="@string/pay_bank"
+                            android:textColor="@color/radio_text" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_primary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="实收金额" />
+
+                    <TextView
+                        android:id="@+id/install_service_amount"
+                        style="@style/text_secondary_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¥"
+                        android:textColor="@color/primary_text"
+                        android:textSize="22sp" />
+
+                    <EditText
+                        android:id="@+id/install_service_real"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/primary_text"
+                        android:textSize="28dp" />
+
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <EditText
+                    android:id="@+id/install_service_remark"
+                    style="@style/text_primary_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:hint="添加备注" />
+
+                <View style="@style/horizontal_line" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_service_take_files" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/take_service_files"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/install_save"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_r5_stroke_primary"
+                    android:text="@string/save"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/install_finish"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_r5_solid_primary"
+                    android:text="@string/install_finish"
+                    android:textColor="@color/color_white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

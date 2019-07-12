@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_tab_array">
+        <item>消息</item>
+        <item>工作</item>
+        <item>养殖户</item>
+        <item>我的</item>
+    </string-array>
+    <string-array name="work_deal_array">
+        <item>安装任务</item>
+        <item>维护任务</item>
+        <item>报修任务</item>
+        <item>回收任务</item>
+   <!--     <item>收款任务</item>
+        <item>对账任务</item>
+        <item>预付款</item>
+        <item>巡检</item>-->
+        <!--<item>设备告警</item>-->
+    </string-array>
+    <string-array name="work_sensor_array">
+        <item>开户申请</item>
+        <item>签/续约</item>
+        <item>设备安装</item>
+        <item>故障报修</item>
+      <!--  <item>收款</item>-->
+        <item>设备回收</item>
+    </string-array>
+    <string-array name="work_feed_array">
+        <item>叫料</item>
+        <item>对账</item>
+        <item>打样</item>
+        <item>巡检</item>
+    </string-array>
+    <string-array name="customer_opera_array">
+        <item>设备安装</item>
+        <item>故障报修</item>
+        <item>设备回收</item>
+        <item>签/续约</item>
+        <item>叫料</item>
+        <item>收款</item>
+        <item>对账</item>
+        <item>巡检</item>
+    </string-array>
+    <string-array name="customer_record_array">
+        <item>安装记录</item>
+        <item>收款记录</item>
+        <item>对账记录</item>
+        <item>结算记录</item>
+        <item>故障记录</item>
+        <item>回收记录</item>
+        <item>维护记录</item>
+        <item>巡检记录</item>
+        <item>我的订单</item>
+        <item>合同管理</item>
+    </string-array>
+    <string-array name="customer_base_array">
+        <item>农户姓名</item>
+        <item>信用等级</item>
+        <item>积分</item>
+        <item>预付款</item>
+        <item>欠款</item>
+        <item>欠款额度</item>
+        <item>鱼塘数量</item>
+        <item>总设备</item>
+        <item>面积</item>
+        <item>联系方式</item>
+        <item>年龄</item>
+        <item>性别</item>
+        <item>身份证号</item>
+        <item>开户时间</item>
+    </string-array>
+    <string-array name="customer_fishpond_array">
+        <item>鱼塘名称</item>
+        <item>鱼塘面积</item>
+        <item>鱼种</item>
+        <item>鱼塘设备</item>
+        <item>鱼塘地址</item>
+        <item>投放鱼苗时间</item>
+        <item>预计卖鱼时间</item>
+    </string-array>
+</resources>

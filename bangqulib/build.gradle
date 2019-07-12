@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        useLibrary 'org.apache.http.legacy'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation rootProject.ext.dependencies.appCompat
+    implementation rootProject.ext.dependencies.recyclerView
+    implementation rootProject.ext.dependencies.volley
+    implementation rootProject.ext.dependencies.glide
+    implementation rootProject.ext.dependencies.gson
+    implementation rootProject.ext.dependencies.okhttp
+    implementation rootProject.ext.dependencies.okhttp_connect
+}

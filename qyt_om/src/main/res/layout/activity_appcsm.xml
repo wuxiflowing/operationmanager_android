@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <TableLayout
+        style="@style/horizontal_padding_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:stretchColumns="1">
+
+        <TableRow>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/csm_type" />
+
+            <RadioGroup
+                android:id="@+id/csm_types"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/csm_type1"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/round_radiobutton"
+                    android:checked="true"
+                    android:paddingLeft="4dp"
+                    android:text="@string/csm_type1" />
+
+                <RadioButton
+                    android:id="@+id/csm_type2"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:button="@drawable/round_radiobutton"
+                    android:paddingLeft="4dp"
+                    android:text="@string/csm_type2" />
+
+                <RadioButton
+                    android:id="@+id/csm_type3"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:button="@drawable/round_radiobutton"
+                    android:paddingLeft="4dp"
+                    android:text="@string/csm_type3" />
+
+                <RadioButton
+                    android:id="@+id/csm_type4"
+                    style="@style/text_primary_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:button="@drawable/round_radiobutton"
+                    android:paddingLeft="4dp"
+                    android:text="@string/csm_type4" />
+            </RadioGroup>
+        </TableRow>
+
+        <View style="@style/horizontal_line" />
+
+        <TableRow>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/csm_title" />
+
+            <EditText
+                android:id="@+id/csm_title"
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@null"
+                android:hint="@string/hint_csm_title"
+                android:lines="1"
+                android:singleLine="true" />
+        </TableRow>
+
+        <View style="@style/horizontal_line" />
+
+        <TableRow>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="top"
+                android:text="@string/csm_context" />
+
+            <EditText
+                android:id="@+id/csm_context"
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="@string/hint_csm_context"
+                android:lines="4" />
+        </TableRow>
+
+        <View style="@style/horizontal_line" />
+
+        <TableRow>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="top"
+                android:text="@string/csm_files" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/csm_files"
+                style="@style/text_primary_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp" />
+        </TableRow>
+
+        <View style="@style/horizontal_line" />
+    </TableLayout>
+
+    <Button
+        android:id="@+id/submit_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_r5_solid_primary"
+        android:text="@string/submit"
+        android:textColor="@color/color_white" />
+
+</LinearLayout>

@@ -1,0 +1,393 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_navigation" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/base_info" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:id="@+id/install_choice_customer"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/choice_customer" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/install_customer_name"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/arrow_right_gray"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/hint_choice_customer" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_selector_light"
+                android:minHeight="@dimen/item_height">
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/item_height"
+                    android:text="@string/customer_address" />
+
+                <TextView
+                    android:id="@+id/install_customer_address"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/address"
+                    android:gravity="center_vertical|right"
+                    android:minHeight="@dimen/item_height" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:gravity="center_vertical"
+                    android:text="@string/contact_mobile" />
+
+                <TextView
+                    android:id="@+id/install_customer_mobile"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/text_primary_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="8dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:text="@string/repair_info" />
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:id="@+id/repair_pond"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/choice_fishpond" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/repair_fishpond"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/color_white"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/arrow_right_gray"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/please_choice" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_selector_light"
+                android:minHeight="@dimen/item_height">
+
+                <TextView
+                    android:id="@+id/paddress"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_centerVertical="true"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/fishpond_address" />
+
+                <TextView
+                    android:id="@+id/repair_fishpond_address"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/paddress"
+                    android:gravity="center_vertical|right"
+                    android:minHeight="@dimen/item_height" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:id="@+id/repair_device"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_id" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/repair_device_id"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/color_white"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/arrow_right_gray"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/please_choice" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_model" />
+
+                <TextView
+                    android:id="@+id/repair_device_model"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/fishpond_mobile" />
+
+                <TextView
+                    android:id="@+id/repair_fishpond_mobile"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <RelativeLayout
+                android:id="@+id/install_choice_operator"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:background="@drawable/item_selector_light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="*"
+                    android:textColor="@color/color_red" />
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/install_operator" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/install_operator"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_alignParentRight="true"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/arrow_right_gray"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/please_choice" />
+            </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                android:id="@+id/install_choice_time"
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/repair_desc" />
+
+                <EditText
+                    android:id="@+id/repair_reason"
+                    style="@style/text_primary_14"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="32dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_r0_strock_gray"
+                    android:gravity="top|left"
+                    android:hint="@string/hint_question_desc"
+                    android:lines="3"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+            <View style="@style/horizontal_line" />
+
+            <LinearLayout
+                style="@style/horizontal_padding_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:text="@string/upload_repair_pic" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/repair_pictures"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/btn_r5_solid_primary"
+                android:text="@string/submit"
+                android:textColor="@color/color_white" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

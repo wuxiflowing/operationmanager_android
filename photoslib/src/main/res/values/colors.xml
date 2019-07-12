@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#FF4081</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#333333</color>
+    <color name="navigation">#DCDCDC</color>
+    <color name="disable">#CCCCCC</color>
+    <color name="background">#191919</color>
+    <color name="button_red_normal">#4375C7</color>
+    <color name="button_red_press">#2456A8</color>
+    <color name="button_red_disable">#994375C7</color>
+</resources>

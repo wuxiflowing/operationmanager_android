@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_menu_dialog_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="选择鱼塘"
+        android:textColor="@color/color_black"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/fishpond_name"
+        style="@style/text_primary_14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="请填写鱼塘名称" />
+
+    <View style="@style/horizontal_line" />
+
+    <ListView
+        android:id="@+id/sentry_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:divider="@color/divider"
+        android:dividerHeight="0.5dp"
+        android:listSelector="@android:color/transparent" />
+
+    <View style="@style/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/edittext_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_style_cancel"
+            android:text="@string/cancel" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_line" />
+
+        <Button
+            android:id="@+id/edittext_ok"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_style_ok"
+            android:text="@string/ok"
+            android:textColor="@color/color_blue" />
+    </LinearLayout>
+
+</LinearLayout>
