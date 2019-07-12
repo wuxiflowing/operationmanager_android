@@ -9,4 +9,5 @@
     <color name="button_red_normal">#4375C7</color>
     <color name="button_red_press">#2456A8</color>
     <color name="button_red_disable">#994375C7</color>
+    <color name="green_enable">#FF23891D</color>
 </resources>

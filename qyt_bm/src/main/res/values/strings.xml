@@ -119,8 +119,8 @@
     <string name="fishpond_size">鱼塘面积</string>
     <string name="prepay_balance">账户金额</string>
     <string name="arrears_sum">欠款金额</string>
-    <string name="click_fishpond_detail">查看鱼塘详情</string>
-    <string name="click_device_detail">查看设备详情</string>
+    <string name="click_fishpond_detail">鱼塘详情</string>
+    <string name="click_device_detail">设备详情</string>
     <string name="customer_opera">操作</string>
     <string name="customer_record">记录</string>
     <!--开户申请-->
@@ -207,4 +207,13 @@
     <string name="control1_config">控制器1配置</string>
     <string name="control2_config">控制器2配置</string>
     <string name="hint_search_device">请输入关键字</string>
+
+
+    <string name="control3_config">控制器3配置</string>
+    <string name="control4_config">控制器4配置</string>
+    <string name="connection_mode_select">选择连接方式</string>
+    <string name="connection_mode_line">有线</string>
+    <string name="text_temperature">温度</string>
+    <string name="text_ph">PH值</string>
+
 </resources>

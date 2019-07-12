@@ -22,12 +22,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qyt.bm.BmApplication;
 import com.qyt.bm.R;
+import com.qyt.bm.activity.device.FishpondInfoAdapter2;
 import com.qyt.bm.adapter.FishpondInfoAdapter;
 import com.qyt.bm.base.BaseActivity;
 import com.qyt.bm.comm.Constants;
 import com.qyt.bm.comm.HttpConfig;
 import com.qyt.bm.model.ContactItem;
 import com.qyt.bm.response.CustomerData;
+import com.qyt.bm.response.DeviceConfigInfo;
 import com.qyt.bm.response.FishPondInfo;
 
 import java.util.ArrayList;
@@ -96,7 +98,9 @@ public class CustomerHomeActivity extends BaseActivity {
     LinearLayout customerGeneral;
 
     private ArrayList<FishPondInfo> fishPondInfos = new ArrayList<>();
+    private ArrayList<DeviceConfigInfo> mListData;
     private FishpondInfoAdapter fishpondInfoAdapter;
+    private FishpondInfoAdapter2 fishpondInfoAdapter2;
     private ContactItem farmer;
     private CustomerData customerData;
 
@@ -117,8 +121,10 @@ public class CustomerHomeActivity extends BaseActivity {
         fmName.setText(farmer.name);
         fmTel.setText(farmer.mobile);
         fmAddress.setText(farmer.farmerAdd);
-        fishpondInfoAdapter = new FishpondInfoAdapter(this, fishPondInfos);
-        fishpondList.setAdapter(fishpondInfoAdapter);
+
+        mListData = new ArrayList<>();
+        fishpondInfoAdapter2 = new FishpondInfoAdapter2(this, mListData);
+        fishpondList.setAdapter(fishpondInfoAdapter2);
     }
 
     /**
@@ -145,19 +151,28 @@ public class CustomerHomeActivity extends BaseActivity {
     @Override
     protected void addViewListener() {
         super.addViewListener();
-        fishpondInfoAdapter.setOperaListener(new ListItemOperaListener() {
+        fishpondInfoAdapter2.setOperaListener(new ListItemOperaListener() {
             @Override
             public void onItemOpera(String tag, int position, Object value) {
                 switch (tag) {
                     case "fishpond":
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable(Constants.INTENT_OBJECT, (FishPondInfo) value);
+                        FishPondInfo fishPondInfo = null;
+                        for (FishPondInfo info : fishPondInfos) {
+                            if (info.pondId.equals((String) value)) {
+                                fishPondInfo = info;
+                                break;
+                            }
+                        }
+                        bundle.putParcelable(Constants.INTENT_OBJECT, fishPondInfo);
                         goToActivity(FishpondInfoActivity.class, bundle);
                         break;
                     case "device":
                         Bundle bundle1 = new Bundle();
                         bundle1.putString(Constants.INTENT_OBJECT, (String) value);
                         goToActivity(DeviceDetailActivity.class, bundle1);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -240,7 +255,16 @@ public class CustomerHomeActivity extends BaseActivity {
                 fishPondInfos.clear();
                 if (d != null && d.size() > 0) {
                     fishPondInfos.addAll(d);
-                    fishpondInfoAdapter.notifyDataSetChanged();
+
+                    mListData.clear();
+                    for (FishPondInfo info : d) {
+                        for (DeviceConfigInfo device : info.childDeviceList) {
+                            device.pondId = info.pondId;
+                            device.pondName = info.name;
+                            mListData.add(device);
+                        }
+                    }
+                    fishpondInfoAdapter2.notifyDataSetChanged();
                 }
             }
 

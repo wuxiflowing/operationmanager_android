@@ -63,13 +63,13 @@ dependencies {
     implementation rootProject.ext.dependencies.glide
     implementation rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.cardView
-    compile 'com.tencent.bugly:crashreport:2.6.6'
-    compile 'com.contrarywind:Android-PickerView:3.2.7'
+    implementation 'com.tencent.bugly:crashreport:2.6.6'
+    implementation 'com.contrarywind:Android-PickerView:3.2.7'
     implementation project(':bangqulib')
     implementation project(':photoslib')
     implementation project(':qrcodelib')
     implementation project(':downloadlib')
-    compile 'com.getui:sdk:2.12.4.0'
+    implementation 'com.getui:sdk:2.12.4.0'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation 'top.zibin:Luban:1.1.8'
 }
