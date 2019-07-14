@@ -9,4 +9,5 @@ public class EquipmentItem {
     public String ITEM2;
     public String ITEM1;
     public String ITEM3;
+    public String ITEM4;
 }

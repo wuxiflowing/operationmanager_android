@@ -21,7 +21,8 @@ import com.qyt.bm.comm.Constants;
 import com.qyt.bm.comm.HttpConfig;
 import com.qyt.bm.model.InfoMap;
 import com.qyt.bm.response.AeratorControlItem;
-import com.qyt.bm.response.DeviceConfigInfo;
+import com.qyt.bm.response.DeviceConfigInfo2;
+import com.qyt.bm.response.DeviceControlInfoBean;
 import com.qyt.bm.response.DeviceRawData;
 import com.qyt.bm.widget.DeviceDataLine;
 import com.qyt.bm.widget.LineTypeDialog;
@@ -35,7 +36,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 新增设备的设备详情界面
+ * QY601的设备详情界面
  */
 public class DeviceNewDetailActivity extends BaseActivity {
 
@@ -168,6 +169,8 @@ public class DeviceNewDetailActivity extends BaseActivity {
                         long startlong = DateFormatUtil.getString2Date(startDate, DateFormatUtil.DATE_FORMAT).getTime();
                         getDeviceRawData(startlong, System.currentTimeMillis());
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -175,13 +178,13 @@ public class DeviceNewDetailActivity extends BaseActivity {
 
     public void getDeviceInfo() {
         showLoading();
-        getData(HttpConfig.DEVICE_TEST_CONFIG.replace("{id}", deviceId), new ResponseCallBack<DeviceConfigInfo>() {
+        getData(HttpConfig.DEVICE_TEST_CONFIG_NEW.replace("{id}", deviceId), new ResponseCallBack<DeviceConfigInfo2>() {
             @Override
-            public void onSuccessResponse(DeviceConfigInfo d, String msg) {
+            public void onSuccessResponse(DeviceConfigInfo2 d, String msg) {
                 dismissLoading();
                 if (d != null) {
-                    devicedetailId.setText(d.identifier + "");
-                    if (d != null && d.workStatus == 0) {
+                    devicedetailId.setText(d.identifier);
+                    if (d.workStatus == 0) {
                         devicedetailState.setTextColor(Color.GREEN);
                     } else {
                         devicedetailState.setTextColor(Color.RED);
@@ -189,81 +192,81 @@ public class DeviceNewDetailActivity extends BaseActivity {
                     devicedetailState.setText(Constants.DEVICE_STATE.get(d.workStatus));
                     sensorItems.clear();
                     //选择连接方式
-                    sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), "有线"));
-                    sensorItems.add(new InfoMap("报警线1", d.alertlineOne + "mg/L"));
-                    sensorItems.add(new InfoMap("报警线2", d.alertlineTwo + "mg/L"));
+                    sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), d.connectionType == 0 ? getString(R.string.connection_mode_line) : getString(R.string.connection_mode_wireless)));
+                    sensorItems.add(new InfoMap("报警线1", d.alertline1 + "mg/L"));
+                    sensorItems.add(new InfoMap("报警线2", d.alertline2 + "mg/L"));
                     sensorAdapter.notifyDataSetChanged();
                     control1Items.clear();
-                    if (d.aeratorControlList != null && d.aeratorControlList.size() > 0) {
-                        AeratorControlItem item1 = d.aeratorControlList.get(0);
-                        if (item1.open) {
+                    if (d.deviceControlInfoBeanList != null && d.deviceControlInfoBeanList.size() > 0) {
+                        DeviceControlInfoBean item1 = d.deviceControlInfoBeanList.get(0);
+                        if (item1.open == 1) {
                             control1Power.setText("开");
                             control1Power.setTextColor(Color.GREEN);
                         } else {
                             control1Power.setText("关");
                             control1Power.setTextColor(Color.RED);
                         }
-                        control1Items.add(new InfoMap("溶氧上限", "0.0" + "mg/L"));
-                        control1Items.add(new InfoMap("溶氧下限", "0.0" + "mg/L"));
-                        control1Items.add(new InfoMap("电流上限", "0.0" + "A"));
-                        control1Items.add(new InfoMap("电流下限", "0.0" + "A"));
-                        control1Items.add(new InfoMap("设备状态", "手动、自动"));
+                        control1Items.add(new InfoMap("溶氧上限", TextUtils.isEmpty(item1.oxyLimitUp) ? "--mg/L" : item1.oxyLimitUp + "mg/L"));
+                        control1Items.add(new InfoMap("溶氧下限", TextUtils.isEmpty(item1.oxyLimitDown) ? "--mg/L" : item1.oxyLimitDown + "mg/L"));
+                        control1Items.add(new InfoMap("电流上限", TextUtils.isEmpty(item1.electricityUp) ? "--A" : item1.electricityUp + "A"));
+                        control1Items.add(new InfoMap("电流下限", TextUtils.isEmpty(item1.electricityDown) ? "--A" : item1.electricityDown + "A"));
+                        control1Items.add(new InfoMap("设备状态", item1.auto == 1 ? getString(R.string.text_auto) : getString(R.string.text_manual)));
 
                         control1Adapter.notifyDataSetInvalidated();
                     }
                     control2Items.clear();
-                    if (d.aeratorControlList != null && d.aeratorControlList.size() > 1) {
-                        AeratorControlItem item2 = d.aeratorControlList.get(1);
-                        if (item2.open) {
-                            control2Power.setText("开");
-                            control2Power.setTextColor(Color.GREEN);
+                    if (d.deviceControlInfoBeanList != null && d.deviceControlInfoBeanList.size() > 1) {
+                        DeviceControlInfoBean item1 = d.deviceControlInfoBeanList.get(1);
+                        if (item1.open == 1) {
+                            control1Power.setText("开");
+                            control1Power.setTextColor(Color.GREEN);
                         } else {
-                            control2Power.setText("关");
-                            control2Power.setTextColor(Color.RED);
+                            control1Power.setText("关");
+                            control1Power.setTextColor(Color.RED);
                         }
-                        control2Items.add(new InfoMap("溶氧上限", "0.0" + "mg/L"));
-                        control2Items.add(new InfoMap("溶氧下限", "0.0" + "mg/L"));
-                        control2Items.add(new InfoMap("电流上限", "0.0" + "A"));
-                        control2Items.add(new InfoMap("电流下限", "0.0" + "A"));
-                        control2Items.add(new InfoMap("设备状态", "手动、自动"));
+                        control2Items.add(new InfoMap("溶氧上限", TextUtils.isEmpty(item1.oxyLimitUp) ? "--mg/L" : item1.oxyLimitUp + "mg/L"));
+                        control2Items.add(new InfoMap("溶氧下限", TextUtils.isEmpty(item1.oxyLimitDown) ? "--mg/L" : item1.oxyLimitDown + "mg/L"));
+                        control2Items.add(new InfoMap("电流上限", TextUtils.isEmpty(item1.electricityUp) ? "--A" : item1.electricityUp + "A"));
+                        control2Items.add(new InfoMap("电流下限", TextUtils.isEmpty(item1.electricityDown) ? "--A" : item1.electricityDown + "A"));
+                        control2Items.add(new InfoMap("设备状态", item1.auto == 1 ? getString(R.string.text_auto) : getString(R.string.text_manual)));
 
-                        control2Adapter.notifyDataSetInvalidated();
+                        control1Adapter.notifyDataSetInvalidated();
                     }
                     control3Items.clear();
-                    if (d.aeratorControlList != null && d.aeratorControlList.size() > 1) {
-                        AeratorControlItem item2 = d.aeratorControlList.get(1);
-                        if (item2.open) {
-                            control3Power.setText("开");
-                            control3Power.setTextColor(Color.GREEN);
+                    if (d.deviceControlInfoBeanList != null && d.deviceControlInfoBeanList.size() > 2) {
+                        DeviceControlInfoBean item1 = d.deviceControlInfoBeanList.get(2);
+                        if (item1.open == 1) {
+                            control1Power.setText("开");
+                            control1Power.setTextColor(Color.GREEN);
                         } else {
-                            control3Power.setText("关");
-                            control3Power.setTextColor(Color.RED);
+                            control1Power.setText("关");
+                            control1Power.setTextColor(Color.RED);
                         }
-                        control3Items.add(new InfoMap("溶氧上限", "0.0" + "mg/L"));
-                        control3Items.add(new InfoMap("溶氧下限", "0.0" + "mg/L"));
-                        control3Items.add(new InfoMap("电流上限", "0.0" + "A"));
-                        control3Items.add(new InfoMap("电流下限", "0.0" + "A"));
-                        control3Items.add(new InfoMap("设备状态", "手动、自动"));
+                        control3Items.add(new InfoMap("溶氧上限", TextUtils.isEmpty(item1.oxyLimitUp) ? "--mg/L" : item1.oxyLimitUp + "mg/L"));
+                        control3Items.add(new InfoMap("溶氧下限", TextUtils.isEmpty(item1.oxyLimitDown) ? "--mg/L" : item1.oxyLimitDown + "mg/L"));
+                        control3Items.add(new InfoMap("电流上限", TextUtils.isEmpty(item1.electricityUp) ? "--A" : item1.electricityUp + "A"));
+                        control3Items.add(new InfoMap("电流下限", TextUtils.isEmpty(item1.electricityDown) ? "--A" : item1.electricityDown + "A"));
+                        control3Items.add(new InfoMap("设备状态", item1.auto == 1 ? getString(R.string.text_auto) : getString(R.string.text_manual)));
 
-                        control3Adapter.notifyDataSetInvalidated();
+                        control1Adapter.notifyDataSetInvalidated();
                     }
                     control4Items.clear();
-                    if (d.aeratorControlList != null && d.aeratorControlList.size() > 1) {
-                        AeratorControlItem item2 = d.aeratorControlList.get(1);
-                        if (item2.open) {
-                            control4Power.setText("开");
-                            control4Power.setTextColor(Color.GREEN);
+                    if (d.deviceControlInfoBeanList != null && d.deviceControlInfoBeanList.size() > 3) {
+                        DeviceControlInfoBean item1 = d.deviceControlInfoBeanList.get(3);
+                        if (item1.open == 1) {
+                            control1Power.setText("开");
+                            control1Power.setTextColor(Color.GREEN);
                         } else {
-                            control4Power.setText("关");
-                            control4Power.setTextColor(Color.RED);
+                            control1Power.setText("关");
+                            control1Power.setTextColor(Color.RED);
                         }
-                        control4Items.add(new InfoMap("溶氧上限", "0.0" + "mg/L"));
-                        control4Items.add(new InfoMap("溶氧下限", "0.0" + "mg/L"));
-                        control4Items.add(new InfoMap("电流上限", "0.0" + "A"));
-                        control4Items.add(new InfoMap("电流下限", "0.0" + "A"));
-                        control4Items.add(new InfoMap("设备状态", "手动、自动"));
+                        control4Items.add(new InfoMap("溶氧上限", TextUtils.isEmpty(item1.oxyLimitUp) ? "--mg/L" : item1.oxyLimitUp + "mg/L"));
+                        control4Items.add(new InfoMap("溶氧下限", TextUtils.isEmpty(item1.oxyLimitDown) ? "--mg/L" : item1.oxyLimitDown + "mg/L"));
+                        control4Items.add(new InfoMap("电流上限", TextUtils.isEmpty(item1.electricityUp) ? "--A" : item1.electricityUp + "A"));
+                        control4Items.add(new InfoMap("电流下限", TextUtils.isEmpty(item1.electricityDown) ? "--A" : item1.electricityDown + "A"));
+                        control4Items.add(new InfoMap("设备状态", item1.auto == 1 ? getString(R.string.text_auto) : getString(R.string.text_manual)));
 
-                        control4Adapter.notifyDataSetInvalidated();
+                        control1Adapter.notifyDataSetInvalidated();
                     }
                 } else {
                     showToast(msg);
@@ -312,6 +315,8 @@ public class DeviceNewDetailActivity extends BaseActivity {
                                     deviceDataLine.refreshViewData(2, timesValues, oxValues);
                                 }
                                 break;
+                            default:
+                                break;
                         }
                     }
                 }).show();
@@ -331,7 +336,8 @@ public class DeviceNewDetailActivity extends BaseActivity {
                 devicedetailFive.setChecked(false);
                 getDeviceRawData(start, end);
                 break;
-
+            default:
+                break;
         }
     }
 

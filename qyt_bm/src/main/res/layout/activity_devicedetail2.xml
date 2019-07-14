@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
@@ -132,13 +132,13 @@
             <!--鱼塘-->
             <RelativeLayout
                 style="@style/horizontal_padding_style"
-                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/color_white"
                 android:paddingTop="8dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/text_primary_14"
@@ -227,6 +227,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />
             </RelativeLayout>
+
             <com.bangqu.lib.widget.UnScrollListView
                 android:id="@+id/sensor_infos"
                 android:layout_width="match_parent"
@@ -304,6 +305,7 @@
                 android:dividerHeight="4dp"
                 android:paddingBottom="8dp" />
 
+            <View style="@style/horizontal_line" />
             <!--控制器3配置-->
             <RelativeLayout
                 style="@style/horizontal_padding_style"
@@ -318,6 +320,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/control3_config" />
+
 
                 <TextView
                     android:id="@+id/control3_power"
@@ -337,6 +340,7 @@
                 android:dividerHeight="4dp"
                 android:paddingBottom="8dp" />
 
+            <View style="@style/horizontal_line" />
             <!--控制器4配置-->
             <RelativeLayout
                 style="@style/horizontal_padding_style"

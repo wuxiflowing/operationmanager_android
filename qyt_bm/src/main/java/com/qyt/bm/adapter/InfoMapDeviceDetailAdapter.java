@@ -1,6 +1,7 @@
 package com.qyt.bm.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by 15052286501 on 2017/8/29.
+ * Created by sunzhibin
  */
 public class InfoMapDeviceDetailAdapter extends BaseSimpleAdapter<InfoMap> {
 
@@ -36,6 +37,13 @@ public class InfoMapDeviceDetailAdapter extends BaseSimpleAdapter<InfoMap> {
         InfoMap model = mData.get(position);
         viewHolder.label.setText(model.label);
         viewHolder.value.setText(model.value);
+        if (mContext.getString(R.string.connection_mode_select).equals(model.label)) {
+            if (mContext.getString(R.string.text_normal).equals(model.value)) {
+                viewHolder.value.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            } else {
+                viewHolder.value.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            }
+        }
         return convertView;
     }
 

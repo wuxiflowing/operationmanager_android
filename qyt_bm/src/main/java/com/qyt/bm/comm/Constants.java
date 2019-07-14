@@ -30,6 +30,12 @@ public class Constants {
     public static final String INSTALL_CREATE = "PRO00011527662267836";//安装
     public static final String REPAIR_CREATE = "PRO00281532487186962";//报修
     public static final String RECYCLE_CREATE = "PRO00031527817388054";//回收
+    /**
+     * 设备类型
+     */
+    public static final String DEVICE_TYPE_KD326 = "KD326";
+    public static final String DEVICE_TYPE_QY601 = "QY601";
+
     public static final RequestOptions REQUEST_OPTIONS = new RequestOptions().placeholder(R.mipmap.contacts_header).error(R.mipmap.contacts_header);
 
     public static final HashMap<String, Integer> TASK_ICONS = new HashMap<String, Integer>() {

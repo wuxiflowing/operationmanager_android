@@ -22,15 +22,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qyt.bm.BmApplication;
 import com.qyt.bm.R;
+import com.qyt.bm.activity.device.DeviceNewDetailActivity;
 import com.qyt.bm.activity.device.FishpondInfoAdapter2;
 import com.qyt.bm.adapter.FishpondInfoAdapter;
 import com.qyt.bm.base.BaseActivity;
 import com.qyt.bm.comm.Constants;
 import com.qyt.bm.comm.HttpConfig;
 import com.qyt.bm.model.ContactItem;
+import com.qyt.bm.response.ChildDeviceListBean;
 import com.qyt.bm.response.CustomerData;
 import com.qyt.bm.response.DeviceConfigInfo;
 import com.qyt.bm.response.FishPondInfo;
+import com.qyt.bm.response.FishPondInfo2;
 
 import java.util.ArrayList;
 
@@ -97,9 +100,8 @@ public class CustomerHomeActivity extends BaseActivity {
     @BindView(R.id.customer_general)
     LinearLayout customerGeneral;
 
-    private ArrayList<FishPondInfo> fishPondInfos = new ArrayList<>();
-    private ArrayList<DeviceConfigInfo> mListData;
-    private FishpondInfoAdapter fishpondInfoAdapter;
+    private ArrayList<FishPondInfo2> fishPondInfos = new ArrayList<>();
+    private ArrayList<ChildDeviceListBean> mListData;
     private FishpondInfoAdapter2 fishpondInfoAdapter2;
     private ContactItem farmer;
     private CustomerData customerData;
@@ -157,8 +159,8 @@ public class CustomerHomeActivity extends BaseActivity {
                 switch (tag) {
                     case "fishpond":
                         Bundle bundle = new Bundle();
-                        FishPondInfo fishPondInfo = null;
-                        for (FishPondInfo info : fishPondInfos) {
+                        FishPondInfo2 fishPondInfo = null;
+                        for (FishPondInfo2 info : fishPondInfos) {
                             if (info.pondId.equals((String) value)) {
                                 fishPondInfo = info;
                                 break;
@@ -168,9 +170,17 @@ public class CustomerHomeActivity extends BaseActivity {
                         goToActivity(FishpondInfoActivity.class, bundle);
                         break;
                     case "device":
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putString(Constants.INTENT_OBJECT, (String) value);
-                        goToActivity(DeviceDetailActivity.class, bundle1);
+                        String typeAndId = (String) value;
+                        int index = typeAndId.indexOf("-");
+                        if ("KD326".equals(typeAndId.substring(0, index))) {
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString(Constants.INTENT_OBJECT, typeAndId.substring(index + 1));
+                            goToActivity(DeviceDetailActivity.class, bundle1);
+                        } else if ("QY601".equals(typeAndId.substring(0, index))) {
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString(Constants.INTENT_OBJECT, typeAndId.substring(index + 1));
+                            goToActivity(DeviceNewDetailActivity.class, bundle1);
+                        }
                         break;
                     default:
                         break;
@@ -244,39 +254,42 @@ public class CustomerHomeActivity extends BaseActivity {
                 goToActivity(CustomerCreateActivity.class, bundle);
                 BmApplication.getInstance().addToSteamActivity(this);
                 break;
+            default:
+                break;
         }
     }
 
     private void getFishPonds() {
         /*获取鱼塘列表*/
-        getData(HttpConfig.GET_CUSTOMER_PONDS.replace("{customerId}", farmer.farmerId), new ResponseCallBack<ArrayList<FishPondInfo>>() {
-            @Override
-            public void onSuccessResponse(ArrayList<FishPondInfo> d, String msg) {
-                fishPondInfos.clear();
-                if (d != null && d.size() > 0) {
-                    fishPondInfos.addAll(d);
+        getData(HttpConfig.PONDS_INFO_LIST.replace("{customerId}", farmer.farmerId),
+                new ResponseCallBack<ArrayList<FishPondInfo2>>() {
+                    @Override
+                    public void onSuccessResponse(ArrayList<FishPondInfo2> d, String msg) {
+                        fishPondInfos.clear();
+                        if (d != null && d.size() > 0) {
+                            fishPondInfos.addAll(d);
 
-                    mListData.clear();
-                    for (FishPondInfo info : d) {
-                        for (DeviceConfigInfo device : info.childDeviceList) {
-                            device.pondId = info.pondId;
-                            device.pondName = info.name;
-                            mListData.add(device);
+                            mListData.clear();
+                            for (FishPondInfo2 info : d) {
+                                for (ChildDeviceListBean device : info.childDeviceList) {
+                                    device.pondId = info.pondId;
+                                    device.pondName = info.name;
+                                    mListData.add(device);
+                                }
+                            }
+                            fishpondInfoAdapter2.notifyDataSetChanged();
                         }
                     }
-                    fishpondInfoAdapter2.notifyDataSetChanged();
-                }
-            }
 
-            @Override
-            public void onFailResponse(String msg) {
+                    @Override
+                    public void onFailResponse(String msg) {
 
-            }
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
+                    @Override
+                    public void onVolleyError(int code, String msg) {
 
-            }
-        });
+                    }
+                });
     }
 }

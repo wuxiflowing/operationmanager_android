@@ -29,10 +29,6 @@ public class DeviceConfigInfo implements Parcelable {
     public boolean scheduled;
     public ArrayList<AeratorControlItem> aeratorControlList;
 
-    // add by sunzhibin
-    public transient String pondId;
-    public transient String pondName;
-
     @Override
     public int describeContents() {
         return 0;

@@ -35,7 +35,8 @@
             android:textColor="@android:color/white"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_item_name"
-            app:layout_constraintLeft_toLeftOf="@id/tv_item_value"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_value" />
 
         <TextView
@@ -47,7 +48,8 @@
             android:textColor="@android:color/white"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/tv_item_value"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_unit" />
 
     </android.support.constraint.ConstraintLayout>
@@ -74,7 +76,7 @@
                 style="@style/text_primary_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="胸大鱼塘"
+                android:text="鱼塘"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -114,8 +116,8 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/check_green_white"
-                android:gravity="center"
                 android:checked="true"
+                android:gravity="center"
                 android:text="1"
                 android:textAlignment="center"
                 android:textColor="@color/check_primary_white"
@@ -130,9 +132,9 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="16dp"
                 android:background="@drawable/check_green_white"
+                android:checked="true"
                 android:gravity="center"
                 android:text="2"
-                android:checked="true"
                 android:textAlignment="center"
                 android:textColor="@color/check_primary_white"
                 android:textSize="14sp"

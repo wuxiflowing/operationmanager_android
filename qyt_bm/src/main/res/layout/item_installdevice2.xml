@@ -27,6 +27,7 @@
         app:layout_constraintRight_toLeftOf="@id/device_identifier"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/device_identifier"
         style="@style/text_primary_14"

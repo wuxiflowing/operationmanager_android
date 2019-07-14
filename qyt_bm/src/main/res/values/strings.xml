@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">养殖管家</string>
+    <string name="app_name">养殖管家(测)</string>
     <!--我的(测)-->
     <string name="mine_change_pass">修改密码</string>
     <string name="mine_about">关于庆渔堂</string>
@@ -213,7 +213,11 @@
     <string name="control4_config">控制器4配置</string>
     <string name="connection_mode_select">选择连接方式</string>
     <string name="connection_mode_line">有线</string>
+    <string name="connection_mode_wireless">无线</string>
     <string name="text_temperature">温度</string>
     <string name="text_ph">PH值</string>
+    <string name="text_normal">正常</string>
+    <string name="text_auto">自动</string>
+    <string name="text_manual">手动</string>
 
 </resources>
