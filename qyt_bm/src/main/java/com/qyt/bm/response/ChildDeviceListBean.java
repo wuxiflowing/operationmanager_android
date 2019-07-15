@@ -25,7 +25,7 @@ public class ChildDeviceListBean implements Parcelable {
     public String id;
     public String name;
     public String type;
-    public int workStatus;
+    public String workStatus; //正常(0)、告警限1(1)、告警限2(2)、不在线告警(3)、设备告警(5)、数据解析异常(-1)断点告警(10)
     public int connectionType;
     public String alertline1;
     public String alertline2;
@@ -42,7 +42,7 @@ public class ChildDeviceListBean implements Parcelable {
         id = in.readString();
         name = in.readString();
         type = in.readString();
-        workStatus = in.readInt();
+        workStatus = in.readString();
         connectionType = in.readInt();
         alertline1 = in.readString();
         alertline2 = in.readString();
@@ -75,7 +75,7 @@ public class ChildDeviceListBean implements Parcelable {
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(type);
-        dest.writeInt(workStatus);
+        dest.writeString(workStatus);
         dest.writeInt(connectionType);
         dest.writeString(alertline1);
         dest.writeString(alertline2);

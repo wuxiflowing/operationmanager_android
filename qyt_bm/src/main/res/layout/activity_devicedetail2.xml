@@ -137,8 +137,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/color_white"
                 android:paddingTop="8dp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     style="@style/text_primary_14"
@@ -159,15 +158,16 @@
             <RelativeLayout
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/color_white"
-                android:paddingTop="8dp">
+                android:background="@color/color_white">
 
                 <TextView
                     style="@style/text_primary_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
                     android:gravity="center_vertical"
                     android:text="@string/device_id" />
 
@@ -177,21 +177,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="3dp"
+                    android:text="" />
             </RelativeLayout>
             <!--设备状态-->
             <RelativeLayout
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:paddingTop="4dp"
-                android:paddingBottom="8dp">
+                android:layout_height="30dp"
+                android:background="@color/color_white">
 
                 <TextView
                     style="@style/text_primary_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:gravity="center_vertical"
                     android:text="@string/device_state" />
 
@@ -201,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_marginTop="3dp" />
             </RelativeLayout>
 
             <View style="@style/horizontal_line" />
@@ -240,6 +241,7 @@
             <View style="@style/horizontal_line" />
             <!--控制器1配置-->
             <RelativeLayout
+                android:id="@+id/rl_control1"
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -274,6 +276,7 @@
             <View style="@style/horizontal_line" />
             <!--控制器2配置-->
             <RelativeLayout
+                android:id="@+id/rl_control2"
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -308,6 +311,7 @@
             <View style="@style/horizontal_line" />
             <!--控制器3配置-->
             <RelativeLayout
+                android:id="@+id/rl_control3"
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -343,6 +347,7 @@
             <View style="@style/horizontal_line" />
             <!--控制器4配置-->
             <RelativeLayout
+                android:id="@+id/rl_control4"
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

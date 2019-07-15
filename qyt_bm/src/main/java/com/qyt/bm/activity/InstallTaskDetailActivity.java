@@ -313,13 +313,16 @@ public class InstallTaskDetailActivity extends BaseActivity {
                         @Override
                         public void onItemOpera(String tag, int position, Object value) {
                             Bundle bundle1 = new Bundle();
-                            // bundle1.putString(Constants.INTENT_OBJECT, "090000");
+                             bundle1.putString(Constants.INTENT_OBJECT, "090000");
                             bundle1.putString(Constants.INTENT_OBJECT, (String) value);
                             if (Constants.DEVICE_TYPE_KD326.equals(tag) || TextUtils.isEmpty(tag)) {
                                 goToActivity(DeviceDetailActivity.class, bundle1);
                             } else if (Constants.DEVICE_TYPE_QY601.equals(tag)) {
                                 goToActivity(DeviceNewDetailActivity.class, bundle1);
                             }
+                            //fixme
+//                            bundle1.putString(Constants.INTENT_OBJECT, "090000");
+//                            goToActivity(DeviceNewDetailActivity.class, bundle1);
                         }
                     });
                 }
