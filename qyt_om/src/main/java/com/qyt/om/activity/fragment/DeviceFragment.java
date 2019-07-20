@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bangqu.lib.listener.RecyclerViewItemClickListener;
+import com.bangqu.lib.listener.ListItemOperaListener;
 import com.bangqu.lib.slipload.widget.SlipLoadLayout;
 import com.bangqu.lib.utils.AppUtils;
 import com.bangqu.lib.volley.ResponseCallBack;
@@ -24,15 +24,14 @@ import com.bangqu.lib.widget.DividerItemDecoration;
 import com.bangqu.lib.widget.LoadingView;
 import com.qyt.om.R;
 import com.qyt.om.activity.DeviceDetailActivity;
-import com.qyt.om.activity.MessageAlarmListActivity;
+import com.qyt.om.activity.device.DeviceNewDetailActivity;
 import com.qyt.om.adapter.DeviceInfoAdapter;
-import com.qyt.om.adapter.MessageAdapter;
+import com.qyt.om.adapter.DeviceInfoAdapter2;
 import com.qyt.om.base.BaseFragment;
 import com.qyt.om.comm.Constants;
 import com.qyt.om.comm.HttpConfig;
-import com.qyt.om.model.DeviceChoiceModel;
-import com.qyt.om.model.MessageModel;
-import com.qyt.om.response.MessageItem;
+import com.qyt.om.response.ChildDeviceListBean;
+import com.qyt.om.response.PondDeviceInfo2;
 import com.qyt.om.response.PondDeviceInfo;
 
 import java.util.ArrayList;
@@ -59,8 +58,10 @@ public class DeviceFragment extends BaseFragment {
     @BindView(R.id.phone_search_cancel)
     ImageView cancelSearch;
 
-    private ArrayList<PondDeviceInfo> deviceModels = new ArrayList<>();
-    private DeviceInfoAdapter deviceAdapter;
+    private ArrayList<PondDeviceInfo2> deviceModels = new ArrayList<>();
+    //private DeviceInfoAdapter deviceAdapter;
+    private ArrayList<ChildDeviceListBean> mListData;
+    private DeviceInfoAdapter2 deviceInfoAdapter2;
     private int page = 0;
 
     @Override
@@ -82,48 +83,75 @@ public class DeviceFragment extends BaseFragment {
         return rootView;
     }
 
+    private void initView() {
+        title.setText("设备");
+        mListData = new ArrayList<>();
+        //deviceAdapter = new DeviceInfoAdapter(getContext(), deviceModels);
+        deviceInfoAdapter2 = new DeviceInfoAdapter2(getContext(), mListData);
+
+        slipRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        slipRecyclerView.setAdapter(deviceInfoAdapter2);
+        slipRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL_LIST, 8f, Color.TRANSPARENT));
+    }
+
     private void requestData() {
         String loginId = sharedPref.getString(Constants.LOGIN_ID);
-        getData(HttpConfig.MAINTAINKEEPER_DEVICE_LIST.replace("{maintainKeeperID}", loginId) + "/true" + "?page=" + page, new ResponseCallBack<ArrayList<PondDeviceInfo>>() {
-            @Override
-            public void onSuccessResponse(ArrayList<PondDeviceInfo> d, String msg) {
-                if (page == 0) {
-                    deviceModels.clear();
-                    slipLoadLayout.setNoMoreData(false);
-                }
-                slipLoadLayout.onLoadingComplete(true);
-                if (d != null && d.size() > 0) {
-                    deviceModels.addAll(d);
-                    if (d.size() < 10) {
-                        slipLoadLayout.setNoMoreData(true);
-                    } else {
-                        slipLoadLayout.setLoadingMore(true);
+        getData(HttpConfig.PONDS_INFO_LIST.replace("{maintainKeeperID}", loginId) + "?page=" + page,
+                new ResponseCallBack<ArrayList<PondDeviceInfo2>>() {
+                    @Override
+                    public void onSuccessResponse(ArrayList<PondDeviceInfo2> d, String msg) {
+                        if (page == 0) {
+                            deviceModels.clear();
+                            mListData.clear();
+                            slipLoadLayout.setNoMoreData(false);
+                        }
+                        slipLoadLayout.onLoadingComplete(true);
+                        if (d != null && d.size() > 0) {
+                            deviceModels.addAll(d);
+                            if (d.size() < 10) {
+                                slipLoadLayout.setNoMoreData(true);
+                            } else {
+                                slipLoadLayout.setLoadingMore(true);
+                            }
+                        }
+                        for (PondDeviceInfo2 info : deviceModels) {
+//                            if (info.childDeviceList != null && info.childDeviceList.size() != 0) {
+                            for (ChildDeviceListBean device : info.childDeviceList) {
+                                device.pondId = info.pondId;
+                                device.pondName = info.name;
+                                mListData.add(device);
+                            }
+//                            } else {
+//                                mListData.add(new ChildDeviceListBean());
+//                            }
+                        }
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        if (deviceModels.size() > 0) {
+                            slipLoadingView.setLoadingState(LoadingView.SHOW_DATA);
+                        } else {
+                            slipLoadingView.setLoadingState(LoadingView.NO_DATA);
+                        }
                     }
-                }
-                deviceAdapter.notifyDataSetChanged();
-                if (deviceModels.size() > 0) {
-                    slipLoadingView.setLoadingState(LoadingView.SHOW_DATA);
-                } else {
-                    slipLoadingView.setLoadingState(LoadingView.NO_DATA);
-                }
-            }
 
-            @Override
-            public void onFailResponse(String msg) {
-                deviceModels.clear();
-                deviceAdapter.notifyDataSetChanged();
-                slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
-                slipLoadLayout.onLoadingComplete(false);
-            }
+                    @Override
+                    public void onFailResponse(String msg) {
+                        deviceModels.clear();
+                        mListData.clear();
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
+                        slipLoadLayout.onLoadingComplete(false);
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
-                deviceModels.clear();
-                deviceAdapter.notifyDataSetChanged();
-                slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
-                slipLoadLayout.onLoadingComplete(false);
-            }
-        });
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        deviceModels.clear();
+                        mListData.clear();
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
+                        slipLoadLayout.onLoadingComplete(false);
+                    }
+                });
     }
 
     private void addViewListener() {
@@ -148,24 +176,47 @@ public class DeviceFragment extends BaseFragment {
                 }
             }
         });
-        deviceAdapter.setRecyclerViewItemClickListener(new RecyclerViewItemClickListener<PondDeviceInfo>() {
+        deviceInfoAdapter2.setOperaListener(new ListItemOperaListener() {
             @Override
-            public void onItemClick(int position, PondDeviceInfo value) {
-
-            }
-
-            @Override
-            public void onItemOpera(String tag, int position, PondDeviceInfo value) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.INTENT_OBJECT, tag);
-                goToActivity(DeviceDetailActivity.class, bundle);
+            public void onItemOpera(String tag, int position, Object value) {
+                switch (tag) {
+                    case "fishpond":
+                        Bundle bundle = new Bundle();
+                        PondDeviceInfo2 fishPondInfo = null;
+                        for (PondDeviceInfo2 info : deviceModels) {
+                            if (info.pondId.equals((String) value)) {
+                                fishPondInfo = info;
+                                break;
+                            }
+                        }
+                        bundle.putParcelable(Constants.INTENT_OBJECT, fishPondInfo);
+                        goToActivity(getActivity().getClass(), bundle);
+                        break;
+                    case "device":
+                        String typeAndId = (String) value;
+                        int index = typeAndId.indexOf("-");
+                        if (Constants.DEVICE_TYPE_KD326.equals(typeAndId.substring(0, index))) {
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString(Constants.INTENT_OBJECT, typeAndId.substring(index + 1));
+                            goToActivity(DeviceDetailActivity.class, bundle1);
+                        } else if (Constants.DEVICE_TYPE_QY601.equals(typeAndId.substring(0, index))) {
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString(Constants.INTENT_OBJECT, typeAndId.substring(index + 1));
+                            goToActivity(DeviceNewDetailActivity.class, bundle1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         });
+
         switchcityInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     AppUtils.hideSoftInput(getContext(), switchcityInput);
+                    page = 0;
                     searchData(v.getText().toString());
                 }
                 return false;
@@ -199,54 +250,65 @@ public class DeviceFragment extends BaseFragment {
             return;
         }
         String loginId = sharedPref.getString(Constants.LOGIN_ID);
-        getData(HttpConfig.MAINTAINKEEPER_DEVICE_LIST.replace("{maintainKeeperID}", loginId) + "/true/" + name + "?page=" + page, new ResponseCallBack<ArrayList<PondDeviceInfo>>() {
-            @Override
-            public void onSuccessResponse(ArrayList<PondDeviceInfo> d, String msg) {
-                slipLoadLayout.onLoadingComplete(true);
-                if (page == 0) {
-                    deviceModels.clear();
-                    slipLoadLayout.setNoMoreData(false);
-                }
-                if (d != null && d.size() > 0) {
-                    if (d.size() < 10) {
-                        slipLoadLayout.setNoMoreData(true);
-                    } else {
-                        slipLoadLayout.setLoadingMore(true);
+        getData(HttpConfig.PONDS_INFO_LIST_FILTER
+                        .replace("{maintainKeeperID}", loginId)
+                        .replace("{queryValue}", name) + "?page=" + page,
+                new ResponseCallBack<ArrayList<PondDeviceInfo2>>() {
+                    @Override
+                    public void onSuccessResponse(ArrayList<PondDeviceInfo2> d, String msg) {
+                        if (page == 0) {
+                            deviceModels.clear();
+                            mListData.clear();
+                            slipLoadLayout.setNoMoreData(false);
+                        }
+                        slipLoadLayout.onLoadingComplete(true);
+                        if (d != null && d.size() > 0) {
+                            deviceModels.addAll(d);
+                            if (d.size() < 10) {
+                                slipLoadLayout.setNoMoreData(true);
+                            } else {
+                                slipLoadLayout.setLoadingMore(true);
+                            }
+                        }
+                        for (PondDeviceInfo2 info : deviceModels) {
+//                            if (info.childDeviceList != null && info.childDeviceList.size() != 0) {
+                            for (ChildDeviceListBean device : info.childDeviceList) {
+                                device.pondId = info.pondId;
+                                device.pondName = info.name;
+                                mListData.add(device);
+                            }
+//                            } else {
+//                                mListData.add(new ChildDeviceListBean());
+//                            }
+                        }
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        if (deviceModels.size() > 0) {
+                            slipLoadingView.setLoadingState(LoadingView.SHOW_DATA);
+                        } else {
+                            slipLoadingView.setLoadingState(LoadingView.NO_DATA);
+                        }
                     }
-                    deviceModels.addAll(d);
-                    slipLoadingView.setLoadingState(LoadingView.SHOW_DATA);
-                } else {
-                    slipLoadingView.setLoadingState(LoadingView.NO_DATA);
-                }
-                deviceAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onFailResponse(String msg) {
-                deviceModels.clear();
-                deviceAdapter.notifyDataSetChanged();
-                slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
-                slipLoadLayout.onLoadingComplete(false);
-            }
+                    @Override
+                    public void onFailResponse(String msg) {
+                        deviceModels.clear();
+                        mListData.clear();
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
+                        slipLoadLayout.onLoadingComplete(false);
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
-                deviceModels.clear();
-                deviceAdapter.notifyDataSetChanged();
-                slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
-                slipLoadLayout.onLoadingComplete(false);
-            }
-        });
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        deviceModels.clear();
+                        mListData.clear();
+                        deviceInfoAdapter2.notifyDataSetChanged();
+                        slipLoadingView.setLoadingState(LoadingView.NET_ERROR);
+                        slipLoadLayout.onLoadingComplete(false);
+                    }
+                });
     }
 
-    private void initView() {
-        title.setText("设备");
-        deviceAdapter = new DeviceInfoAdapter(getContext(), deviceModels);
-        slipRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        slipRecyclerView.setAdapter(deviceAdapter);
-        slipRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL_LIST, 8f, Color.TRANSPARENT));
-    }
 
     @OnClick({R.id.phone_search_cancel})
     public void onViewClicked(View view) {
@@ -255,6 +317,8 @@ public class DeviceFragment extends BaseFragment {
                 cancelSearch.setVisibility(View.GONE);
                 switchcityInput.setText("");
                 requestData();
+                break;
+            default:
                 break;
         }
     }

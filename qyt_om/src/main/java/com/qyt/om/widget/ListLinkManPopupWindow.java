@@ -17,6 +17,7 @@ import com.bangqu.lib.base.BaseSimpleAdapter;
 import com.bangqu.lib.utils.AppUtils;
 import com.qyt.om.R;
 import com.qyt.om.model.LinkManMap;
+import com.qyt.om.response.LinkManBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +35,13 @@ import butterknife.ButterKnife;
 public class ListLinkManPopupWindow extends PopupWindow {
 
     private Activity mContext;
-    private List<LinkManMap> mListData;
+    private List<LinkManBean> mListData;
     private ListAdapter mListAdapter;
     private View mRootView;
     private ListView listView;
     private OnItemClickListener onItemClicklistener;
 
-    public ListLinkManPopupWindow(Activity context, List<LinkManMap> mListData, OnItemClickListener onItemClicklistener) {
+    public ListLinkManPopupWindow(Activity context, List<LinkManBean> mListData, OnItemClickListener onItemClicklistener) {
         super(context);
         this.mContext = context;
         this.mListData = mListData;
@@ -108,7 +109,7 @@ public class ListLinkManPopupWindow extends PopupWindow {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (onItemClicklistener != null) {
-                    onItemClicklistener.itemClick("联系人", "电话");
+                    onItemClicklistener.itemClick(mListData.get(position));
                 }
                 dismiss();
             }
@@ -116,18 +117,18 @@ public class ListLinkManPopupWindow extends PopupWindow {
 
     }
 
-    public void setmListData(List<LinkManMap> mListData) {
+    public void setmListData(List<LinkManBean> mListData) {
         this.mListData = mListData;
         mListAdapter.setListData(mListData);
     }
 
-    public static class ListAdapter extends BaseSimpleAdapter<LinkManMap> {
+    public static class ListAdapter extends BaseSimpleAdapter<LinkManBean> {
 
-        public ListAdapter(Context mContext, List<LinkManMap> mData) {
+        public ListAdapter(Context mContext, List<LinkManBean> mData) {
             super(mContext, mData);
         }
 
-        public void setListData(List<LinkManMap> mData) {
+        public void setListData(List<LinkManBean> mData) {
             this.mData = mData;
             notifyDataSetChanged();
         }
@@ -142,8 +143,11 @@ public class ListLinkManPopupWindow extends PopupWindow {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
+            LinkManBean linkManBean = getItem(position);
             //fixme
-            viewHolder.tvName.setText("联系人（10000000000）");
+            if (linkManBean != null) {
+                viewHolder.tvName.setText(new StringBuilder(linkManBean.name).append("(").append(linkManBean.phoneNumber).append(")"));
+            }
             return convertView;
         }
 
@@ -159,7 +163,7 @@ public class ListLinkManPopupWindow extends PopupWindow {
 
 
     public interface OnItemClickListener {
-        void itemClick(String people, String phoneNum);
+        void itemClick(LinkManBean linkManBean);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClicklistener) {

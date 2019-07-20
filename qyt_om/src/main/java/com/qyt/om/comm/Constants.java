@@ -1,5 +1,7 @@
 package com.qyt.om.comm;
 
+import android.text.TextUtils;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.qyt.om.R;
 
@@ -28,6 +30,13 @@ public class Constants {
     //页面跳转参数
     public static final String INTENT_OBJECT = "intent_object";  //页面跳转参数
     public static final String INTENT_FLAG = "intent_flag";  //页面跳转参数
+
+    /**
+     * 设备类型
+     */
+    public static final String DEVICE_TYPE_KD326 = "KD326";
+    public static final String DEVICE_TYPE_QY601 = "QY601";
+
     public static final RequestOptions REQUEST_OPTIONS = new RequestOptions().placeholder(R.mipmap.contacts_header).error(R.mipmap.contacts_header);
 
     public static final HashMap<String, Integer> TASK_ICONS = new HashMap<String, Integer>() {
@@ -66,4 +75,31 @@ public class Constants {
             put(4, "超过上下限告警");
         }
     };
+
+    public static String showDeviceStatus(String workStatus) {
+        if (TextUtils.isEmpty(workStatus)) {
+            return "--";
+        }
+        switch (workStatus) {
+            case "-1": //数据解析异常(-1)
+                //fixme 待处理
+                return "数据解析异常";
+            case "0": //正常(0)
+                return "正常";
+            case "3": //不在线告警(3)
+                return "不在线告警";
+            case "1": //告警限1(1)
+                return "告警线1";
+            case "2": //告警限2(2)
+                return "告警线2";
+            case "5": //设备告警(5)
+                return "设备告警";
+            case "10": //断电告警(10)
+                return "断电告警";
+            default:
+                //fixme 多状态 ","分割
+                return "--";
+        }
+    }
+
 }

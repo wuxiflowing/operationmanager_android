@@ -27,9 +27,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:src="@mipmap/contacts_header" />
 
                 <LinearLayout
@@ -120,12 +120,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
-                android:drawablePadding="8dp"
                 android:drawableRight="@mipmap/icon_address_blue"
-                android:paddingBottom="8dp"
+                android:drawablePadding="8dp"
                 android:paddingLeft="16dp"
+                android:paddingTop="8dp"
                 android:paddingRight="16dp"
-                android:paddingTop="8dp" />
+                android:paddingBottom="8dp" />
 
             <View style="@style/horizontal_line" />
 
@@ -136,8 +136,8 @@
                 android:background="@color/color_white"
                 android:divider="@color/color_white"
                 android:dividerHeight="4dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp" />
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
 
             <View style="@style/horizontal_line" />
 
@@ -171,20 +171,43 @@
                 android:id="@+id/install_fishpond_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
                 android:divider="#00000000"
                 android:dividerHeight="8dp" />
 
-            <TextView
-                android:id="@+id/install_add_fishpond"
-                style="@style/text_theme_16"
+            <LinearLayout
+                style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:layout_marginBottom="8dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/item_selector_light"
-                android:gravity="center"
-                android:text="@string/add_fishpond_device" />
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/install_add_fishpond"
+                    style="@style/text_theme_14"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_r5_solid_primary"
+                    android:gravity="center"
+                    android:text="@string/add_fishpond_device"
+                    android:textColor="@color/color_white" />
+
+                <TextView
+                    android:id="@+id/install_add_fishpond2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_r5_solid_primary"
+                    android:gravity="center"
+                    android:text="@string/add_fishpond_device2"
+                    android:textColor="@color/color_white" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/text_primary_16"

@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,9 +19,11 @@ import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.bangqu.lib.listener.DialogConfirmListener;
+import com.bangqu.lib.utils.AppUtils;
 import com.bangqu.lib.volley.ResponseCallBack;
 import com.bangqu.lib.widget.TextViewPlus;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.zxing.activity.CaptureActivity;
 import com.qyt.om.R;
 import com.qyt.om.base.BaseActivity;
@@ -32,11 +35,16 @@ import com.qyt.om.model.LocPoi;
 import com.qyt.om.request.DeviceConfigPut;
 import com.qyt.om.response.AeratorControlItem;
 import com.qyt.om.response.DeviceConfigInfo;
+import com.qyt.om.response.LinkManBean;
+import com.qyt.om.response.PondLinkMan;
 import com.qyt.om.utils.BaiduLocManager;
 import com.qyt.om.utils.LogInfo;
+import com.qyt.om.widget.EditContactsDialog;
 import com.qyt.om.widget.FishPondDialog;
+import com.qyt.om.widget.ListLinkManPopupWindow;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -109,6 +117,16 @@ public class DeviceConfigActivity extends BaseActivity {
     TextView configControlState2;
     @BindView(R.id.install_pond_address)
     EditText installPondAddress;
+    @BindView(R.id.tv_add_contacts)
+    TextView tvAddContacts;
+    @BindView(R.id.tv_linkman_day)
+    TextView tvLinkmanDay;
+    @BindView(R.id.tv_linkman_day2)
+    TextView tvLinkmanDay2;
+    @BindView(R.id.tv_linkman_night)
+    TextView tvLinkmanNight;
+    @BindView(R.id.tv_linkman_night2)
+    TextView tvLinkmanNight2;
 
     private ArrayList<FishPondInfo> fishPondInfos = new ArrayList<>();
     private final int REQUEST_SCANNING = 100;
@@ -118,6 +136,11 @@ public class DeviceConfigActivity extends BaseActivity {
     private BindDeviceInfo bindDeviceInfo = new BindDeviceInfo();
     private String installMessage;
     private boolean isChange = false;
+
+    //联系人列表
+    private List<LinkManBean> mLinkManList;
+    private ListLinkManPopupWindow mListLinkManPopupWindow;
+    private Handler mHander;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {
@@ -137,6 +160,7 @@ public class DeviceConfigActivity extends BaseActivity {
         String id = getIntent().getStringExtra("deviceId");
         if (isRepair) {
             String pond = getIntent().getStringExtra("pondsName");
+            String pondsId = getIntent().getStringExtra("pondsId");
             configFishpond.setText(pond);
             if (!TextUtils.isEmpty(id)) {
                 title.setText("设备配置");
@@ -146,6 +170,7 @@ public class DeviceConfigActivity extends BaseActivity {
                 title.setText("更换设备");
                 isChange = true;
             }
+            getPondLinkManSetting(pondsId);
         } else {
             title.setText("设备配置");
             bindDeviceInfo = getIntent().getParcelableExtra("info");
@@ -154,6 +179,7 @@ public class DeviceConfigActivity extends BaseActivity {
                 configDeviceType.setText(bindDeviceInfo.deviceModel);
                 configFishpond.setText(bindDeviceInfo.pondName);
                 getDeviceInfo();
+                // getPondLinkManSetting(bindDeviceInfo.pondId);
             } else {
                 bindDeviceInfo = new BindDeviceInfo();
             }
@@ -173,21 +199,85 @@ public class DeviceConfigActivity extends BaseActivity {
                 }
             }
         });
+        mLinkManList = new ArrayList<>();
+        Bundle bundle = getIntent().getExtras();
+        String contacters = bundle.getString("contacters");
+        String contactPhone = bundle.getString("contactPhone");
+        String nightContacters = bundle.getString("nightContacters");
+        String nightContactPhone = bundle.getString("nightContactPhone");
+
+        String standbyContact = bundle.getString("standbyContact");
+        String standbyContactPhone = bundle.getString("standbyContactPhone");
+        String standbyNightContact = bundle.getString("standbyNightContact");
+        String standbyNightContactPhone = bundle.getString("standbyNightContactPhone");
+
+        setDeviceLinkMan(contacters, contactPhone, nightContacters, nightContactPhone,
+                standbyContact, standbyContactPhone, standbyNightContact, standbyNightContactPhone);
     }
+
+    private void setDeviceLinkMan(
+            String contacters,
+            String contactPhone,
+            String nightContacters,
+            String nightContactPhone,
+            String standbyContact,
+            String standbyContactPhone,
+            String standbyNightContact,
+            String standbyNightContactPhone) {
+
+        if (!TextUtils.isEmpty(contacters) && !TextUtils.isEmpty(contactPhone)) {
+            tvLinkmanDay.setText(contacters + "(" + contactPhone + ")");
+        }
+        if (!TextUtils.isEmpty(nightContacters) && !TextUtils.isEmpty(nightContactPhone)) {
+            tvLinkmanNight.setText(nightContacters + "(" + nightContactPhone + ")");
+        }
+        if (!TextUtils.isEmpty(standbyContact) && !TextUtils.isEmpty(standbyContactPhone)) {
+            tvLinkmanDay2.setText(standbyContact + "(" + standbyContactPhone + ")");
+        }
+        if (!TextUtils.isEmpty(standbyNightContact) && !TextUtils.isEmpty(standbyNightContactPhone)) {
+            tvLinkmanNight2.setText(standbyNightContact + "(" + standbyNightContactPhone + ")");
+        }
+    }
+
 
     @Override
     protected void requestData() {
         super.requestData();
         getFishPonds(farmerID);
+        queryLinkManList(farmerID);
     }
 
     @OnClick({R.id.device_scanning, R.id.device_connect, R.id.device_open, R.id.device_close, R.id.device_reset
-            , R.id.config_save, R.id.config_cancel, R.id.config_fishpond, R.id.install_location, R.id.install_pond_address})
+            , R.id.config_save, R.id.config_cancel, R.id.config_fishpond, R.id.install_location,
+            R.id.install_pond_address, R.id.tv_add_contacts,
+            R.id.tv_linkman_day, R.id.tv_linkman_day2, R.id.tv_linkman_night, R.id.tv_linkman_night2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.install_location:
             case R.id.install_pond_address:
                 goToActivityForResult(LocationActivity.class, REQUEST_LOCATION);
+                break;
+            case R.id.tv_add_contacts:
+                //添加联系人接口
+                new EditContactsDialog(DeviceConfigActivity.this, new EditContactsDialog.OnEditContactListener() {
+                    @Override
+                    public void onEditContact(String tag, String people, String phoneNum) {
+                        //fixme 添加到联系人列表
+                        addLinkMan(people, phoneNum);
+                    }
+                }).show();
+                break;
+            case R.id.tv_linkman_day:
+                showLinkManList(tvLinkmanDay);
+                break;
+            case R.id.tv_linkman_day2:
+                showLinkManList(tvLinkmanDay2);
+                break;
+            case R.id.tv_linkman_night:
+                showLinkManList(tvLinkmanNight);
+                break;
+            case R.id.tv_linkman_night2:
+                showLinkManList(tvLinkmanNight2);
                 break;
             case R.id.device_scanning:
                 goToActivityForResult(CaptureActivity.class, REQUEST_SCANNING);
@@ -259,7 +349,9 @@ public class DeviceConfigActivity extends BaseActivity {
                 saveDeviceConfig();
                 break;
             case R.id.config_fishpond:
-                if (isRepair) return;
+                if (isRepair) {
+                    return;
+                }
                 String notice = farmerName;
                 if (!TextUtils.isEmpty(configFishpond.getText())) {
                     notice = configFishpond.getText().toString();
@@ -272,6 +364,8 @@ public class DeviceConfigActivity extends BaseActivity {
                             configFishpond.setText(fishPondInfo.name);
                             bindDeviceInfo.pondId = fishPondInfo.pondId;
                             bindDeviceInfo.pondName = fishPondInfo.name;
+
+                            getPondLinkManSetting(fishPondInfo.pondId);
                         } else {
                             configFishpond.setText(String.valueOf(value));
                             bindDeviceInfo.pondId = "";
@@ -284,6 +378,8 @@ public class DeviceConfigActivity extends BaseActivity {
                         }
                     }
                 }).show();
+                break;
+            default:
                 break;
         }
     }
@@ -361,8 +457,10 @@ public class DeviceConfigActivity extends BaseActivity {
                 dismissLoading();
                 showToast("保存成功");
                 Intent intent = new Intent();
-                bindDeviceInfo.automatic = callbackApproveAgree.isChecked() ? "自动" : "手动";
+                bindDeviceInfo.automatic = callbackApproveAgree.isChecked() ? "1" : "0";
                 intent.putExtra(Constants.INTENT_OBJECT, bindDeviceInfo);
+                //设置联系人
+                setResultLinkMan(intent);
                 setResult(RESULT_OK, intent);
                 onBackPressed();
             }
@@ -379,6 +477,54 @@ public class DeviceConfigActivity extends BaseActivity {
                 showToast(msg);
             }
         });
+    }
+
+    private void setResultLinkMan(Intent intent) {
+        String contacter = tvLinkmanDay.getText().toString();
+        if (!TextUtils.isEmpty(contacter)) {
+            try {
+                contacter = contacter.replace("(", ",").replace(")", "");
+                String[] contacters = contacter.split(",");
+                intent.putExtra("contacters", contacters[1]);
+                intent.putExtra("contactPhone", contacters[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        contacter = tvLinkmanDay2.getText().toString();
+        if (!TextUtils.isEmpty(contacter)) {
+            try {
+                contacter = contacter.replace("(", ",").replace(")", "");
+                String[] contacters = contacter.split(",");
+                intent.putExtra("standbyContact", contacters[0]);
+                intent.putExtra("standbyContactPhone", contacters[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        contacter = tvLinkmanNight.getText().toString();
+        if (!TextUtils.isEmpty(contacter)) {
+            try {
+                contacter = contacter.replace("(", ",").replace(")", "");
+                String[] contacters = contacter.split(",");
+                intent.putExtra("nightContacters", contacters[0]);
+                intent.putExtra("nightContactPhone", contacters[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        contacter = tvLinkmanNight2.getText().toString();
+        if (!TextUtils.isEmpty(contacter)) {
+            try {
+                contacter = contacter.replace("(", ",").replace(")", "");
+                String[] contacters = contacter.split(",");
+                intent.putExtra("standbyNightContact", contacters[0]);
+                intent.putExtra("standbyNightContactPhone", contacters[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void getFishPonds(String farmerId) {
@@ -425,6 +571,8 @@ public class DeviceConfigActivity extends BaseActivity {
                             control2Ainfo.setVisibility(View.GONE);
                         }
                         break;
+                    default:
+                        break;
                 }
             }
         };
@@ -456,6 +604,7 @@ public class DeviceConfigActivity extends BaseActivity {
 
             }
         });
+
     }
 
     @Override
@@ -477,6 +626,8 @@ public class DeviceConfigActivity extends BaseActivity {
                     bindDeviceInfo.pondAddr = locPoi.address;
                     bindDeviceInfo.latitude = locPoi.lat + "";
                     bindDeviceInfo.longitude = locPoi.lng + "";
+                    break;
+                default:
                     break;
             }
         }
@@ -536,27 +687,34 @@ public class DeviceConfigActivity extends BaseActivity {
     }
 
     public void testReset() {
+        showLoading();
         String deviceId = configDeviceId.getText().toString();
         putData(HttpConfig.DEVICE_TEST_RESET.replace("{id}", deviceId), new ResponseCallBack<JsonElement>() {
             @Override
             public void onSuccessResponse(JsonElement d, String msg) {
+                dismissLoading();
                 showToast("发送成功");
             }
 
             @Override
             public void onFailResponse(String msg) {
+                dismissLoading();
                 showToast(msg);
             }
 
             @Override
             public void onVolleyError(int code, String msg) {
+                dismissLoading();
                 showToast(msg);
             }
         });
     }
 
     private void delay5sGetInfo() {
-        new Handler().postDelayed(new Runnable() {
+        if (mHander == null) {
+            mHander = new Handler();
+        }
+        mHander.postDelayed(new Runnable() {
             @Override
             public void run() {
                 getDeviceInfo();
@@ -572,6 +730,7 @@ public class DeviceConfigActivity extends BaseActivity {
             public void onSuccessResponse(DeviceConfigInfo d, String msg) {
                 dismissLoading();
                 if (d != null) {
+
                     configDeviceType.setText(d.type);
                     configLimitUp.setText(d.oxyLimitUp + "");
                     configLimitDown1.setText(d.oxyLimitDownOne + "");
@@ -627,8 +786,8 @@ public class DeviceConfigActivity extends BaseActivity {
                     bindDeviceInfo.deviceIdentifier = d.identifier;
                     bindDeviceInfo.deviceModel = d.type;
                     bindDeviceInfo.state = Constants.DEVICE_STATE.get(d.workStatus);
-                    bindDeviceInfo.oxyValue = d.dissolvedOxygen + "mg/L";
-                    bindDeviceInfo.temperature = d.temperature + "℃";
+                    bindDeviceInfo.oxyValue = d.dissolvedOxygen;
+                    bindDeviceInfo.temperature = d.temperature;
                     bindDeviceInfo.ph = d.ph + "";
                     bindDeviceInfo.automatic = d.automatic ? "自动" : "手动";
                     if ((!isRepair || isChange) && !TextUtils.isEmpty(configDeviceType.getText()) && !TextUtils.isEmpty(configFishpond.getText())) {
@@ -685,4 +844,124 @@ public class DeviceConfigActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 添加联系人
+     */
+    private void addLinkMan(String name, String phoneNumber) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("name", name);
+        jsonObject.addProperty("phoneNumber", phoneNumber);
+        String json = jsonObject.toString();
+        showLoading();
+        putData(HttpConfig.LINKMAN_ADD.replace("{farmerId}", farmerID), json, new ResponseCallBack<LinkManBean>() {
+            @Override
+            public void onSuccessResponse(LinkManBean d, String msg) {
+                dismissLoading();
+                if (d != null) {
+                    showToast("联系人添加成功");
+                    mLinkManList.add(d);
+                } else {
+                    showToast(msg);
+                }
+            }
+
+            @Override
+            public void onFailResponse(String msg) {
+                dismissLoading();
+                showToast(msg);
+            }
+
+            @Override
+            public void onVolleyError(int code, String msg) {
+                dismissLoading();
+                showToast(msg);
+            }
+        });
+
+    }
+
+    /**
+     * 查询联系人列表
+     */
+    private void queryLinkManList(String farmerID) {
+        getData(HttpConfig.LINKMAN_GET.replace("{farmerId}", farmerID), new ResponseCallBack<List<LinkManBean>>() {
+            @Override
+            public void onSuccessResponse(List<LinkManBean> d, String msg) {
+                mLinkManList.clear();
+                mLinkManList.addAll(d);
+            }
+
+            @Override
+            public void onFailResponse(String msg) {
+                showToast(msg);
+            }
+
+            @Override
+            public void onVolleyError(int code, String msg) {
+                showToast(msg);
+            }
+        });
+    }
+
+    /**
+     * 选择联系人列表
+     *
+     * @param textView
+     */
+    private void showLinkManList(final TextView textView) {
+        //设置联系人
+        mListLinkManPopupWindow = new ListLinkManPopupWindow(this,
+                mLinkManList, new ListLinkManPopupWindow.OnItemClickListener() {
+            @Override
+            public void itemClick(LinkManBean linkManBean) {
+                //
+                if (mListLinkManPopupWindow != null && mListLinkManPopupWindow.isShowing()) {
+                    mListLinkManPopupWindow.dismiss();
+                }
+                textView.setText(new StringBuilder(linkManBean.name).append("(").append(linkManBean.phoneNumber).append(")"));
+                textView.setTag(linkManBean);
+            }
+        });
+        mListLinkManPopupWindow.showAsDropDown(textView, 0, AppUtils.dp2px(mContext, 16), Gravity.END);
+
+    }
+
+    /**
+     * 根据设备id,查询鱼塘联系人配置
+     *
+     * @param pondId 鱼塘id
+     */
+    private void getPondLinkManSetting(String pondId) {
+        if (TextUtils.isEmpty(pondId)) {
+            return;
+        }
+        getData(HttpConfig.LINKMAN_ADDED_POND.replace("{deviceId}", pondId),
+                new ResponseCallBack<PondLinkMan>() {
+                    @Override
+                    public void onSuccessResponse(PondLinkMan d, String msg) {
+                        //
+                        setDeviceLinkMan(d.contacters, d.contactPhone, d.nightContacters, d.nightContactPhone,
+                                d.standbyContact, d.standbyContactPhone, d.standbyNightContact, d.standbyNightContactPhone);
+                    }
+
+                    @Override
+                    public void onFailResponse(String msg) {
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        showToast(msg);
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mHander != null) {
+            mHander.removeCallbacksAndMessages(null);
+        }
+        super.onDestroy();
+
+    }
 }

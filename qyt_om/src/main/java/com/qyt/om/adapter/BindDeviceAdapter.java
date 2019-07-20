@@ -45,6 +45,9 @@ public class BindDeviceAdapter extends BaseSimpleAdapter<BindDeviceInfo> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         BindDeviceInfo model = mData.get(position);
+        if (model == null) {
+            return convertView;
+        }
         viewHolder.deviceFishpond.setText(model.pondName);
         viewHolder.deviceId.setText("设备ID：" + model.deviceIdentifier);
         viewHolder.deviceType.setText("型号：" + model.deviceModel);

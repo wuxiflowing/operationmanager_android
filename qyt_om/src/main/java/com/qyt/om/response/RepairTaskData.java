@@ -55,4 +55,44 @@ public class RepairTaskData {
     public String latitude;
     public String longitude;
     public String txtRemarks;
+
+
+    /**
+     * txtLogID :
+     * txtOldDeviceFullID : DEV11110000000001205
+     * txtProcessID :
+     * txtFarmer :
+     * calOT :
+     * calCT :
+     * txtPhone :
+     * txtInstallAddress :
+     * txtMonMembNo :
+     * cboPondID : PND11110000000000834
+     * TextField1 :
+     * txtEqpCode :
+     * txtPondID :
+     * calDispatchTime :
+     * txtInstallationPersonnel :
+     * txtReciptTime : 2018-11-29 12:45:25
+     * txtNewDeviceFullID :
+     */
+
+    public String txtLogID;
+    public String txtOldDeviceFullID;
+    public String txtProcessID;
+    public String txtFarmer;
+    public String calOT;
+    public String calCT;
+    public String txtPhone;
+    public String txtInstallAddress;
+    public String txtMonMembNo;
+    public String cboPondID;
+    public String TextField1;
+    public String txtEqpCode;
+    public String txtPondID;
+    public String calDispatchTime;
+    public String txtInstallationPersonnel;
+    public String txtReciptTime;
+    public String txtNewDeviceFullID;
+
 }

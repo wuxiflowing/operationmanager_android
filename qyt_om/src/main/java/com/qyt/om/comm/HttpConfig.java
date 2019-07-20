@@ -9,8 +9,8 @@ import com.qyt.om.BuildConfig;
  */
 public class HttpConfig {
 
-    private static final String HTTP_HOST = "http://api.celefish.com:8080";
-//    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
+    //    private static final String HTTP_HOST = "http://api.celefish.com:8080";
+    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
     /*版本更新*/
     public static final String VERSION_UPDATE = HTTP_HOST + "/RESTAdapter/checkAPP/Dq1k4xjV0x8IAxgWzQLo54";
     /*登录*/
@@ -73,4 +73,30 @@ public class HttpConfig {
     public static final String POST_APPCSM = HTTP_HOST + "/RESTAdapter/app/createAppCSM";
     /*任务查询*/
     public static final String GET_QUERY_TASK = HTTP_HOST + "/RESTAdapter/queryTask/{loginid}/list/";
+
+    /*获取新设备QY601配置*/
+    public static final String DEVICE_TEST_CONFIG_NEW = HTTP_HOST + "/RESTAdapter/device/new/{id}";
+//    /*鱼塘基础信息列表*/
+//    public static final String PONDS_INFO_LIST = HTTP_HOST + "/RESTAdapter/app/mytask/{customerId}/customerPondData";
+
+    /*查询新设备信息、包含鱼塘信息*/
+    public static final String DEVICE_DETAIL = HTTP_HOST + "/RESTAdapter/newDevice/{identifierID}/rawdata";
+    /*鱼塘基础信息列表(运维管家ID)*/
+    public static final String PONDS_INFO_LIST = HTTP_HOST + "/RESTAdapter/app/mytask/{maintainKeeperID}/maintainKeeperID/pondData/newDevDetail";
+    /*鱼塘基础信息列表(运维管家ID和搜索条件)*/
+    public static final String PONDS_INFO_LIST_FILTER = HTTP_HOST + "/RESTAdapter/app/mytask/{maintainKeeperID}/maintainKeeperID/pondData/newDevDetail/{queryValue}";
+    /*存储新设备信息,设备配置使用*/
+    public static final String DEVICE_TEST_CONFIG2 = HTTP_HOST + "/RESTAdapter/newDevice/{identifierID}";
+
+    /*添加联系人*/
+    public static final String LINKMAN_ADD = HTTP_HOST + "/RESTAdapter/linkMan/{farmerId}/save";
+    /*查询联系人列表*/
+    public static final String LINKMAN_GET = HTTP_HOST + "/RESTAdapter/linkMan/farmerId/{farmerId}";
+    /*设备连线方式配对*/
+    public static final String DEVICE_LINK_PAIR = HTTP_HOST + "/RESTAdapter/app/device/{identifierID}/devicePair";
+    /*打开设备某一路开关*/
+    public static final String DEVICE_CONTROL_SWITCH = HTTP_HOST + "/v1/deviceMonitor/core/device/identifier/{identifier}/control/{cch}/switch/{state}";
+    public static final String LINKMAN_ADDED_POND = HTTP_HOST + "/RESTAdapter/linkMan/deviceId/{deviceId}";
+
+
 }

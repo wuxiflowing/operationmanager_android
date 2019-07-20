@@ -26,4 +26,6 @@ public class DeviceConfigInfo {
     public boolean scheduled;
     public ArrayList<AeratorControlItem> aeratorControlList;
 
+    public transient String pondName;
+    public transient String pondId;
 }

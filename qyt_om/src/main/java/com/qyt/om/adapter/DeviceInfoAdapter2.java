@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bangqu.lib.base.BaseRecyclerAdapter;
 import com.bangqu.lib.listener.ListItemOperaListener;
 import com.qyt.om.R;
-import com.qyt.om.activity.device.FishpondInfoAdapter2;
 import com.qyt.om.comm.Constants;
 import com.qyt.om.response.ChildDeviceListBean;
 import com.qyt.om.response.DeviceControlInfoBean;
@@ -47,103 +46,177 @@ public class DeviceInfoAdapter2 extends BaseRecyclerAdapter<ChildDeviceListBean>
     protected void bindingViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         final ChildDeviceListBean bean = mData.get(position);
-        viewHolder.tvFishpondName.setText(bean != null ? bean.pondName : "--");
+        viewHolder.tvFishpondName.setText((bean != null && !TextUtils.isEmpty(bean.pondName)) ? bean.pondName : "--");
         viewHolder.tvDeviceType.setText(bean != null ? bean.type : "--");
 
-        if (bean != null) {
+        if (bean != null && !TextUtils.isEmpty(bean.workStatus)) {
             switch (bean.workStatus) {
-                case -1:
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_offline);
-                    break;
-                case 0:
+                case "-1": //数据解析异常(-1)
+                    //fixme
                     viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
                     break;
-                case 1:
-                case 2:
-                case 3:
-                case 4:
+                case "0": //正常(0)
+                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
+                    break;
+                case "3": //不在线告警(3)
+                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_offline);
+                    break;
+                case "1": //告警限1(1)
+                case "2": //告警限2(2)
+                case "5": //设备告警(5)
+                case "10": //断点告警(10)
                     viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_warning);
                     break;
                 default:
+                    //fixme 多状态 ","分割
                     viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_offline);
                     break;
             }
         } else {
-            viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_offline);
+            viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
         }
         if (bean != null) {
-            if (Constants.DEVICE_TYPE_KD326.equals(bean.type)) {
-                viewHolder.tvControl3.setVisibility(View.GONE);
-                viewHolder.tvControl4.setVisibility(View.GONE);
-
-                viewHolder.ivControl3.setVisibility(View.GONE);
-                viewHolder.ivControl4.setVisibility(View.GONE);
-
-            } else if (Constants.DEVICE_TYPE_QY601.equals(bean.type)) {
-                viewHolder.tvControl3.setVisibility(View.VISIBLE);
-                viewHolder.tvControl4.setVisibility(View.VISIBLE);
-
-                viewHolder.ivControl3.setVisibility(View.VISIBLE);
-                viewHolder.ivControl4.setVisibility(View.VISIBLE);
-                if (bean.deviceControlInfoBeanList != null) {
-                    viewHolder.tvControl3.setChecked(bean.deviceControlInfoBeanList.size() > 2 && bean.deviceControlInfoBeanList.get(2).open == 1);
-                    viewHolder.tvControl4.setChecked(bean.deviceControlInfoBeanList.size() > 3 && bean.deviceControlInfoBeanList.get(3).open == 1);
-                } else {
-                    viewHolder.tvControl3.setChecked(false);
-                    viewHolder.tvControl4.setChecked(false);
-                }
-            }
-            if (bean.deviceControlInfoBeanList != null) {
-
-                viewHolder.tvControl1.setChecked(bean.deviceControlInfoBeanList.size() > 0 && bean.deviceControlInfoBeanList.get(1).open == 1);
-                viewHolder.tvControl2.setChecked(bean.deviceControlInfoBeanList.size() > 1 && bean.deviceControlInfoBeanList.get(1).open == 1);
+            if (TextUtils.isEmpty(bean.workStatus) || bean.workStatus.contains("3")) {
+                viewHolder.tvItemValue.setText("--");
+                viewHolder.tvTemperatureValue.setText("--");
+                viewHolder.tvPhValue.setText("--");
             } else {
-                viewHolder.tvControl1.setChecked(false);
-                viewHolder.tvControl2.setChecked(false);
-
+                viewHolder.tvItemValue.setText(!TextUtils.isEmpty(bean.oxy) ? bean.oxy : "--");
+                viewHolder.tvTemperatureValue.setText(!TextUtils.isEmpty(bean.temp) ? bean.temp + "℃" : "--℃");
+                viewHolder.tvPhValue.setText((TextUtils.isEmpty(bean.ph) || bean.ph.contains("-")) ? "--" : bean.ph);
             }
-            viewHolder.tvItemValue.setText(!TextUtils.isEmpty(bean.oxy) ? bean.oxy : "--");
-            viewHolder.tvTemperatureValue.setText(!TextUtils.isEmpty(bean.temp) ? bean.temp + "℃" : "--℃");
-            viewHolder.tvPhValue.setText((TextUtils.isEmpty(bean.ph) || bean.ph.contains("-")) ? "--" : bean.ph);
-
         } else {
-            viewHolder.tvControl3.setVisibility(View.VISIBLE);
-            viewHolder.tvControl4.setVisibility(View.VISIBLE);
-
-            viewHolder.ivControl3.setVisibility(View.VISIBLE);
-            viewHolder.ivControl4.setVisibility(View.VISIBLE);
-
-            viewHolder.tvControl1.setChecked(false);
-            viewHolder.tvControl2.setChecked(false);
-            viewHolder.tvControl3.setChecked(false);
-            viewHolder.tvControl4.setChecked(false);
-
             viewHolder.tvItemValue.setText("--");
             viewHolder.tvTemperatureValue.setText("--℃");
             viewHolder.tvPhValue.setText("--");
 
         }
+        settingControlInfoShow(viewHolder, bean);
         settingControlMode(bean, viewHolder);
-
-        viewHolder.tvDeviceDetail.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tvDeviceDetail.setVisibility(View.GONE);
+        viewHolder.tvFishpondDetail.setText(mContext.getString(R.string.text_device_detail));
+//        viewHolder.tvDeviceDetail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (operaListener != null) {
+//                    operaListener.onItemOpera("device", position, bean != null ? bean.type + "-" + bean.identifier : "");
+//                }
+//            }
+//        });
+        viewHolder.tvFishpondDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (operaListener != null) {
+//                    operaListener.onItemOpera("fishpond", position, bean.pondId);
+//                }
                 if (operaListener != null) {
                     operaListener.onItemOpera("device", position, bean != null ? bean.type + "-" + bean.identifier : "");
                 }
             }
         });
-        viewHolder.tvFishpondDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (operaListener != null) {
-                    operaListener.onItemOpera("fishpond", position, bean.pondId);
-                }
-            }
-        });
-
     }
 
+    /**
+     * 设置控制器个数显示
+     *
+     * @param viewHolder
+     * @param bean
+     */
+    private void settingControlInfoShow(ViewHolder viewHolder, ChildDeviceListBean bean) {
+        if (bean == null || bean.deviceControlInfoBeanList == null || bean.deviceControlInfoBeanList.size() == 0) {
+            if (bean == null) {
+                viewHolder.tvControl1.setVisibility(View.VISIBLE);
+                viewHolder.ivControl1.setVisibility(View.VISIBLE);
+                viewHolder.tvControl2.setVisibility(View.VISIBLE);
+                viewHolder.ivControl2.setVisibility(View.VISIBLE);
+                viewHolder.tvControl3.setVisibility(View.VISIBLE);
+                viewHolder.ivControl3.setVisibility(View.VISIBLE);
+                viewHolder.tvControl4.setVisibility(View.VISIBLE);
+                viewHolder.ivControl4.setVisibility(View.VISIBLE);
+            } else if (Constants.DEVICE_TYPE_KD326.equals(bean.type)) {
+                viewHolder.tvControl1.setVisibility(View.VISIBLE);
+                viewHolder.ivControl1.setVisibility(View.VISIBLE);
+                viewHolder.tvControl2.setVisibility(View.VISIBLE);
+                viewHolder.ivControl2.setVisibility(View.VISIBLE);
+                viewHolder.tvControl3.setVisibility(View.GONE);
+                viewHolder.ivControl3.setVisibility(View.GONE);
+                viewHolder.tvControl4.setVisibility(View.GONE);
+                viewHolder.ivControl4.setVisibility(View.GONE);
+            } else if (Constants.DEVICE_TYPE_QY601.equals(bean.type)) {
+                viewHolder.tvControl1.setVisibility(View.VISIBLE);
+                viewHolder.ivControl1.setVisibility(View.VISIBLE);
+                viewHolder.tvControl2.setVisibility(View.VISIBLE);
+                viewHolder.ivControl2.setVisibility(View.VISIBLE);
+                viewHolder.tvControl3.setVisibility(View.VISIBLE);
+                viewHolder.ivControl3.setVisibility(View.VISIBLE);
+                viewHolder.tvControl4.setVisibility(View.VISIBLE);
+                viewHolder.ivControl4.setVisibility(View.VISIBLE);
+            }
+
+            viewHolder.tvControl1.setChecked(false);
+            viewHolder.tvControl2.setChecked(false);
+            viewHolder.tvControl3.setChecked(false);
+            viewHolder.tvControl4.setChecked(false);
+            return;
+        }
+        viewHolder.tvControl1.setVisibility(View.GONE);
+        viewHolder.ivControl1.setVisibility(View.GONE);
+        viewHolder.tvControl2.setVisibility(View.GONE);
+        viewHolder.ivControl2.setVisibility(View.GONE);
+        viewHolder.tvControl3.setVisibility(View.GONE);
+        viewHolder.ivControl3.setVisibility(View.GONE);
+        viewHolder.tvControl4.setVisibility(View.GONE);
+        viewHolder.ivControl4.setVisibility(View.GONE);
+        for (DeviceControlInfoBean controlInfoBean : bean.deviceControlInfoBeanList) {
+
+            if (controlInfoBean.controlId == 0) {
+                if (!TextUtils.isEmpty(controlInfoBean.open)) {
+                    viewHolder.tvControl1.setChecked("1".equals(controlInfoBean.open));
+                    viewHolder.tvControl1.setVisibility(View.VISIBLE);
+                    viewHolder.ivControl1.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.tvControl1.setVisibility(View.GONE);
+                    viewHolder.ivControl1.setVisibility(View.GONE);
+                }
+                continue;
+            }
+            if (controlInfoBean.controlId == 1) {
+                if (!TextUtils.isEmpty(controlInfoBean.open)) {
+                    viewHolder.tvControl2.setChecked("1".equals(controlInfoBean.open));
+                    viewHolder.tvControl2.setVisibility(View.VISIBLE);
+                    viewHolder.ivControl2.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.tvControl2.setVisibility(View.GONE);
+                    viewHolder.ivControl2.setVisibility(View.GONE);
+                }
+                continue;
+            }
+
+            if (controlInfoBean.controlId == 2) {
+                if (!TextUtils.isEmpty(controlInfoBean.open)) {
+                    viewHolder.tvControl3.setChecked("1".equals(controlInfoBean.open));
+                    viewHolder.tvControl3.setVisibility(View.VISIBLE);
+                    viewHolder.ivControl3.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.tvControl3.setVisibility(View.GONE);
+                    viewHolder.ivControl3.setVisibility(View.GONE);
+                }
+                continue;
+            }
+
+            if (controlInfoBean.controlId == 3) {
+                if (!TextUtils.isEmpty(controlInfoBean.open)) {
+                    viewHolder.tvControl4.setChecked("1".equals(controlInfoBean.open));
+                    viewHolder.tvControl4.setVisibility(View.VISIBLE);
+                    viewHolder.ivControl4.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.tvControl4.setVisibility(View.GONE);
+                    viewHolder.ivControl4.setVisibility(View.GONE);
+                }
+            }
+        }
+
+    }
 
     private void settingControlMode(ChildDeviceListBean bean, ViewHolder viewHolder) {
         if (bean == null || bean.deviceControlInfoBeanList == null) {
@@ -170,6 +243,7 @@ public class DeviceInfoAdapter2 extends BaseRecyclerAdapter<ChildDeviceListBean>
             }
         }
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_item_value)

@@ -61,4 +61,9 @@
 
     </style>
 
+    <!--&lt;!&ndash; PopupWindow从下往上的窗口动画 &ndash;&gt;-->
+    <!--<style name="PopupAnimation" parent="android:Animation">-->
+    <!--<item name="android:windowEnterAnimation">@anim/push_bottom_in</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/push_bottom_out</item>-->
+    <!--</style>-->
 </resources>

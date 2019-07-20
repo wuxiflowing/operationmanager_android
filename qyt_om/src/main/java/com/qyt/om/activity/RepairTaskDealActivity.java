@@ -35,6 +35,8 @@ import com.bangqu.photos.util.ImageSelect;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonElement;
 import com.qyt.om.R;
+import com.qyt.om.activity.device.Device2ConfigActivity;
+import com.qyt.om.activity.device.DeviceNewDetailActivity;
 import com.qyt.om.adapter.OrderItemAdapter;
 import com.qyt.om.adapter.PhotosAdapter;
 import com.qyt.om.adapter.PhotosChoiceAdapter;
@@ -42,11 +44,13 @@ import com.qyt.om.base.BaseActivity;
 import com.qyt.om.comm.Constants;
 import com.qyt.om.comm.HttpConfig;
 import com.qyt.om.model.BindDeviceInfo;
+import com.qyt.om.request.DeviceBind;
 import com.qyt.om.request.RepairFinish;
 import com.qyt.om.request.RepairSubmit;
 import com.qyt.om.request.UploadModel;
+import com.qyt.om.response.ChildDeviceListBean;
+import com.qyt.om.response.PondLinkMan;
 import com.qyt.om.response.RepairTaskData;
-import com.qyt.om.response.RepairTaskItem;
 import com.qyt.om.utils.BaiduLocManager;
 import com.qyt.om.utils.LogInfo;
 import com.qyt.om.utils.MapNaviUtil;
@@ -56,7 +60,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.zibin.luban.CompressionPredicate;
 import top.zibin.luban.Luban;
@@ -100,6 +103,8 @@ public class RepairTaskDealActivity extends BaseActivity {
     RoundImageView installCustomerHeader;
     @BindView(R.id.repair_pond_address)
     TextViewPlus repairPondAddress;
+    @BindView(R.id.repair_device_type)
+    TextView repairDeviceType;
 
     private ArrayList<String> createPhotos = new ArrayList<>();
     private PhotosAdapter createAdapter;
@@ -109,10 +114,12 @@ public class RepairTaskDealActivity extends BaseActivity {
     private ArrayList<String> repairPhotos = new ArrayList<>();
     private PhotosChoiceAdapter payAdapter;
     private ArrayList<String> payPhotos = new ArrayList<>();
-    private final int REQUEST_DEVICE_CONFIG1 = 1000; //更换设备
+    private final int REQUEST_DEVICE_CONFIG1 = 1000; //更换KD设备
     private final int REQUEST_DEVICE_CONFIG2 = 1001; //修改设备
+    private final int REQUEST_DEVICE_CONFIG3 = 1002; //更换QY设备
+    private final int REQUEST_DEVICE_CONFIG4 = 1003; //修改QY设备
     private String farmerID, deviceId;
-    private RepairFinish repairFinish = new RepairFinish();
+    private RepairFinish mRepairFinish = new RepairFinish();
     private ArrayList<CheckBox> issueChecks = new ArrayList<>();
     private ArrayList<CheckBox> contextChecks = new ArrayList<>();
     final int REQUEST_FORM_PHOTO = 30001;
@@ -125,8 +132,12 @@ public class RepairTaskDealActivity extends BaseActivity {
     final int PERMISSIONS_REQUEST_CAMERA = 1002;
     private MenuDialog menuDialog;
     private File cameraFile;
-    private String takID, pondsName, mobile;
+    private String takID, pondsName, mobile, pondsId;
     private RepairTaskData taskData;
+
+    //TODO 设备类型
+    private String mDeviceType;
+    private PondLinkMan mPondLinkMan;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {
@@ -249,6 +260,8 @@ public class RepairTaskDealActivity extends BaseActivity {
                                 break;
                         }
                         break;
+                    default:
+                        break;
                 }
             }
         }).show();
@@ -301,22 +314,23 @@ public class RepairTaskDealActivity extends BaseActivity {
                 showToast(msg);
             }
         });
-        getData(HttpConfig.TASK_DETAIL.replace("{taskid}", takID), new ResponseCallBack<RepairTaskData>() {
-            @Override
-            public void onSuccessResponse(RepairTaskData d, String msg) {
-                showTaskData(d);
-            }
+        getData(HttpConfig.TASK_DETAIL.replace("{taskid}", takID),
+                new ResponseCallBack<RepairTaskData>() {
+                    @Override
+                    public void onSuccessResponse(RepairTaskData d, String msg) {
+                        showTaskData(d);
+                    }
 
-            @Override
-            public void onFailResponse(String msg) {
-                showToast(msg);
-            }
+                    @Override
+                    public void onFailResponse(String msg) {
+                        showToast(msg);
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
-                showToast(msg);
-            }
-        });
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        showToast(msg);
+                    }
+                });
     }
 
     private void addIssueItems(ArrayList<String> d, boolean isIssue) {
@@ -341,6 +355,7 @@ public class RepairTaskDealActivity extends BaseActivity {
         mobile = d.txtFarmerPhone;
         farmerID = d.txtFarmerID;
         pondsName = d.txtPondsName;
+        pondsId = d.cboPondID;
         installCustomerName.setText(d.txtFarmerName);
         installCustomerAdress.setText(d.txtFarmerAddr);
         Glide.with(this).load(d.picture).apply(Constants.REQUEST_OPTIONS).into(installCustomerHeader);
@@ -353,6 +368,7 @@ public class RepairTaskDealActivity extends BaseActivity {
         if (!TextUtils.isEmpty(d.txtMonMembName)) {
             orderItems.add("监控人员：" + d.txtMonMembName);
         }
+        mDeviceType = d.txtRepairEqpKind;
         orderItems.add("设备型号：" + d.txtRepairEqpKind);
         orderItems.add("故障描述：" + d.txtMaintenDetail);
         if (!TextUtils.isEmpty(d.txtMonMembName)) {
@@ -364,11 +380,14 @@ public class RepairTaskDealActivity extends BaseActivity {
             createAdapter.notifyDataSetChanged();
         }
         repairDeviceId.setText(d.txtRepairEqpID);
+        //fixme 设置设备类型
+        repairDeviceType.setText("");
         deviceId = d.txtRepairEqpID;
-        repairFinish.oldDeviceId = deviceId;
+        mRepairFinish.oldDeviceId = deviceId;
     }
 
-    @OnClick({R.id.install_customer_call, R.id.repair_finish, R.id.repair_change_device, R.id.repair_device_reset, R.id.repair_device_detail
+    @OnClick({R.id.install_customer_call, R.id.repair_finish, R.id.repair_change_device,
+            R.id.repair_change_device2, R.id.repair_device_reset, R.id.repair_device_detail
             , R.id.repair_device_config, R.id.repair_pond_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -389,21 +408,59 @@ public class RepairTaskDealActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("isRepair", true);
                 bundle.putString("pondsName", pondsName);
+                bundle.putString("pondsId", pondsId);
+                bundle.putString("deviceIdentifier", TextUtils.isEmpty(mRepairFinish.newDeviceId) ? mRepairFinish.oldDeviceId : mRepairFinish.newDeviceId);
+                mDeviceType = Constants.DEVICE_TYPE_KD326;
                 bundle.putString(Constants.INTENT_OBJECT, farmerID);
                 goToActivityForResult(DeviceConfigActivity.class, bundle, REQUEST_DEVICE_CONFIG1);
                 break;
+            case R.id.repair_change_device2:
+
+                Bundle bundle21 = new Bundle();
+                bundle21.putBoolean("isRepair", true);
+                bundle21.putString("pondsName", pondsName);
+                bundle21.putString("pondsId", pondsId);
+                bundle21.putString("deviceIdentifier", TextUtils.isEmpty(mRepairFinish.newDeviceId) ? mRepairFinish.oldDeviceId : mRepairFinish.newDeviceId);
+                mDeviceType = Constants.DEVICE_TYPE_QY601;
+                bundle21.putString(Constants.INTENT_OBJECT, farmerID);
+                goToActivityForResult(Device2ConfigActivity.class, bundle21, REQUEST_DEVICE_CONFIG3);
+                break;
             case R.id.repair_device_config:
+                //参数配置
                 Bundle bundle1 = new Bundle();
                 bundle1.putBoolean("isRepair", true);
                 bundle1.putString("deviceId", repairDeviceId.getText().toString());
                 bundle1.putString("pondsName", pondsName);
+                bundle1.putString("pondsId", pondsId);
+                bundle1.putString("deviceIdentifier", TextUtils.isEmpty(mRepairFinish.newDeviceId) ? mRepairFinish.oldDeviceId : mRepairFinish.newDeviceId);
+
+                bundle1.putString("contactPhone", mRepairFinish.contactPhone);
+                bundle1.putString("contacters", mRepairFinish.contacters);
+                bundle1.putString("standbyContact", mRepairFinish.standbyContact);
+                bundle1.putString("standbyContactPhone", mRepairFinish.standbyContactPhone);
+
+                bundle1.putString("nightContactPhone", mRepairFinish.nightContactPhone);
+                bundle1.putString("nightContacters", mRepairFinish.nightContacters);
+                bundle1.putString("standbyNightContactPhone", mRepairFinish.standbyNightContactPhone);
+                bundle1.putString("standbyNightContact", mRepairFinish.standbyNightContact);
+
                 bundle1.putString(Constants.INTENT_OBJECT, farmerID);
-                goToActivityForResult(DeviceConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG2);
+                //fixme :根据设备类型跳转
+                if (TextUtils.isEmpty(mDeviceType) || Constants.DEVICE_TYPE_KD326.equals(mDeviceType)) {
+                    goToActivityForResult(DeviceConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG2);
+                } else if (Constants.DEVICE_TYPE_QY601.equals(mDeviceType)) {
+                    goToActivityForResult(Device2ConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG4);
+                }
                 break;
             case R.id.repair_device_detail:
                 Bundle bundle2 = new Bundle();
                 bundle2.putString(Constants.INTENT_OBJECT, repairDeviceId.getText().toString());
-                goToActivity(DeviceDetailActivity.class, bundle2);
+                //fixme :根据设备类型跳转
+                if (TextUtils.isEmpty(mDeviceType) || Constants.DEVICE_TYPE_KD326.equals(mDeviceType)) {
+                    goToActivityForResult(DeviceDetailActivity.class, bundle2, REQUEST_DEVICE_CONFIG2);
+                } else if (Constants.DEVICE_TYPE_QY601.equals(mDeviceType)) {
+                    goToActivityForResult(DeviceNewDetailActivity.class, bundle2, REQUEST_DEVICE_CONFIG4);
+                }
                 break;
             case R.id.repair_device_reset:
                 testReset();
@@ -433,6 +490,8 @@ public class RepairTaskDealActivity extends BaseActivity {
                 } else {
                     showToast("未获取到经纬度信息");
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -471,12 +530,12 @@ public class RepairTaskDealActivity extends BaseActivity {
                 contentTxt = contentTxt + "," + cont.getText().toString();
             }
         }
-        repairFinish.resMulti = issueTxt.length() > 0 ? issueTxt.substring(1) : "";
-        repairFinish.conMulti = contentTxt.length() > 0 ? contentTxt.substring(1) : "";
-        repairFinish.resOth = repairIssueInput.getText().toString();
-        repairFinish.conOth = repairContextInput.getText().toString();
-        repairFinish.remarks = repairRemarks.getText().toString();
-        repairFinish.selfYes = callbackApproveAgree.isChecked() ? "0" : "1";
+        mRepairFinish.resMulti = issueTxt.length() > 0 ? issueTxt.substring(1) : "";
+        mRepairFinish.conMulti = contentTxt.length() > 0 ? contentTxt.substring(1) : "";
+        mRepairFinish.resOth = repairIssueInput.getText().toString();
+        mRepairFinish.conOth = repairContextInput.getText().toString();
+        mRepairFinish.remarks = repairRemarks.getText().toString();
+        mRepairFinish.selfYes = callbackApproveAgree.isChecked() ? "0" : "1";
         uploadPhotoList();
     }
 
@@ -506,9 +565,9 @@ public class RepairTaskDealActivity extends BaseActivity {
             @Override
             public void onSuccessResponse(String d, String msg) {
                 if (d.contains("repairPic")) {
-                    repairFinish.repairUrls.add(d);
+                    mRepairFinish.repairUrls.add(d);
                 } else if (d.contains("repairFee")) {
-                    repairFinish.payUrls.add(d);
+                    mRepairFinish.payUrls.add(d);
                 }
                 if (--photoSize == 0) {
                     createCustomer();
@@ -532,7 +591,7 @@ public class RepairTaskDealActivity extends BaseActivity {
     private void createCustomer() {
         RepairSubmit repairSubmit = new RepairSubmit();
         repairSubmit.loginid = sharedPref.getString(Constants.LOGIN_ID);
-        repairSubmit.appData = repairFinish;
+        repairSubmit.appData = mRepairFinish;
         LogInfo.error(repairSubmit.toString());
         postData(HttpConfig.CONFIRM_TASK_FINISH.replace("{taskid}", takID), repairSubmit.toString(), new ResponseCallBack<JsonElement>() {
             @Override
@@ -562,19 +621,44 @@ public class RepairTaskDealActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_DEVICE_CONFIG1:
                     BindDeviceInfo info = data.getParcelableExtra(Constants.INTENT_OBJECT);
-                    repairFinish.newDeviceId = info.deviceIdentifier;
+                    mRepairFinish.newDeviceId = info.deviceIdentifier;
                     repairDeviceId.setText(info.deviceIdentifier);
-                    repairFinish.pondAddr = info.pondAddr;
-                    repairFinish.latitude = info.latitude;
-                    repairFinish.longitude = info.longitude;
+                    repairDeviceType.setText(info.deviceModel);
+                    mRepairFinish.pondAddr = info.pondAddr;
+                    mRepairFinish.latitude = info.latitude;
+                    mRepairFinish.longitude = info.longitude;
+                    handleLinkMan(data, mRepairFinish);
+                    setDeviceBind(info);
                     break;
                 case REQUEST_DEVICE_CONFIG2:
                     BindDeviceInfo info1 = data.getParcelableExtra(Constants.INTENT_OBJECT);
-                    repairFinish.oldDeviceId = info1.deviceIdentifier;
+                    mRepairFinish.oldDeviceId = info1.deviceIdentifier;
                     repairDeviceId.setText(info1.deviceIdentifier);
+                    repairDeviceType.setText(info1.deviceModel);
+                    handleLinkMan(data, mRepairFinish);
+                    setDeviceBind(info1);
+                    break;
+                case REQUEST_DEVICE_CONFIG3:
+                    ChildDeviceListBean info3 = data.getParcelableExtra(Constants.INTENT_OBJECT);
+                    mRepairFinish.newDeviceId = info3.identifier;
+                    repairDeviceId.setText(info3.identifier);
+                    repairDeviceType.setText(info3.type);
+                    mRepairFinish.pondAddr = info3.pondAddr;
+                    mRepairFinish.latitude = info3.latitude;
+                    mRepairFinish.longitude = info3.longitude;
+                    handleLinkMan(data, mRepairFinish);
+                    setDeviceBind2(info3);
+                    break;
+                case REQUEST_DEVICE_CONFIG4:
+                    ChildDeviceListBean info4 = data.getParcelableExtra(Constants.INTENT_OBJECT);
+                    mRepairFinish.oldDeviceId = info4.identifier;
+                    repairDeviceId.setText(info4.identifier);
+                    repairDeviceType.setText(info4.type);
+                    handleLinkMan(data, mRepairFinish);
+                    setDeviceBind2(info4);
                     break;
                 case REQUEST_FORM_CAMERA:
-                    lubanCompress(REQUEST_FORM_CAMERA,cameraFile);
+                    lubanCompress(REQUEST_FORM_CAMERA, cameraFile);
 //                    repairPhotos.clear();
 //                    ImageSelect.mSelectedImage.add(cameraFile.getPath());
 //                    repairPhotos.addAll(ImageSelect.mSelectedImage);
@@ -586,7 +670,7 @@ public class RepairTaskDealActivity extends BaseActivity {
                     repairAdapter.notifyDataSetChanged();
                     break;
                 case REQUEST_FARMER_CAMERA:
-                    lubanCompress(REQUEST_FARMER_CAMERA,cameraFile);
+                    lubanCompress(REQUEST_FARMER_CAMERA, cameraFile);
 //                    payPhotos.clear();
 //                    ImageSelect.mSelectedImage.add(cameraFile.getPath());
 //                    payPhotos.addAll(ImageSelect.mSelectedImage);
@@ -596,6 +680,8 @@ public class RepairTaskDealActivity extends BaseActivity {
                     payPhotos.clear();
                     payPhotos.addAll(ImageSelect.mSelectedImage);
                     payAdapter.notifyDataSetChanged();
+                    break;
+                default:
                     break;
             }
         }
@@ -635,6 +721,8 @@ public class RepairTaskDealActivity extends BaseActivity {
                                 payPhotos.addAll(ImageSelect.mSelectedImage);
                                 payAdapter.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
                         }
                     }
 
@@ -654,10 +742,86 @@ public class RepairTaskDealActivity extends BaseActivity {
                                 payPhotos.addAll(ImageSelect.mSelectedImage);
                                 payAdapter.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
                         }
                     }
                 }).launch();
     }
+
+
+    private void handleLinkMan(Intent data, RepairFinish bean) {
+        String contacters = data.getStringExtra("contacters");
+        String contactPhone = data.getStringExtra("contactPhone");
+        String nightContacters = data.getStringExtra("nightContacters");
+        String nightContactPhone = data.getStringExtra("nightContactPhone");
+
+        String standbyContact = data.getStringExtra("standbyContact");
+        String standbyContactPhone = data.getStringExtra("standbyContactPhone");
+        String standbyNightContact = data.getStringExtra("standbyNightContact");
+        String standbyNightContactPhone = data.getStringExtra("standbyNightContactPhone");
+
+        bean.contacters = contacters;
+        bean.contactPhone = contactPhone;
+        bean.nightContacters = nightContacters;
+        bean.nightContactPhone = nightContactPhone;
+
+        bean.standbyContact = standbyContact;
+        bean.standbyContactPhone = standbyContactPhone;
+        bean.standbyNightContact = standbyNightContact;
+        bean.standbyNightContactPhone = standbyNightContactPhone;
+
+
+    }
+
+    private void setDeviceBind(BindDeviceInfo info) {
+        mRepairFinish.bindDeviceList.clear();
+        DeviceBind deviceBind = new DeviceBind();
+        deviceBind.deviceId = info.deviceIdentifier;
+        deviceBind.pondAddr = info.pondAddr;
+        deviceBind.latitude = info.latitude;
+        deviceBind.longitude = info.longitude;
+
+        deviceBind.pondId = pondsId;
+        deviceBind.pondName = pondsName;
+
+        deviceBind.contacters = mRepairFinish.contacters;//               白班联系人姓名
+        deviceBind.contactPhone = mRepairFinish.contactPhone;//             白班联系人电话
+        deviceBind.standbyContactPhone = mRepairFinish.standbyContactPhone;//      白班备用联系人姓名
+        deviceBind.standbyContact = mRepairFinish.standbyContact;//           白班备用联系人电话
+
+        deviceBind.nightContactPhone = mRepairFinish.nightContactPhone;//        晚班联系人姓名
+        deviceBind.nightContacters = mRepairFinish.nightContacters;//          晚班联系人电话
+        deviceBind.standbyNightContact = mRepairFinish.standbyNightContact;//      晚班备用联系人姓名
+        deviceBind.standbyNightContactPhone = mRepairFinish.standbyNightContactPhone;// 晚班备用联系人电话
+
+        mRepairFinish.bindDeviceList.add(deviceBind);
+    }
+
+    private void setDeviceBind2(ChildDeviceListBean info) {
+        mRepairFinish.bindDeviceList.clear();
+        DeviceBind deviceBind = new DeviceBind();
+        deviceBind.deviceId = info.identifier;
+        deviceBind.pondAddr = info.pondAddr;
+        deviceBind.latitude = info.latitude;
+        deviceBind.longitude = info.longitude;
+
+        deviceBind.pondId = pondsId;
+        deviceBind.pondName = pondsName;
+
+        deviceBind.contacters = mRepairFinish.contacters;//               白班联系人姓名
+        deviceBind.contactPhone = mRepairFinish.contactPhone;//             白班联系人电话
+        deviceBind.standbyContactPhone = mRepairFinish.standbyContactPhone;//      白班备用联系人姓名
+        deviceBind.standbyContact = mRepairFinish.standbyContact;//           白班备用联系人电话
+
+        deviceBind.nightContactPhone = mRepairFinish.nightContactPhone;//        晚班联系人姓名
+        deviceBind.nightContacters = mRepairFinish.nightContacters;//          晚班联系人电话
+        deviceBind.standbyNightContact = mRepairFinish.standbyNightContact;//      晚班备用联系人姓名
+        deviceBind.standbyNightContactPhone = mRepairFinish.standbyNightContactPhone;// 晚班备用联系人电话
+
+        mRepairFinish.bindDeviceList.add(deviceBind);
+    }
+
 
     @Override
     protected void onDestroy() {

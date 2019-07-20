@@ -155,10 +155,135 @@
 
             <View style="@style/horizontal_line" />
             <!--联系人-->
-            <com.bangqu.lib.widget.UnScrollListView
-                android:id="@+id/lv_contacts"
+
+            <View style="@style/horizontal_line" />
+            <!--联系人-->
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_day_contacts" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_day"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:minWidth="170dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_night_contacts" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_night"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:minWidth="170dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_day_contacts_2" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_day2"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:minWidth="170dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:id="@+id/infomap_label"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_night2_contacts_2" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_night2"
+                    style="@style/text_secondary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:minWidth="170dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_add_contacts"
@@ -244,7 +369,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:button="@drawable/round_radiobutton"
-                        android:checked="true"
                         android:paddingLeft="4dp"
                         android:text="@string/connection_mode_line"
                         android:textColor="@color/radio_text" />
@@ -265,7 +389,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginLeft="30dp"
-                    android:background="@drawable/btn_r5_solid_primary"
+                    android:background="@drawable/shape_r5_solid_gray"
                     android:text="@string/text_device_pair"
                     android:textColor="@color/color_white"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -343,6 +467,7 @@
 
             <!--控制器1-->
             <RelativeLayout
+                android:id="@+id/rl_control1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -543,6 +668,7 @@
 
             <!--控制器2-->
             <RelativeLayout
+                android:id="@+id/rl_control2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -743,6 +869,7 @@
 
             <!--控制器3-->
             <RelativeLayout
+                android:id="@+id/rl_control3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -943,6 +1070,7 @@
 
             <!--控制器4-->
             <RelativeLayout
+                android:id="@+id/rl_control4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

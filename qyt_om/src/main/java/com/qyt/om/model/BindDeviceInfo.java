@@ -16,11 +16,11 @@ public class BindDeviceInfo implements Parcelable {
     public String deviceId;//设备Id
     public String deviceIdentifier;//设备identifier
     public String deviceModel;//设备型号
-    public String state;//设备状态
+    public String state;//设备状态      workStatus
     public String oxyValue;//溶氧值
     public String temperature;//温度
     public String ph;//PH
-    public String control1;//控制器1
+    public String control1;//控制器1    开 关
     public String control2;//控制器2
     public String automatic;//手动自动
 

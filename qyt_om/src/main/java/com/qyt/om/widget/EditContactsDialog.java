@@ -3,6 +3,7 @@ package com.qyt.om.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bangqu.lib.utils.AppUtils;
 import com.qyt.om.R;
@@ -77,7 +79,15 @@ public class EditContactsDialog extends Dialog implements View.OnClickListener {
                 break;
             case R.id.edittext_ok:
                 // fixme 调用接口添加联系人
-
+                if (TextUtils.isEmpty(etContacts.getText().toString())) {
+                    Toast.makeText(getContext(), "请输入联系人", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(etPhone.getText().toString())) {
+                    Toast.makeText(getContext(), "请输入联系人电话", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                dismiss();
                 if (mListener != null) {
                     mListener.onEditContact("", etContacts.getText().toString(), etPhone.getText().toString());
                 }

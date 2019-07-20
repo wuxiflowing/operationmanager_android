@@ -24,6 +24,7 @@ import com.bangqu.lib.widget.UnScrollListView;
 import com.bangqu.photos.GalleryActivity;
 import com.bumptech.glide.Glide;
 import com.qyt.om.R;
+import com.qyt.om.activity.device.DeviceNewDetailActivity;
 import com.qyt.om.adapter.DeviceListAdapter;
 import com.qyt.om.adapter.InstallDeviceAdapter;
 import com.qyt.om.adapter.OrderItemAdapter;
@@ -96,7 +97,7 @@ public class InstallTaskFinishActivity extends BaseActivity {
     RecyclerView taskDepositFiles;
     @BindView(R.id.lab_task_remark)
     TextView labTaskRemark;
-//    @BindView(R.id.task_remark)
+    //    @BindView(R.id.task_remark)
 //    TextView taskRemark;
     @BindView(R.id.task_files_pics)
     RecyclerView taskFilesPics;
@@ -273,10 +274,16 @@ public class InstallTaskFinishActivity extends BaseActivity {
                         public void onItemOpera(String tag, int position, Object value) {
                             Bundle bundle1 = new Bundle();
                             bundle1.putString(Constants.INTENT_OBJECT, (String) value);
-                            goToActivity(DeviceDetailActivity.class, bundle1);
+                            if (Constants.DEVICE_TYPE_KD326.equals(tag)) {
+                                goToActivity(DeviceDetailActivity.class, bundle1);
+                            } else if (Constants.DEVICE_TYPE_QY601.equals(tag)) {
+                                goToActivity(DeviceNewDetailActivity.class, bundle1);
+                            }
                         }
                     });
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -319,6 +326,8 @@ public class InstallTaskFinishActivity extends BaseActivity {
                 } else {
                     showToast("未获取到经纬度信息");
                 }
+                break;
+            default:
                 break;
         }
     }
