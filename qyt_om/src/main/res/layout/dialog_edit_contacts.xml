@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_menu_dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/edittext_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/text_add_contact2"
+        android:textColor="@color/primary_text"
+        android:textSize="16sp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:id="@+id/tv_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center"
+            android:text="@string/text_contacts"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_contacts"
+            style="@style/text_primary_14"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="46dp"
+            android:background="@drawable/dialog_edittext_bg"
+            android:gravity="center_vertical"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minWidth="120dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_contacts"
+            app:layout_constraintLeft_toRightOf="@id/tv_contacts"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_contacts" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center"
+            android:text="@string/text_contact_number"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/text_primary_14"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/dialog_edittext_bg"
+            android:gravity="center_vertical"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:minWidth="120dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_phone"
+            app:layout_constraintLeft_toRightOf="@id/tv_phone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_phone" />
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/color_line" />
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginBottom="20dp">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/edittext_cancel"-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="35dp"-->
+    <!--android:background="@drawable/shape_r2_stroke_gray"-->
+    <!--android:text="@string/cancel"-->
+    <!--android:textColor="@color/primary_text" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/edittext_ok"-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="35dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:background="@drawable/shape_r2_solid_blue"-->
+    <!--android:text="@string/text_affirm"-->
+    <!--android:textColor="@color/color_white" />-->
+    <!--</RelativeLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <Button
+            android:id="@+id/edittext_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_style_cancel"
+            android:text="@string/cancel"
+            android:textColor="@color/primary_text" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_line" />
+
+        <Button
+            android:id="@+id/edittext_ok"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_style_ok"
+            android:text="@string/text_affirm"
+            android:textColor="@color/color_blue" />
+    </LinearLayout>
+</LinearLayout>

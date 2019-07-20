@@ -31,7 +31,7 @@ public class DeviceConfigInfo2 implements Parcelable {
     public String id;             //设备Id
     public String name;        //设备名称
     public String type;        //设备型号
-    public int workStatus;  //正常(0)、告警限1(1)、告警限2(2)、不在线告警(3)、设备告警(5)、数据解析异常(-1)
+    public String workStatus;  //正常(0)、告警限1(1)、告警限2(2)、不在线告警(3)、设备告警(5)、数据解析异常(-1)
     public int connectionType; //连线方式 0:无线  1: 有线
     public String alertline1;     //告警线1
     public String alertline2;     //告警线1
@@ -45,7 +45,7 @@ public class DeviceConfigInfo2 implements Parcelable {
         id = in.readString();
         name = in.readString();
         type = in.readString();
-        workStatus = in.readInt();
+        workStatus = in.readString();
         connectionType = in.readInt();
         alertline1 = in.readString();
         alertline2 = in.readString();
@@ -77,7 +77,7 @@ public class DeviceConfigInfo2 implements Parcelable {
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(type);
-        dest.writeInt(workStatus);
+        dest.writeString(workStatus);
         dest.writeInt(connectionType);
         dest.writeString(alertline1);
         dest.writeString(alertline2);

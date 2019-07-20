@@ -379,6 +379,9 @@
                 android:dividerHeight="4dp"
                 android:paddingBottom="8dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
         </LinearLayout>
     </ScrollView>
 

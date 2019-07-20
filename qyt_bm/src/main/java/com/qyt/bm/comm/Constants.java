@@ -1,5 +1,7 @@
 package com.qyt.bm.comm;
 
+import android.text.TextUtils;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.qyt.bm.R;
 
@@ -74,4 +76,31 @@ public class Constants {
             put(4, "超过上下限告警");
         }
     };
+
+
+    public static String showDeviceStatus(String workStatus) {
+        if (TextUtils.isEmpty(workStatus)) {
+            return "--";
+        }
+        switch (workStatus) {
+            case "-1": //数据解析异常(-1)
+                //fixme 待处理
+                return "数据解析异常";
+            case "0": //正常(0)
+                return "正常";
+            case "3": //不在线告警(3)
+                return "不在线告警";
+            case "1": //告警限1(1)
+                return "告警线1";
+            case "2": //告警限2(2)
+                return "告警线2";
+            case "5": //设备告警(5)
+                return "设备告警";
+            case "10": //断电告警(10)
+                return "断电告警";
+            default:
+                //fixme 多状态 ","分割
+                return "--";
+        }
+    }
 }

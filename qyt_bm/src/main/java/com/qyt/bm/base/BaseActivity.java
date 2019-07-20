@@ -18,12 +18,12 @@ import com.qyt.bm.utils.SharedPref;
 import butterknife.ButterKnife;
 
 /*
-* 方法执行顺序
-*  1、setLayoutView(savedInstanceState);
-*  2、initView();
-*  3、requestData();
-*  4、addViewListener();
-* */
+ * 方法执行顺序
+ *  1、setLayoutView(savedInstanceState);
+ *  2、initView();
+ *  3、requestData();
+ *  4、addViewListener();
+ * */
 public class BaseActivity extends EshowActivity {
 
     protected SharedPref sharedPref;

@@ -20,7 +20,7 @@ android {
 //        versionName "1.1.4.2"
         //测试版本号
         versionCode 42
-        versionName "v3.0.0627"
+        versionName "v3.0.0628"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [

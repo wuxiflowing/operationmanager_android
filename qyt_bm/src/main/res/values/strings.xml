@@ -119,8 +119,8 @@
     <string name="fishpond_size">鱼塘面积</string>
     <string name="prepay_balance">账户金额</string>
     <string name="arrears_sum">欠款金额</string>
-    <string name="click_fishpond_detail">鱼塘详情</string>
-    <string name="click_device_detail">设备详情</string>
+    <string name="click_fishpond_detail">查看鱼塘详情</string>
+    <string name="click_device_detail">查看设备详情</string>
     <string name="customer_opera">操作</string>
     <string name="customer_record">记录</string>
     <!--开户申请-->
@@ -219,5 +219,6 @@
     <string name="text_normal">正常</string>
     <string name="text_auto">自动</string>
     <string name="text_manual">手动</string>
-
+    <string name="text_fishpond_detail">鱼塘详情</string>
+    <string name="text_device_detail">设备详情</string>
 </resources>

@@ -196,12 +196,13 @@ public class DeviceNewDetailActivity extends BaseActivity {
                     return;
                 }
                 devicedetailId.setText(d.identifier);
-                if (d.workStatus == 0) {
+                if ("0".equals(d.workStatus)) {
                     devicedetailState.setTextColor(Color.GREEN);
                 } else {
                     devicedetailState.setTextColor(Color.RED);
                 }
-                devicedetailState.setText(Constants.DEVICE_STATE.get(d.workStatus));
+
+                devicedetailState.setText(Constants.showDeviceStatus(d.workStatus));
                 sensorItems.clear();
                 //选择连接方式
                 sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), d.connectionType == 0 ? getString(R.string.connection_mode_line) : getString(R.string.connection_mode_wireless)));
@@ -243,6 +244,7 @@ public class DeviceNewDetailActivity extends BaseActivity {
             }
         });
     }
+
 
     private void control1Setting(DeviceControlInfoBean item1) {
         control1Items.clear();
