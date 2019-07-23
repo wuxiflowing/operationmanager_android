@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ChildDeviceListBean implements Parcelable {
     /**
@@ -35,6 +36,8 @@ public class ChildDeviceListBean implements Parcelable {
     public List<DeviceControlInfoBean> deviceControlInfoBeanList;
 
 
+
+
     //额外添加字段，与接口返回数据无关
     public String pondId;
     public String pondName;
@@ -51,6 +54,20 @@ public class ChildDeviceListBean implements Parcelable {
     public String nightContacters;//          晚班联系人电话
     public String standbyNightContact;//      晚班备用联系人姓名
     public String standbyNightContactPhone;// 晚班备用联系人电话
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChildDeviceListBean that = (ChildDeviceListBean) o;
+        return identifier.equals(that.identifier) &&
+                id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier, id);
+    }
 
     public ChildDeviceListBean() {
     }

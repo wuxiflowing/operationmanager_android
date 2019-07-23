@@ -34,6 +34,7 @@ import com.bangqu.photos.PhotosActivity;
 import com.bangqu.photos.util.ImageSelect;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.qyt.om.R;
 import com.qyt.om.activity.device.Device2ConfigActivity;
 import com.qyt.om.activity.device.DeviceNewDetailActivity;
@@ -137,7 +138,6 @@ public class RepairTaskDealActivity extends BaseActivity {
 
     //TODO 设备类型
     private String mDeviceType;
-    private PondLinkMan mPondLinkMan;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {
@@ -463,7 +463,14 @@ public class RepairTaskDealActivity extends BaseActivity {
                 }
                 break;
             case R.id.repair_device_reset:
-                testReset();
+                // fixme
+                if (Constants.DEVICE_TYPE_KD326.equals(mDeviceType)) {
+                    testReset();
+
+                } else if (Constants.DEVICE_TYPE_QY601.equals(mDeviceType)) {
+                    testReset2(deviceId);
+                }
+
                 break;
             case R.id.repair_pond_address:
                 if (taskData != null && !TextUtils.isEmpty(taskData.latitude) && !TextUtils.isEmpty(taskData.longitude)) {
@@ -497,23 +504,56 @@ public class RepairTaskDealActivity extends BaseActivity {
     }
 
     public void testReset() {
+        showLoading();
         String deviceId = repairDeviceId.getText().toString();
         putData(HttpConfig.DEVICE_TEST_RESET.replace("{id}", deviceId), new ResponseCallBack<JsonElement>() {
             @Override
             public void onSuccessResponse(JsonElement d, String msg) {
+                dismissLoading();
                 showToast("发送成功");
             }
 
             @Override
             public void onFailResponse(String msg) {
+                dismissLoading();
                 showToast(msg);
             }
 
             @Override
             public void onVolleyError(int code, String msg) {
+                dismissLoading();
                 showToast(msg);
             }
         });
+    }
+
+    public void testReset2(String identifierID) {
+        showLoading();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("ch", "0");
+        jsonObject.addProperty("type", "do");
+        jsonObject.addProperty("stage", "1");
+        String json = jsonObject.toString();
+        putData(HttpConfig.DEVICE_NEW_RESET.replace("{identifierID}", identifierID), json,
+                new ResponseCallBack<JsonElement>() {
+                    @Override
+                    public void onSuccessResponse(JsonElement d, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onFailResponse(String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+                });
     }
 
     private void repairTaskSubmit() {

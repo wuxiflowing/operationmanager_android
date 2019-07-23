@@ -306,29 +306,30 @@ public class InstallTaskDealActivity extends BaseActivity {
                             BindDeviceInfo bindDeviceInfo = childDeviceListBean2BindDeviceInfo(childDevice);
 
                             bundle1.putParcelable("info", bindDeviceInfo);
-                            bundle1.putString("contactPhone", childDevice.contactPhone);
                             bundle1.putString("contacters", childDevice.contacters);
+                            bundle1.putString("contactPhone", childDevice.contactPhone);
                             bundle1.putString("standbyContact", childDevice.standbyContact);
                             bundle1.putString("standbyContactPhone", childDevice.standbyContactPhone);
 
-                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
                             bundle1.putString("nightContacters", childDevice.nightContacters);
-                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
+                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
                             bundle1.putString("standbyNightContact", childDevice.standbyNightContact);
+                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
 
                             goToActivityForResult(DeviceConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG2);
                         } else if (Constants.DEVICE_TYPE_QY601.equals(childDevice.type)) {
 
                             bundle1.putParcelable("info", childDevice);
-                            bundle1.putString("contactPhone", childDevice.contactPhone);
                             bundle1.putString("contacters", childDevice.contacters);
+                            bundle1.putString("contactPhone", childDevice.contactPhone);
                             bundle1.putString("standbyContact", childDevice.standbyContact);
                             bundle1.putString("standbyContactPhone", childDevice.standbyContactPhone);
 
-                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
                             bundle1.putString("nightContacters", childDevice.nightContacters);
-                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
+                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
                             bundle1.putString("standbyNightContact", childDevice.standbyNightContact);
+                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
+
 
                             goToActivityForResult(Device2ConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG4);
                         }
@@ -675,6 +676,10 @@ public class InstallTaskDealActivity extends BaseActivity {
                 case REQUEST_DEVICE_CONFIG1:
                     BindDeviceInfo info = data.getParcelableExtra(Constants.INTENT_OBJECT);
                     ChildDeviceListBean bean = bindDeviceInfo2ChildDeviceListBean(info);
+                    if (mChildDeviceList.contains(bean)) {
+                        showToast("设备重复安装");
+                        return;
+                    }
                     mChildDeviceList.add(bean);
                     fishpondInfoAdapter2.notifyDataSetChanged();
                     installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
@@ -693,6 +698,10 @@ public class InstallTaskDealActivity extends BaseActivity {
                     break;
                 case REQUEST_DEVICE_CONFIG3:
                     ChildDeviceListBean bean2 = data.getParcelableExtra(Constants.INTENT_OBJECT);
+                    if (mChildDeviceList.contains(bean2)) {
+                        showToast("设备重复安装");
+                        return;
+                    }
                     mChildDeviceList.add(bean2);
                     fishpondInfoAdapter2.notifyDataSetChanged();
                     installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
@@ -812,6 +821,8 @@ public class InstallTaskDealActivity extends BaseActivity {
                                 depositPhotos.addAll(ImageSelect.mSelectedImage);
                                 depositAdapter.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
                         }
                     }
 
@@ -875,7 +886,7 @@ public class InstallTaskDealActivity extends BaseActivity {
         DeviceControlInfoBean controlsBean1 = new DeviceControlInfoBean();
         controlsBean1.controlId = 1;
         controlsBean1.open = "开".equals(info.control2) ? "1" : "0";
-        controlsBean1.auto = (!TextUtils.isEmpty(info.automatic) && "1".equals(info.automatic)) ? 1 : 0;
+        controlsBean1.auto = (TextUtils.isEmpty(info.automatic) || "1".equals(info.automatic)) ? 1 : 0;
         deviceControls.add(controlsBean1);
 
         DeviceControlInfoBean controlsBean2 = new DeviceControlInfoBean();
@@ -953,6 +964,13 @@ public class InstallTaskDealActivity extends BaseActivity {
             installSubmit.appData.bindDeviceList.add(deviceBind);
         }
         return true;
+    }
+
+    /**
+     * 判断设备清单
+     */
+    private void aaa() {
+
     }
 
     @Override

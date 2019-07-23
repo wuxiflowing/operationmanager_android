@@ -96,7 +96,12 @@ public class HttpConfig {
     public static final String DEVICE_LINK_PAIR = HTTP_HOST + "/RESTAdapter/app/device/{identifierID}/devicePair";
     /*打开设备某一路开关*/
     public static final String DEVICE_CONTROL_SWITCH = HTTP_HOST + "/v1/deviceMonitor/core/device/identifier/{identifier}/control/{cch}/switch/{state}";
+    /*查询鱼塘的联系人*/
     public static final String LINKMAN_ADDED_POND = HTTP_HOST + "/RESTAdapter/linkMan/deviceId/{deviceId}";
+    /*QY601校准*/
+    public static final String DEVICE_NEW_RESET = HTTP_HOST + "/RESTAdapter/app/newDevice/{identifierID}/reset/install";
+    /*设备连线方式切换*/
+    public static final String DEVICE_CONNECT_TYPE_CHANGE = HTTP_HOST + "/RESTAdapter/app/device/{identifierID}/deviceModeChange/ch/{ch}/pairType/{pairType}";
 
 
 }

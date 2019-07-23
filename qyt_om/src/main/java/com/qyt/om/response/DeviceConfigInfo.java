@@ -17,7 +17,7 @@ public class DeviceConfigInfo {
     public String ph;
     public boolean enabled;
     public boolean automatic;
-    public int workStatus;
+    public String workStatus;
     public String oxyLimitUp;
     public String oxyLimitDownOne;
     public String oxyLimitDownTwo;

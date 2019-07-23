@@ -68,39 +68,13 @@ public class FishpondInfoAdapter2 extends BaseSimpleAdapter<ChildDeviceListBean>
         viewHolder.tvFishpondName.setText((bean != null && !TextUtils.isEmpty(bean.pondName)) ? bean.pondName : "--");
         viewHolder.tvDeviceType.setText(bean != null ? bean.type : "--");
 
-        if (bean != null && !TextUtils.isEmpty(bean.workStatus)) {
-            switch (bean.workStatus) {
-                case "-1": //数据解析异常(-1)
-                    //fixme 待处理
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
-                    break;
-                case "0": //正常(0)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
-                    break;
-                case "3": //不在线告警(3)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_offline);
-                    break;
-                case "1": //告警限1(1)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_data);
-                    break;
-                case "2": //告警限2(2)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_data2);
-                    break;
-                case "5": //设备告警(5)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_eq);
-                    break;
-                case "10": //断电告警(10)
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_ponds_warning);
-                    break;
-                default:
-                    //fixme 多状态 ","分割
-                    viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
-                    break;
-
-            }
+        if (bean == null) {
+            viewHolder.tvDeviceStatus.setText("--");
         } else {
-            viewHolder.tvDeviceStatus.setBackgroundResource(R.mipmap.icon_normal);
+            String status = Constants.showDeviceStatus(mContext, bean.workStatus);
+            viewHolder.tvDeviceStatus.setText(status);
         }
+
         if (bean != null) {
             if (TextUtils.isEmpty(bean.workStatus) || bean.workStatus.contains("3")) {
                 viewHolder.tvItemValue.setText("--");

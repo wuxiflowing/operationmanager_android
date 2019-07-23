@@ -44,7 +44,7 @@
     <string name="is_change_device">是否更换设备</string>
     <string name="config">配置</string>
     <string name="add_fishpond_device">＋ 添加KD326设备</string>
-    <string name="add_fishpond_device2">＋ 添加QYT设备</string>
+    <string name="add_fishpond_device2">＋ 添加QY601设备</string>
     <string name="upload_service_take_files">上传服务费用收据</string>
     <string name="upload_deposit_take_files">上传押金费用收据</string>
     <string name="upload_install_confirm_form">上传确认单</string>
@@ -174,4 +174,15 @@
     <string name="text_device_pair_fail">设备配对失败</string>
     <string name="toast_device_pair_no">请先设备配对</string>
     <string name="toast_input_device_id">请输入6位设备Id</string>
+
+    <!--设备告警-->
+    <string name="text_device_status">状态</string>
+    <string name="status_data_alarm1">数据告警1</string>
+    <string name="status_data_alarm2">数据告警2</string>
+    <string name="status_device_offline">不在线告警</string>
+    <string name="status_device_alarm">设备告警</string>
+    <string name="status_electricity_exception">电流异常</string>
+    <string name="status_outages_alarm">断电告警</string>
+    <string name="status_data_analysis_exception">数据解析异常</string>
+
 </resources>

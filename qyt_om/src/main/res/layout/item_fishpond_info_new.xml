@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_left"
         android:layout_width="98dp"
-        android:layout_height="186dp"
+        android:layout_height="220dp"
         android:background="@drawable/shape_r2_solid_blue"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -94,17 +94,18 @@
                 app:layout_constraintLeft_toRightOf="@id/tv_fishpond_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_device_status"
-                android:layout_width="60dp"
-                android:layout_height="24dp"
-                android:background="@mipmap/icon_ponds_offline"
-                android:gravity="center"
-                android:textColor="@color/color_white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <!--<TextView-->
+            <!--android:id="@+id/tv_device_status"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="24dp"-->
+            <!--android:background="@mipmap/icon_ponds_offline"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:visibility="gone"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -285,6 +286,38 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_2">
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/text_secondary_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_device_status"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_device_status"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_device_status" />
+
+            <TextView
+                android:id="@+id/tv_device_status"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="--"
+                android:lines="1"
+                app:layout_constraintLeft_toRightOf="@id/tv_status"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
         <View
             android:id="@+id/view_1"
             android:layout_width="match_parent"
@@ -292,7 +325,7 @@
             android:layout_marginTop="15dp"
             android:background="@color/divider"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_2" />
+            app:layout_constraintTop_toBottomOf="@id/cl_3" />
 
         <TextView
             android:id="@+id/tv_device_detail"

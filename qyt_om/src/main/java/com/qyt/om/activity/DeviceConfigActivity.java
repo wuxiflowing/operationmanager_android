@@ -179,7 +179,6 @@ public class DeviceConfigActivity extends BaseActivity {
                 configDeviceType.setText(bindDeviceInfo.deviceModel);
                 configFishpond.setText(bindDeviceInfo.pondName);
                 getDeviceInfo();
-                // getPondLinkManSetting(bindDeviceInfo.pondId);
             } else {
                 bindDeviceInfo = new BindDeviceInfo();
             }
@@ -485,8 +484,8 @@ public class DeviceConfigActivity extends BaseActivity {
             try {
                 contacter = contacter.replace("(", ",").replace(")", "");
                 String[] contacters = contacter.split(",");
-                intent.putExtra("contacters", contacters[1]);
-                intent.putExtra("contactPhone", contacters[0]);
+                intent.putExtra("contacters", contacters[0]);
+                intent.putExtra("contactPhone", contacters[1]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -785,11 +784,11 @@ public class DeviceConfigActivity extends BaseActivity {
                     bindDeviceInfo.deviceId = d.id + "";
                     bindDeviceInfo.deviceIdentifier = d.identifier;
                     bindDeviceInfo.deviceModel = d.type;
-                    bindDeviceInfo.state = Constants.DEVICE_STATE.get(d.workStatus);
+                    bindDeviceInfo.state = d.workStatus;
                     bindDeviceInfo.oxyValue = d.dissolvedOxygen;
                     bindDeviceInfo.temperature = d.temperature;
                     bindDeviceInfo.ph = d.ph + "";
-                    bindDeviceInfo.automatic = d.automatic ? "自动" : "手动";
+                    bindDeviceInfo.automatic = d.automatic ? "1" : "0";
                     if ((!isRepair || isChange) && !TextUtils.isEmpty(configDeviceType.getText()) && !TextUtils.isEmpty(configFishpond.getText())) {
                         String type = configDeviceType.getText().toString();
                         configControlName1.setText(configFishpond.getText().toString() + type + "1#");

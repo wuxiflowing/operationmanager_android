@@ -51,12 +51,17 @@ public class DeviceCellAdapter extends BaseSimpleAdapter<DeviceConfigInfo> {
         final DeviceConfigInfo bean = mData.get(position);
         viewHolder.deviceId.setText("设备ID：" + (bean != null ? bean.identifier : "--"));
         viewHolder.deviceType.setText("型号：" + (bean != null ? bean.type : "--"));
-        if (bean != null && bean.workStatus == 0) {
+        if (bean != null && "0".equals(bean.workStatus)) {
             viewHolder.deviceState.setTextColor(Color.GREEN);
         } else {
             viewHolder.deviceState.setTextColor(Color.RED);
         }
-        viewHolder.deviceState.setText("" + (bean != null ? Constants.DEVICE_STATE.get(bean.workStatus) : "--"));
+        if (bean == null) {
+            viewHolder.deviceState.setText("--");
+        } else {
+            String status = Constants.showDeviceStatus(mContext, bean.workStatus);
+            viewHolder.deviceState.setText(status);
+        }
         List<InfoMap> infoMaps = new ArrayList<>();
         infoMaps.add(new InfoMap("溶氧值", (bean != null ? bean.dissolvedOxygen : "--") + "mg/L"));
         infoMaps.add(new InfoMap("温度", (bean != null ? bean.temperature : "--") + "℃"));

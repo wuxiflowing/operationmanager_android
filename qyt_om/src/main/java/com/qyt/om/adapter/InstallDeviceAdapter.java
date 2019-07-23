@@ -43,14 +43,14 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
         }
         final EquipmentItem model = mData.get(position);
         //fixme
-        viewHolder.deviceType.setText("KD326");
+        viewHolder.deviceType.setText(model.ITEM4);
         viewHolder.pondName.setText(model.ITEM2);
         viewHolder.deviceIdentifier.setText(model.ITEM1);
         viewHolder.deviceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listItemOperaListener != null) {
-                    listItemOperaListener.onItemOpera("KD326", position, model.ITEM1);
+                    listItemOperaListener.onItemOpera(model.ITEM4, position, model.ITEM1);
                 }
             }
         });

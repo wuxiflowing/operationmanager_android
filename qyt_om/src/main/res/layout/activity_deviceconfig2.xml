@@ -389,7 +389,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginLeft="30dp"
-                    android:background="@drawable/shape_r5_solid_gray"
+                    android:background="@drawable/btn_r5_solid_primary"
                     android:text="@string/text_device_pair"
                     android:textColor="@color/color_white"
                     app:layout_constraintBottom_toBottomOf="parent"

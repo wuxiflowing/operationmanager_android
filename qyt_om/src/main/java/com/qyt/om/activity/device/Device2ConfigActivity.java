@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -46,6 +47,7 @@ import com.qyt.om.response.LinkManBean;
 import com.qyt.om.response.PondLinkMan;
 import com.qyt.om.utils.BaiduLocManager;
 import com.qyt.om.utils.LogInfo;
+import com.qyt.om.utils.PointLengthFilter;
 import com.qyt.om.widget.EditContactsDialog;
 import com.qyt.om.widget.FishPondDialog;
 import com.qyt.om.widget.ListLinkManPopupWindow;
@@ -281,8 +283,10 @@ public class Device2ConfigActivity extends BaseActivity {
 
         setDeviceLinkMan(contacters, contactPhone, nightContacters, nightContactPhone,
                 standbyContact, standbyContactPhone, standbyNightContact, standbyNightContactPhone);
-    }
 
+        setEditTextInputFilter();
+        rbConnectLine.toggle();
+    }
 
     private void initUI(boolean isSetIdentifier) {
         if (isSetIdentifier) {
@@ -292,8 +296,6 @@ public class Device2ConfigActivity extends BaseActivity {
         configDeviceType.setText(mChildDeviceListBean.type);
         configAlarmLine1.setText(mChildDeviceListBean.alertline1);
         configAlarmLine2.setText(mChildDeviceListBean.alertline2);
-        //mChildDeviceListBean.connectionType == 1
-        rbConnectLine.performClick();
         if (mChildDeviceListBean.deviceControlInfoBeanList != null
                 && mChildDeviceListBean.deviceControlInfoBeanList.size() > 0) {
             for (DeviceControlInfoBean item1 : mChildDeviceListBean.deviceControlInfoBeanList) {
@@ -368,9 +370,11 @@ public class Device2ConfigActivity extends BaseActivity {
                 break;
             case R.id.rb_connect_line:
                 btnDevicePair.setEnabled(false);
+                connectTypeChange(1);
                 break;
             case R.id.rb_connect_wiredless:
                 btnDevicePair.setEnabled(true);
+                connectTypeChange(0);
                 break;
             case R.id.tv_add_contacts:
                 //添加联系人接口
@@ -572,8 +576,8 @@ public class Device2ConfigActivity extends BaseActivity {
             try {
                 contacter = contacter.replace("(", ",").replace(")", "");
                 String[] contacters = contacter.split(",");
-                intent.putExtra("contacters", contacters[1]);
-                intent.putExtra("contactPhone", contacters[0]);
+                intent.putExtra("contacters", contacters[0]);
+                intent.putExtra("contactPhone", contacters[1]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -656,6 +660,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl.electricityDown = etCurrentDown1.getText().toString();
         String open = mControlOpenMap.get("0");
         deviceControl.open = TextUtils.isEmpty(open) || "1".equals(open) ? "1" : "0";
+        deviceControl.auto = 1;
 
         DeviceControl deviceControl1 = new DeviceControl();
         deviceControl1.controlId = 1;
@@ -665,6 +670,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl1.electricityDown = configCurrentDown2.getText().toString();
         String open1 = mControlOpenMap.get("1");
         deviceControl1.open = TextUtils.isEmpty(open1) || "1".equals(open1) ? "1" : "0";
+        deviceControl1.auto = 1;
 
         DeviceControl deviceControl2 = new DeviceControl();
         deviceControl2.controlId = 2;
@@ -674,6 +680,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl2.electricityDown = configCurrentDown3.getText().toString();
         String open2 = mControlOpenMap.get("2");
         deviceControl2.open = TextUtils.isEmpty(open2) || "1".equals(open2) ? "1" : "0";
+        deviceControl2.auto = 1;
 
         DeviceControl deviceControl3 = new DeviceControl();
         deviceControl3.controlId = 3;
@@ -683,6 +690,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl3.electricityDown = configCurrentDown4.getText().toString();
         String open3 = mControlOpenMap.get("3");
         deviceControl3.open = TextUtils.isEmpty(open3) || "1".equals(open3) ? "1" : "0";
+        deviceControl3.auto = 1;
 
         if (!TextUtils.isEmpty(deviceControl.oxyLimitUp)
                 && !TextUtils.isEmpty(deviceControl.oxyLimitDown)
@@ -827,6 +835,7 @@ public class Device2ConfigActivity extends BaseActivity {
     @Override
     protected void addViewListener() {
         super.addViewListener();
+
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -850,8 +859,6 @@ public class Device2ConfigActivity extends BaseActivity {
                 }
             }
         };
-//        configHasa1.setOnCheckedChangeListener(onCheckedChangeListener);
-//        configHasa2.setOnCheckedChangeListener(onCheckedChangeListener);
         configDeviceId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -899,6 +906,8 @@ public class Device2ConfigActivity extends BaseActivity {
                     mChildDeviceListBean.pondAddr = locPoi.address;
                     mChildDeviceListBean.latitude = locPoi.lat + "";
                     mChildDeviceListBean.longitude = locPoi.lng + "";
+                    break;
+                default:
                     break;
             }
         }
@@ -990,30 +999,74 @@ public class Device2ConfigActivity extends BaseActivity {
     }
 
     public void testReset() {
-        String deviceId = configDeviceId.getText().toString();
-        putData(HttpConfig.DEVICE_TEST_RESET.replace("{id}", deviceId), new ResponseCallBack<JsonElement>() {
-            @Override
-            public void onSuccessResponse(JsonElement d, String msg) {
-                showToast("发送成功");
-            }
+        showLoading();
+        String identifierID = configDeviceId.getText().toString();
 
-            @Override
-            public void onFailResponse(String msg) {
-                showToast(msg);
-            }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("ch", "0");
+        jsonObject.addProperty("type", "do");
+        jsonObject.addProperty("stage", "1");
+        String json = jsonObject.toString();
+        putData(HttpConfig.DEVICE_NEW_RESET.replace("{identifierID}", identifierID), json,
+                new ResponseCallBack<JsonElement>() {
+                    @Override
+                    public void onSuccessResponse(JsonElement d, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
-                showToast(msg);
-            }
-        });
+                    @Override
+                    public void onFailResponse(String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+                });
+    }
+
+    /**
+     * 连接方式切换
+     */
+    public void connectTypeChange(int type) {
+        showLoading();
+        String identifierID = configDeviceId.getText().toString();
+        if (TextUtils.isEmpty(identifierID)) {
+            return;
+        }
+        putData(HttpConfig.DEVICE_CONNECT_TYPE_CHANGE.replace("{identifierID}", identifierID)
+                        .replace("{ch}", "0")
+                        .replace("{pairType}", type + ""),
+                new ResponseCallBack<JsonElement>() {
+                    @Override
+                    public void onSuccessResponse(JsonElement d, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onFailResponse(String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        dismissLoading();
+                        showToast(msg);
+                    }
+                });
     }
 
     private void delay5sGetInfo() {
         if (mHander == null) {
             mHander = new Handler();
         }
-        tvAddContacts.postDelayed(new Runnable() {
+        mHander.postDelayed(new Runnable() {
             @Override
             public void run() {
                 getDeviceInfo();
@@ -1033,9 +1086,6 @@ public class Device2ConfigActivity extends BaseActivity {
                             showToast(msg);
                             return;
                         }
-                        if (isRepair) {
-                            getPondLinkManSetting(d.id);
-                        }
                         mChildDeviceListBean.identifier = d.identifier;
                         mChildDeviceListBean.id = d.id;
                         mChildDeviceListBean.name = d.name;
@@ -1044,37 +1094,10 @@ public class Device2ConfigActivity extends BaseActivity {
                         mChildDeviceListBean.oxy = d.oxy;
                         mChildDeviceListBean.temp = d.temp;
                         mChildDeviceListBean.ph = d.ph;
-//                        configFishpond.setText(d.name);
-//                        if (d.deviceControlInfoBeanList == null) {
-//                            return;
-//                        }
-//                        configDeviceType.setText(d.type);
-//                        configAlarmLine1.setText(d.alertline1);
-//                        configAlarmLine2.setText(d.alertline2);
-//                        rbConnectLine.setChecked(d.connectionType == 1);
-//
-//                        if (d.deviceControlInfoBeanList != null
-//                                && d.deviceControlInfoBeanList.size() > 0) {
-//                            for (DeviceControlInfoBean item1 : d.deviceControlInfoBeanList) {
-//                                if (item1.controlId == 0) {
-//                                    control1Setting(item1);
-//                                    continue;
-//                                }
-//                                if (item1.controlId == 1) {
-//                                    control2Setting(item1);
-//                                    continue;
-//                                }
-//
-//                                if (item1.controlId == 2) {
-//                                    control3Setting(item1);
-//                                    continue;
-//                                }
-//                                if (item1.controlId == 3) {
-//                                    control4Setting(item1);
-//                                    continue;
-//                                }
-//                            }
-//                        }
+                        mChildDeviceListBean.alertline1 = d.alertline1;
+                        mChildDeviceListBean.alertline2 = d.alertline2;
+                        mChildDeviceListBean.connectionType = d.connectionType;
+                        mChildDeviceListBean.deviceControlInfoBeanList = d.deviceControlInfoBeanList;
                         initUI(false);
 
                     }
@@ -1094,103 +1117,103 @@ public class Device2ConfigActivity extends BaseActivity {
     }
 
     private void control1Setting(DeviceControlInfoBean item1) {
-        if (!TextUtils.isEmpty(item1.open)) {
+//        if (!TextUtils.isEmpty(item1.open)) {
 
-            //fixme
-            if ("1".equals(item1.open)) {
-                tvControl1State.setText("开");
-                tvControl1State.setTextColor(Color.GREEN);
-            } else {
-                tvControl1State.setText("关");
-                tvControl1State.setTextColor(Color.RED);
-            }
-            mControlOpenMap.put("0", item1.open);
-            etOxygenUp1.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-            etOxygenUpDown1.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-            etCurrentUp1.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-            etCurrentDown1.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
-
+        //fixme
+        if ("1".equals(item1.open)) {
+            tvControl1State.setText("开");
+            tvControl1State.setTextColor(Color.GREEN);
         } else {
-            tvControl1State.setText("");
-            etOxygenUp1.setText("");
-            etOxygenUpDown1.setText("");
-            etCurrentUp1.setText("");
-            etCurrentDown1.setText("");
-
+            tvControl1State.setText("关");
+            tvControl1State.setTextColor(Color.RED);
         }
+        mControlOpenMap.put("0", item1.open);
+        etOxygenUp1.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+        etOxygenUpDown1.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+        etCurrentUp1.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+        etCurrentDown1.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+//        } else {
+//            tvControl1State.setText("");
+//            etOxygenUp1.setText("");
+//            etOxygenUpDown1.setText("");
+//            etCurrentUp1.setText("");
+//            etCurrentDown1.setText("");
+//
+//        }
     }
 
     private void control2Setting(DeviceControlInfoBean item1) {
-        if (!TextUtils.isEmpty(item1.open)) {
-            if ("1".equals(item1.open)) {
-                tvControl2State.setText("开");
-                tvControl2State.setTextColor(Color.GREEN);
-            } else {
-                tvControl2State.setText("关");
-                tvControl2State.setTextColor(Color.RED);
-            }
-            mControlOpenMap.put("1", item1.open);
-            configVoltageUp2.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-            configVoltageDown2.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-            currentUp2.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-            configCurrentDown2.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
-
+//        if (!TextUtils.isEmpty(item1.open)) {
+        if ("1".equals(item1.open)) {
+            tvControl2State.setText("开");
+            tvControl2State.setTextColor(Color.GREEN);
         } else {
-            tvControl2State.setText("");
-            configVoltageUp2.setText("");
-            configVoltageDown2.setText("");
-            currentUp2.setText("");
-            configCurrentDown2.setText("");
+            tvControl2State.setText("关");
+            tvControl2State.setTextColor(Color.RED);
         }
+        mControlOpenMap.put("1", item1.open);
+        configVoltageUp2.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+        configVoltageDown2.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+        currentUp2.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+        configCurrentDown2.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+//        } else {
+//            tvControl2State.setText("");
+//            configVoltageUp2.setText("");
+//            configVoltageDown2.setText("");
+//            currentUp2.setText("");
+//            configCurrentDown2.setText("");
+//        }
     }
 
     private void control3Setting(DeviceControlInfoBean item1) {
-        if (!TextUtils.isEmpty(item1.open)) {
-            if ("1".equals(item1.open)) {
-                configControlState3.setText("开");
-                configControlState3.setTextColor(Color.GREEN);
-            } else {
-                configControlState3.setText("关");
-                configControlState3.setTextColor(Color.RED);
-            }
-            mControlOpenMap.put("2", item1.open);
-            configVoltageUp3.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-            configVoltageDown3.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-            currentUp3.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-            configCurrentDown3.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
-
+//        if (!TextUtils.isEmpty(item1.open)) {
+        if ("1".equals(item1.open)) {
+            configControlState3.setText("开");
+            configControlState3.setTextColor(Color.GREEN);
         } else {
-            configControlState3.setText("");
-            configVoltageUp3.setText("");
-            configVoltageDown3.setText("");
-            currentUp3.setText("");
-            configCurrentDown3.setText("");
+            configControlState3.setText("关");
+            configControlState3.setTextColor(Color.RED);
         }
+        mControlOpenMap.put("2", item1.open);
+        configVoltageUp3.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+        configVoltageDown3.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+        currentUp3.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+        configCurrentDown3.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+//        } else {
+//            configControlState3.setText("");
+//            configVoltageUp3.setText("");
+//            configVoltageDown3.setText("");
+//            currentUp3.setText("");
+//            configCurrentDown3.setText("");
+//        }
     }
 
     private void control4Setting(DeviceControlInfoBean item1) {
-        if (!TextUtils.isEmpty(item1.open)) {
-            //fixme
-            if ("1".equals(item1.open)) {
-                configControlState4.setText("开");
-                configControlState4.setTextColor(Color.GREEN);
-            } else {
-                configControlState4.setText("关");
-                configControlState4.setTextColor(Color.RED);
-            }
-            mControlOpenMap.put("3", item1.open);
-            configVoltageUp4.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-            configVoltageDown4.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-            currentUp4.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-            configCurrentDown4.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
-
+//        if (!TextUtils.isEmpty(item1.open)) {
+        //fixme
+        if ("1".equals(item1.open)) {
+            configControlState4.setText("开");
+            configControlState4.setTextColor(Color.GREEN);
         } else {
-            configControlState4.setText("");
-            configVoltageUp4.setText("");
-            configVoltageDown4.setText("");
-            currentUp4.setText("");
-            configCurrentDown4.setText("");
+            configControlState4.setText("关");
+            configControlState4.setTextColor(Color.RED);
         }
+        mControlOpenMap.put("3", item1.open);
+        configVoltageUp4.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+        configVoltageDown4.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+        currentUp4.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+        configCurrentDown4.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+//        } else {
+//            configControlState4.setText("");
+//            configVoltageUp4.setText("");
+//            configVoltageDown4.setText("");
+//            currentUp4.setText("");
+//            configCurrentDown4.setText("");
+//        }
     }
 
     public void getDeviceInstallState() {
@@ -1245,10 +1268,10 @@ public class Device2ConfigActivity extends BaseActivity {
                         dismissLoading();
                         showToast(d ? getString(R.string.text_device_pair_success) : getString(R.string.text_device_pair_fail));
                         isDevicePair = d;
-                        if (isDevicePair) {
-                            btnDevicePair.setBackgroundResource(R.drawable.btn_r5_solid_primary);
-                            btnDevicePair.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.color_white));
-                        }
+//                        if (isDevicePair) {
+//                            btnDevicePair.setBackgroundResource(R.drawable.btn_r5_solid_primary);
+//                            btnDevicePair.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.color_white));
+//                        }
                     }
 
                     @Override
@@ -1377,6 +1400,20 @@ public class Device2ConfigActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 设置EditText小数点一位
+     */
+    private void setEditTextInputFilter() {
+        etOxygenUp1.setFilters(new InputFilter[]{new PointLengthFilter()});
+        etOxygenUpDown1.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageUp3.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageDown2.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageUp3.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageDown3.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageUp4.setFilters(new InputFilter[]{new PointLengthFilter()});
+        configVoltageDown4.setFilters(new InputFilter[]{new PointLengthFilter()});
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -1384,4 +1421,5 @@ public class Device2ConfigActivity extends BaseActivity {
             mHander.removeCallbacksAndMessages(null);
         }
     }
+
 }
