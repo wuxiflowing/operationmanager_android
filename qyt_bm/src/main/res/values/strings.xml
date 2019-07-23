@@ -221,4 +221,15 @@
     <string name="text_manual">手动</string>
     <string name="text_fishpond_detail">鱼塘详情</string>
     <string name="text_device_detail">设备详情</string>
+
+    <!--设备告警-->
+    <string name="text_device_status">状态</string>
+    <string name="status_data_alarm1">数据告警1</string>
+    <string name="status_data_alarm2">数据告警2</string>
+    <string name="status_device_offline">不在线告警</string>
+    <string name="status_device_alarm">设备告警</string>
+    <string name="status_electricity_exception">电流异常</string>
+    <string name="status_outages_alarm">断电告警</string>
+    <string name="status_data_analysis_exception">数据解析异常</string>
+
 </resources>

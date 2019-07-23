@@ -202,7 +202,9 @@ public class DeviceNewDetailActivity extends BaseActivity {
                     devicedetailState.setTextColor(Color.RED);
                 }
 
-                devicedetailState.setText(Constants.showDeviceStatus(d.workStatus));
+                String status = Constants.showDeviceStatus(mContext, d.workStatus);
+                devicedetailState.setText(status);
+
                 sensorItems.clear();
                 //选择连接方式
                 sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), d.connectionType == 0 ? getString(R.string.connection_mode_line) : getString(R.string.connection_mode_wireless)));

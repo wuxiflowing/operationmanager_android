@@ -20,7 +20,7 @@ public class DeviceConfigInfo implements Parcelable {
     public String ph;
     public boolean enabled;
     public boolean automatic;
-    public int workStatus;
+    public String workStatus;
     public String oxyLimitUp;
     public String oxyLimitDownOne;
     public String oxyLimitDownTwo;
@@ -45,7 +45,7 @@ public class DeviceConfigInfo implements Parcelable {
         dest.writeString(this.ph);
         dest.writeByte(this.enabled ? (byte) 1 : (byte) 0);
         dest.writeByte(this.automatic ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.workStatus);
+        dest.writeString(this.workStatus);
         dest.writeString(this.oxyLimitUp);
         dest.writeString(this.oxyLimitDownOne);
         dest.writeString(this.oxyLimitDownTwo);
@@ -68,7 +68,7 @@ public class DeviceConfigInfo implements Parcelable {
         this.ph = in.readString();
         this.enabled = in.readByte() != 0;
         this.automatic = in.readByte() != 0;
-        this.workStatus = in.readInt();
+        this.workStatus = in.readString();
         this.oxyLimitUp = in.readString();
         this.oxyLimitDownOne = in.readString();
         this.oxyLimitDownTwo = in.readString();
