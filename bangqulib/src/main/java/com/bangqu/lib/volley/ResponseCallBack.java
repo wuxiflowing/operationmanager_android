@@ -42,7 +42,12 @@ public abstract class ResponseCallBack<T> {
                 if (response == null) return;
                 BaseModel baseModel = new BaseModel(response, key);
                 if (baseModel.success) {//成功
-                    onSuccessResponse((T) new Gson().fromJson(baseModel.data, getGenericType(0)), baseModel.message);
+                    try {
+                        onSuccessResponse((T) new Gson().fromJson(baseModel.data, getGenericType(0)), baseModel.message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        onFailResponse(e.getLocalizedMessage());
+                    }
                 } else {
                     onFailResponse(baseModel.message);
                 }
