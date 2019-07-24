@@ -284,8 +284,13 @@ public class Device2ConfigActivity extends BaseActivity {
         setDeviceLinkMan(contacters, contactPhone, nightContacters, nightContactPhone,
                 standbyContact, standbyContactPhone, standbyNightContact, standbyNightContactPhone);
 
-        setEditTextInputFilter();
+        //setEditTextInputFilter();
         rbConnectLine.toggle();
+        //设备控制器默认只有两路
+        rlControl3.setVisibility(View.GONE);
+        control3Ainfo.setVisibility(View.GONE);
+        rlControl4.setVisibility(View.GONE);
+        control4Ainfo.setVisibility(View.GONE);
     }
 
     private void initUI(boolean isSetIdentifier) {
@@ -1117,103 +1122,123 @@ public class Device2ConfigActivity extends BaseActivity {
     }
 
     private void control1Setting(DeviceControlInfoBean item1) {
-//        if (!TextUtils.isEmpty(item1.open)) {
+        if (!TextUtils.isEmpty(item1.open)) {
+            rlControl1.setVisibility(View.VISIBLE);
+            control1Info.setVisibility(View.VISIBLE);
+            //fixme
+            if ("1".equals(item1.open)) {
+                tvControl1State.setText("开");
+                tvControl1State.setTextColor(Color.GREEN);
+            } else {
+                tvControl1State.setText("关");
+                tvControl1State.setTextColor(Color.RED);
+            }
+            mControlOpenMap.put("0", item1.open);
+            etOxygenUp1.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+            etOxygenUpDown1.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+            etCurrentUp1.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+            etCurrentDown1.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
 
-        //fixme
-        if ("1".equals(item1.open)) {
-            tvControl1State.setText("开");
-            tvControl1State.setTextColor(Color.GREEN);
         } else {
-            tvControl1State.setText("关");
-            tvControl1State.setTextColor(Color.RED);
+            tvControl1State.setText("");
+            etOxygenUp1.setText("");
+            etOxygenUpDown1.setText("");
+            etCurrentUp1.setText("");
+            etCurrentDown1.setText("");
+            rlControl1.setVisibility(View.GONE);
+            control1Info.setVisibility(View.GONE);
         }
-        mControlOpenMap.put("0", item1.open);
-        etOxygenUp1.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-        etOxygenUpDown1.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-        etCurrentUp1.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-        etCurrentDown1.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
-
-//        } else {
-//            tvControl1State.setText("");
-//            etOxygenUp1.setText("");
-//            etOxygenUpDown1.setText("");
-//            etCurrentUp1.setText("");
-//            etCurrentDown1.setText("");
-//
-//        }
     }
 
     private void control2Setting(DeviceControlInfoBean item1) {
-//        if (!TextUtils.isEmpty(item1.open)) {
-        if ("1".equals(item1.open)) {
-            tvControl2State.setText("开");
-            tvControl2State.setTextColor(Color.GREEN);
-        } else {
-            tvControl2State.setText("关");
-            tvControl2State.setTextColor(Color.RED);
-        }
-        mControlOpenMap.put("1", item1.open);
-        configVoltageUp2.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-        configVoltageDown2.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-        currentUp2.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-        configCurrentDown2.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+        if (!TextUtils.isEmpty(item1.open)) {
+            rlControl2.setVisibility(View.VISIBLE);
+            control2Ainfo.setVisibility(View.VISIBLE);
 
-//        } else {
-//            tvControl2State.setText("");
-//            configVoltageUp2.setText("");
-//            configVoltageDown2.setText("");
-//            currentUp2.setText("");
-//            configCurrentDown2.setText("");
-//        }
+            if ("1".equals(item1.open)) {
+                tvControl2State.setText("开");
+                tvControl2State.setTextColor(Color.GREEN);
+            } else {
+                tvControl2State.setText("关");
+                tvControl2State.setTextColor(Color.RED);
+            }
+            mControlOpenMap.put("1", item1.open);
+            configVoltageUp2.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+            configVoltageDown2.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+            currentUp2.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+            configCurrentDown2.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+        } else {
+            tvControl2State.setText("");
+            configVoltageUp2.setText("");
+            configVoltageDown2.setText("");
+            currentUp2.setText("");
+            configCurrentDown2.setText("");
+            rlControl2.setVisibility(View.GONE);
+            control2Ainfo.setVisibility(View.GONE);
+
+        }
     }
 
     private void control3Setting(DeviceControlInfoBean item1) {
-//        if (!TextUtils.isEmpty(item1.open)) {
-        if ("1".equals(item1.open)) {
-            configControlState3.setText("开");
-            configControlState3.setTextColor(Color.GREEN);
-        } else {
-            configControlState3.setText("关");
-            configControlState3.setTextColor(Color.RED);
-        }
-        mControlOpenMap.put("2", item1.open);
-        configVoltageUp3.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-        configVoltageDown3.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-        currentUp3.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-        configCurrentDown3.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+        if (!TextUtils.isEmpty(item1.open)) {
+            rlControl3.setVisibility(View.VISIBLE);
+            control3Ainfo.setVisibility(View.VISIBLE);
 
-//        } else {
-//            configControlState3.setText("");
-//            configVoltageUp3.setText("");
-//            configVoltageDown3.setText("");
-//            currentUp3.setText("");
-//            configCurrentDown3.setText("");
-//        }
+            if ("1".equals(item1.open)) {
+                configControlState3.setText("开");
+                configControlState3.setTextColor(Color.GREEN);
+            } else {
+                configControlState3.setText("关");
+                configControlState3.setTextColor(Color.RED);
+            }
+            mControlOpenMap.put("2", item1.open);
+            configVoltageUp3.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+            configVoltageDown3.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+            currentUp3.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+            configCurrentDown3.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+        } else {
+            configControlState3.setText("");
+            configVoltageUp3.setText("");
+            configVoltageDown3.setText("");
+            currentUp3.setText("");
+            configCurrentDown3.setText("");
+
+            rlControl3.setVisibility(View.GONE);
+            control3Ainfo.setVisibility(View.GONE);
+
+        }
     }
 
     private void control4Setting(DeviceControlInfoBean item1) {
-//        if (!TextUtils.isEmpty(item1.open)) {
-        //fixme
-        if ("1".equals(item1.open)) {
-            configControlState4.setText("开");
-            configControlState4.setTextColor(Color.GREEN);
-        } else {
-            configControlState4.setText("关");
-            configControlState4.setTextColor(Color.RED);
-        }
-        mControlOpenMap.put("3", item1.open);
-        configVoltageUp4.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
-        configVoltageDown4.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
-        currentUp4.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
-        configCurrentDown4.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+        if (!TextUtils.isEmpty(item1.open)) {
+            rlControl4.setVisibility(View.VISIBLE);
+            control4Ainfo.setVisibility(View.VISIBLE);
 
-//        } else {
-//            configControlState4.setText("");
-//            configVoltageUp4.setText("");
-//            configVoltageDown4.setText("");
-//            currentUp4.setText("");
-//            configCurrentDown4.setText("");
-//        }
+            //fixme
+            if ("1".equals(item1.open)) {
+                configControlState4.setText("开");
+                configControlState4.setTextColor(Color.GREEN);
+            } else {
+                configControlState4.setText("关");
+                configControlState4.setTextColor(Color.RED);
+            }
+            mControlOpenMap.put("3", item1.open);
+            configVoltageUp4.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
+            configVoltageDown4.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
+            currentUp4.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
+            configCurrentDown4.setText(TextUtils.isEmpty(item1.electricityDown) ? "" : item1.electricityDown);
+
+        } else {
+            configControlState4.setText("");
+            configVoltageUp4.setText("");
+            configVoltageDown4.setText("");
+            currentUp4.setText("");
+            configCurrentDown4.setText("");
+            rlControl4.setVisibility(View.GONE);
+            control4Ainfo.setVisibility(View.GONE);
+        }
     }
 
     public void getDeviceInstallState() {

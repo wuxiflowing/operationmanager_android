@@ -63,7 +63,17 @@ public class DeviceInfoAdapter2 extends BaseRecyclerAdapter<ChildDeviceListBean>
                 viewHolder.tvTemperatureValue.setText("--");
                 viewHolder.tvPhValue.setText("--");
             } else {
-                viewHolder.tvItemValue.setText(!TextUtils.isEmpty(bean.oxy) ? bean.oxy : "--");
+                if (!TextUtils.isEmpty(bean.oxy)) {
+                    int index = bean.oxy.indexOf(".");
+                    if (index > 0) {
+                        viewHolder.tvItemValue.setText(bean.oxy.substring(0, index + 2));
+                    } else {
+                        viewHolder.tvItemValue.setText(bean.oxy);
+                    }
+                } else {
+                    viewHolder.tvItemValue.setText("--");
+                }
+                //viewHolder.tvItemValue.setText(!TextUtils.isEmpty(bean.oxy) ? bean.oxy : "--");
                 viewHolder.tvTemperatureValue.setText(!TextUtils.isEmpty(bean.temp) ? bean.temp + "℃" : "--℃");
                 viewHolder.tvPhValue.setText((TextUtils.isEmpty(bean.ph) || bean.ph.contains("-")) ? "--" : bean.ph);
             }
@@ -97,7 +107,6 @@ public class DeviceInfoAdapter2 extends BaseRecyclerAdapter<ChildDeviceListBean>
             }
         });
     }
-
 
 
     /**
