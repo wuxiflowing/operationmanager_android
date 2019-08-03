@@ -207,7 +207,7 @@ public class DeviceNewDetailActivity extends BaseActivity {
 
                 sensorItems.clear();
                 //选择连接方式
-                sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), d.connectionType == 0 ? getString(R.string.connection_mode_line) : getString(R.string.connection_mode_wireless)));
+                sensorItems.add(new InfoMap(getString(R.string.connection_mode_select), d.connectionType == 1 ? getString(R.string.connection_mode_line) : getString(R.string.connection_mode_wireless)));
                 sensorItems.add(new InfoMap("报警线1", d.alertline1 + "mg/L"));
                 sensorItems.add(new InfoMap("报警线2", d.alertline2 + "mg/L"));
                 sensorAdapter.notifyDataSetChanged();

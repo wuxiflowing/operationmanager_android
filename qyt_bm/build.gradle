@@ -16,11 +16,11 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         //正式版本号
-//        versionCode 26
-//        versionName "1.1.4.2"
+        versionCode 27
+        versionName "1.1.5"
         //测试版本号
-        versionCode 42
-        versionName "v3.0.0628"
+//        versionCode 42
+//        versionName "v3.0.0628"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
