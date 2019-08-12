@@ -8,9 +8,12 @@
         android:id="@+id/tv_name"
         style="@style/text_primary_14"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
+        android:ellipsize="start"
         android:gravity="center"
+        android:minHeight="30dp"
+        android:singleLine="true"
         android:text="--"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

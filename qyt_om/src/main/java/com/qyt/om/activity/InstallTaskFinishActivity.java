@@ -273,8 +273,9 @@ public class InstallTaskFinishActivity extends BaseActivity {
                         @Override
                         public void onItemOpera(String tag, int position, Object value) {
                             Bundle bundle1 = new Bundle();
-                            bundle1.putString(Constants.INTENT_OBJECT, (String) value);
-                            if (Constants.DEVICE_TYPE_KD326.equals(tag)) {
+                            String deviceType = (String) value;
+                            bundle1.putString(Constants.INTENT_OBJECT, deviceType);
+                            if (TextUtils.isEmpty(deviceType) || Constants.DEVICE_TYPE_KD326.equals(deviceType)) {
                                 goToActivity(DeviceDetailActivity.class, bundle1);
                             } else if (Constants.DEVICE_TYPE_QY601.equals(tag)) {
                                 goToActivity(DeviceNewDetailActivity.class, bundle1);

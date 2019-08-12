@@ -56,7 +56,7 @@ public class ListLinkManPopupWindow extends PopupWindow {
         mRootView = View.inflate(mContext, R.layout.popup_contact_list, null);
         setContentView(mRootView);
 
-        setWidth(AppUtils.dp2px(mContext, 200));
+        setWidth(AppUtils.dp2px(mContext, 300));
         setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         setOutsideTouchable(true);
         setFocusable(true);

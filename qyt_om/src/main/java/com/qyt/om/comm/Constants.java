@@ -87,9 +87,9 @@ public class Constants {
         String[] status = workStatus.split(",");
         StringBuilder stringBuilder = new StringBuilder();
         for (String state : status) {
-            stringBuilder.append(deviceStatus(context, state));
+            stringBuilder.append(deviceStatus(context, state)).append(",");
         }
-        int index = stringBuilder.lastIndexOf("、");
+        int index = stringBuilder.lastIndexOf(",");
         if (index > 0) {
             return stringBuilder.subSequence(0, index).toString();
         }

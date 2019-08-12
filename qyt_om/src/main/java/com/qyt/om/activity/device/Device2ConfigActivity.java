@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -58,7 +57,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -208,6 +206,7 @@ public class Device2ConfigActivity extends BaseActivity {
     private Handler mHander;
     //controlId 控制器0、控制器1、控制器2、控制器3
     private HashMap<String, String> mControlOpenMap = new HashMap<>(4);
+    private HashMap<String, Integer> mControlAutoMap = new HashMap<>(4);
 
     //设备配对
     private boolean isDevicePair;
@@ -218,6 +217,11 @@ public class Device2ConfigActivity extends BaseActivity {
         setContentView(R.layout.activity_deviceconfig2);
         farmerID = getIntent().getStringExtra(Constants.INTENT_OBJECT);
         farmerName = getIntent().getStringExtra(Constants.INTENT_FLAG);
+
+        mControlAutoMap.put("0", 1);
+        mControlAutoMap.put("1", 1);
+        mControlAutoMap.put("2", 1);
+        mControlAutoMap.put("3", 1);
     }
 
     @Override
@@ -286,6 +290,7 @@ public class Device2ConfigActivity extends BaseActivity {
 
         //setEditTextInputFilter();
         rbConnectLine.toggle();
+        btnDevicePair.setEnabled(false);
         //设备控制器默认只有两路
         rlControl3.setVisibility(View.GONE);
         control3Ainfo.setVisibility(View.GONE);
@@ -642,6 +647,19 @@ public class Device2ConfigActivity extends BaseActivity {
             infoBean.oxyLimitDown = deviceControl.oxyLimitDown;       //溶氧上限
             infoBean.electricityUp = deviceControl.electricityUp;   //电流上限
             infoBean.electricityDown = deviceControl.electricityDown; //电流下限
+//            if (mChildDeviceListBean.deviceControlInfoBeanList != null) {
+//                for (DeviceControlInfoBean bean : mChildDeviceListBean.deviceControlInfoBeanList) {
+//                    if (bean == null) {
+//                        continue;
+//                    }
+//                    if (bean.controlId == infoBean.controlId) {
+//                        infoBean.open = bean.open;
+//                        infoBean.auto = bean.auto;
+//                        break;
+//                    }
+//
+//                }
+//            }
             infoBean.open = deviceControl.open;               //开关状态（1开、0关）
             infoBean.auto = deviceControl.auto;               //控制状态 （1 自动、0 手动）
             deviceControlList.add(infoBean);
@@ -665,7 +683,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl.electricityDown = etCurrentDown1.getText().toString();
         String open = mControlOpenMap.get("0");
         deviceControl.open = TextUtils.isEmpty(open) || "1".equals(open) ? "1" : "0";
-        deviceControl.auto = 1;
+        deviceControl.auto = mControlAutoMap.get("0");
 
         DeviceControl deviceControl1 = new DeviceControl();
         deviceControl1.controlId = 1;
@@ -675,7 +693,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl1.electricityDown = configCurrentDown2.getText().toString();
         String open1 = mControlOpenMap.get("1");
         deviceControl1.open = TextUtils.isEmpty(open1) || "1".equals(open1) ? "1" : "0";
-        deviceControl1.auto = 1;
+        deviceControl1.auto = mControlAutoMap.get("1");
 
         DeviceControl deviceControl2 = new DeviceControl();
         deviceControl2.controlId = 2;
@@ -685,7 +703,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl2.electricityDown = configCurrentDown3.getText().toString();
         String open2 = mControlOpenMap.get("2");
         deviceControl2.open = TextUtils.isEmpty(open2) || "1".equals(open2) ? "1" : "0";
-        deviceControl2.auto = 1;
+        deviceControl2.auto = mControlAutoMap.get("2");
 
         DeviceControl deviceControl3 = new DeviceControl();
         deviceControl3.controlId = 3;
@@ -695,7 +713,7 @@ public class Device2ConfigActivity extends BaseActivity {
         deviceControl3.electricityDown = configCurrentDown4.getText().toString();
         String open3 = mControlOpenMap.get("3");
         deviceControl3.open = TextUtils.isEmpty(open3) || "1".equals(open3) ? "1" : "0";
-        deviceControl3.auto = 1;
+        deviceControl3.auto = mControlAutoMap.get("3");
 
         if (!TextUtils.isEmpty(deviceControl.oxyLimitUp)
                 && !TextUtils.isEmpty(deviceControl.oxyLimitDown)
@@ -980,6 +998,8 @@ public class Device2ConfigActivity extends BaseActivity {
                             int code = jsonObject.getInt("err");
                             if (code == 0) {
                                 showToast("1".equals(isOpen) ? "打开成功" : "关闭成功");
+                                mControlOpenMap.put(controlId, isOpen);
+                                updateUIOpenStatus(controlId, isOpen);
                                 delay5sGetInfo();
                             } else {
                                 showToast("1".equals(isOpen) ? "打开失败" : "关闭失败");
@@ -1002,6 +1022,7 @@ public class Device2ConfigActivity extends BaseActivity {
                     }
                 });
     }
+
 
     public void testReset() {
         showLoading();
@@ -1120,6 +1141,49 @@ public class Device2ConfigActivity extends BaseActivity {
                     }
                 });
     }
+    private void updateUIOpenStatus(final String controlId, final String isOpen) {
+        switch (controlId) {
+            case "0":
+                if ("1".equals(isOpen)) {
+                    tvControl1State.setText("开");
+                    tvControl1State.setTextColor(Color.GREEN);
+                } else {
+                    tvControl1State.setText("关");
+                    tvControl1State.setTextColor(Color.RED);
+                }
+                break;
+            case "1":
+                if ("1".equals(isOpen)) {
+                    tvControl2State.setText("开");
+                    tvControl2State.setTextColor(Color.GREEN);
+                } else {
+                    tvControl2State.setText("关");
+                    tvControl2State.setTextColor(Color.RED);
+                }
+                break;
+            case "2":
+                if ("1".equals(isOpen)) {
+                    configControlState3.setText("开");
+                    configControlState3.setTextColor(Color.GREEN);
+                } else {
+                    configControlState3.setText("关");
+                    configControlState3.setTextColor(Color.RED);
+                }
+                break;
+            case "3":
+                if ("1".equals(isOpen)) {
+                    configControlState4.setText("开");
+                    configControlState4.setTextColor(Color.GREEN);
+                } else {
+                    configControlState4.setText("关");
+                    configControlState4.setTextColor(Color.RED);
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
 
     private void control1Setting(DeviceControlInfoBean item1) {
         if (!TextUtils.isEmpty(item1.open)) {
@@ -1134,6 +1198,8 @@ public class Device2ConfigActivity extends BaseActivity {
                 tvControl1State.setTextColor(Color.RED);
             }
             mControlOpenMap.put("0", item1.open);
+            mControlAutoMap.put("0", item1.auto);
+
             etOxygenUp1.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
             etOxygenUpDown1.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
             etCurrentUp1.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
@@ -1163,6 +1229,8 @@ public class Device2ConfigActivity extends BaseActivity {
                 tvControl2State.setTextColor(Color.RED);
             }
             mControlOpenMap.put("1", item1.open);
+            mControlAutoMap.put("1", item1.auto);
+
             configVoltageUp2.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
             configVoltageDown2.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
             currentUp2.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
@@ -1193,6 +1261,8 @@ public class Device2ConfigActivity extends BaseActivity {
                 configControlState3.setTextColor(Color.RED);
             }
             mControlOpenMap.put("2", item1.open);
+            mControlAutoMap.put("2", item1.auto);
+
             configVoltageUp3.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
             configVoltageDown3.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
             currentUp3.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
@@ -1225,6 +1295,8 @@ public class Device2ConfigActivity extends BaseActivity {
                 configControlState4.setTextColor(Color.RED);
             }
             mControlOpenMap.put("3", item1.open);
+            mControlAutoMap.put("3", item1.auto);
+
             configVoltageUp4.setText(TextUtils.isEmpty(item1.oxyLimitUp) ? "" : item1.oxyLimitUp);
             configVoltageDown4.setText(TextUtils.isEmpty(item1.oxyLimitDown) ? "" : item1.oxyLimitDown);
             currentUp4.setText(TextUtils.isEmpty(item1.electricityUp) ? "" : item1.electricityUp);
