@@ -1000,7 +1000,7 @@ public class Device2ConfigActivity extends BaseActivity {
                                 showToast("1".equals(isOpen) ? "打开成功" : "关闭成功");
                                 mControlOpenMap.put(controlId, isOpen);
                                 updateUIOpenStatus(controlId, isOpen);
-                                delay5sGetInfo();
+                               // delay5sGetInfo();
                             } else {
                                 showToast("1".equals(isOpen) ? "打开失败" : "关闭失败");
                             }
