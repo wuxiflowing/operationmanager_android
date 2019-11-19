@@ -8,11 +8,11 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
 
-        versionCode 27
-        versionName "1.1.5"
+//        versionCode 27
+//        versionName "1.1.5"
         //测试版本号
-//        versionCode 26
-//        versionName "3.0.0627"
+        versionCode 26
+        versionName "3.0.0627"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "8zxWecsMlz6HVGmKqt29N6",

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">养殖管家</string>
+    <string name="app_name">养殖管家（测）</string>
     <!--我的(测)-->
     <string name="mine_change_pass">修改密码</string>
     <string name="mine_about">关于庆渔堂</string>

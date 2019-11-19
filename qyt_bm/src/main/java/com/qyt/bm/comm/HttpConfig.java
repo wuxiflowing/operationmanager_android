@@ -9,8 +9,8 @@ import com.qyt.bm.BuildConfig;
  */
 public class HttpConfig {
 
-    private static final String HTTP_HOST = "http://api.celefish.com:8080";
-//    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
+//    private static final String HTTP_HOST = "http://api.celefish.com:8080";
+    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
     /*版本更新*/
     public static final String VERSION_UPDATE = HTTP_HOST + "/RESTAdapter/checkAPP/rBJkrQ87lHA8WB8q2KTwg5";
     /*登录*/

@@ -8,8 +8,8 @@ package com.qyt.om.comm;
  */
 public class HttpConfig {
 
-    private static final String HTTP_HOST = "http://api.celefish.com:8080";
-    //    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
+//    private static final String HTTP_HOST = "http://api.celefish.com:8080";
+        private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
     /*版本更新*/
     public static final String VERSION_UPDATE = HTTP_HOST + "/RESTAdapter/checkAPP/Dq1k4xjV0x8IAxgWzQLo54";
     /*登录*/
