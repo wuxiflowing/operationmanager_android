@@ -1,5 +1,8 @@
 package com.qyt.om.comm;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.qyt.om.R;
 
@@ -28,6 +31,13 @@ public class Constants {
     //页面跳转参数
     public static final String INTENT_OBJECT = "intent_object";  //页面跳转参数
     public static final String INTENT_FLAG = "intent_flag";  //页面跳转参数
+
+    /**
+     * 设备类型
+     */
+    public static final String DEVICE_TYPE_KD326 = "KD326";
+    public static final String DEVICE_TYPE_QY601 = "QY601";
+
     public static final RequestOptions REQUEST_OPTIONS = new RequestOptions().placeholder(R.mipmap.contacts_header).error(R.mipmap.contacts_header);
 
     public static final HashMap<String, Integer> TASK_ICONS = new HashMap<String, Integer>() {
@@ -66,4 +76,44 @@ public class Constants {
             put(4, "超过上下限告警");
         }
     };
+
+    public static String showDeviceStatus(Context context, String workStatus) {
+        if (TextUtils.isEmpty(workStatus)) {
+            return "--";
+        }
+        if (!workStatus.contains(",")) {
+            return deviceStatus(context, workStatus);
+        }
+        String[] status = workStatus.split(",");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String state : status) {
+            stringBuilder.append(deviceStatus(context, state)).append(",");
+        }
+        int index = stringBuilder.lastIndexOf(",");
+        if (index > 0) {
+            return stringBuilder.subSequence(0, index).toString();
+        }
+        return "--";
+    }
+
+    private static String deviceStatus(Context context, String workstatus) {
+        switch (workstatus) {
+            case "-1": //数据解析异常(-1)
+                return "--";
+            case "0": //正常(0)
+                return context.getString(R.string.text_normal);
+            case "3": //不在线告警(3)
+                return context.getString(R.string.status_device_offline);
+            case "1": //告警限1(1)
+                return context.getString(R.string.status_data_alarm1);
+            case "2": //告警限2(2)
+                return context.getString(R.string.status_data_alarm2);
+            case "5": //设备告警(5)
+                return context.getString(R.string.status_device_alarm);
+            case "10": //断电告警(10)
+                return context.getString(R.string.status_outages_alarm);
+            default:
+                return context.getString(R.string.text_normal);
+        }
+    }
 }

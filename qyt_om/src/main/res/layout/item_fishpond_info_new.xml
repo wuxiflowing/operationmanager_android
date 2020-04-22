@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_r2_solid_white">
+    <!--left-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_left"
+        android:layout_width="98dp"
+        android:layout_height="220dp"
+        android:background="@drawable/shape_r2_solid_blue"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_item_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_item_unit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_item_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mg/L"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_item_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_value" />
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="溶解氧"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_unit" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/cl_left"
+        app:layout_constraintLeft_toRightOf="@id/cl_left"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cl_left">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_fishpond_name"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="130dp"
+                android:maxLines="1"
+                android:text="我的鱼塘"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_device_type"
+                style="@style/text_secondary_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="KD326"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_fishpond_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_device_status"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="24dp"-->
+            <!--android:background="@mipmap/icon_ponds_offline"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/color_white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:visibility="gone"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintRight_toRightOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cl_1">
+
+            <CheckedTextView
+                android:id="@+id/tv_control_1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/check_green_white"
+                android:checked="true"
+                android:gravity="center"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="@color/check_primary_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <CheckedTextView
+                android:id="@+id/tv_control_2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/check_green_white"
+                android:checked="true"
+                android:gravity="center"
+                android:text="2"
+                android:textAlignment="center"
+                android:textColor="@color/check_primary_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@id/tv_control_1"
+                app:layout_constraintTop_toTopOf="@id/tv_control_1" />
+
+            <CheckedTextView
+                android:id="@+id/tv_control_3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/check_green_white"
+                android:gravity="center"
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="@color/check_primary_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@id/tv_control_2"
+                app:layout_constraintTop_toTopOf="@id/tv_control_1" />
+
+
+            <CheckedTextView
+                android:id="@+id/tv_control_4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/check_green_white"
+                android:gravity="center"
+                android:text="4"
+                android:textAlignment="center"
+                android:textColor="@color/check_primary_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toRightOf="@id/tv_control_3"
+                app:layout_constraintTop_toTopOf="@id/tv_control_1" />
+
+            <!--下边的图片-->
+
+            <ImageView
+                android:id="@+id/iv_control_1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/icon_auto"
+                app:layout_constraintLeft_toLeftOf="@id/tv_control_1"
+                app:layout_constraintRight_toRightOf="@id/tv_control_1"
+                app:layout_constraintTop_toBottomOf="@id/tv_control_1" />
+
+
+            <ImageView
+                android:id="@+id/iv_control_2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@mipmap/icon_auto"
+                android:gravity="center"
+                android:text="2"
+                android:textAlignment="center"
+                android:textColor="@color/color_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_control_2"
+                app:layout_constraintRight_toRightOf="@id/tv_control_2"
+                app:layout_constraintTop_toTopOf="@id/iv_control_1" />
+
+            <ImageView
+                android:id="@+id/iv_control_3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@mipmap/icon_auto"
+                android:gravity="center"
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="@color/color_white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_control_3"
+                app:layout_constraintRight_toRightOf="@id/tv_control_3"
+                app:layout_constraintTop_toTopOf="@id/iv_control_1" />
+
+
+            <ImageView
+                android:id="@+id/iv_control_4"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@mipmap/icon_manual"
+                android:gravity="center"
+                android:text="4"
+                android:textAlignment="center"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_control_4"
+                app:layout_constraintRight_toRightOf="@id/tv_control_4"
+                app:layout_constraintTop_toTopOf="@id/iv_control_1" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_center">
+
+            <TextView
+                android:id="@+id/tv_temperature_name"
+                style="@style/text_secondary_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_temperature"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_temperature_value"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_temperature_value" />
+
+            <TextView
+                android:id="@+id/tv_temperature_value"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="15℃"
+                app:layout_constraintLeft_toRightOf="@id/tv_temperature_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tv_ph_name"
+                style="@style/text_secondary_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:text="@string/text_ph"
+                app:layout_constraintBottom_toBottomOf="@id/tv_temperature_value"
+                app:layout_constraintLeft_toRightOf="@id/tv_temperature_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_temperature_value" />
+
+            <TextView
+                android:id="@+id/tv_ph_value"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="6"
+                app:layout_constraintBottom_toBottomOf="@id/tv_temperature_value"
+                app:layout_constraintLeft_toRightOf="@id/tv_ph_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_temperature_value" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_2">
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/text_secondary_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_device_status"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_device_status"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_device_status" />
+
+            <TextView
+                android:id="@+id/tv_device_status"
+                style="@style/text_primary_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="--"
+                android:lines="1"
+                app:layout_constraintLeft_toRightOf="@id/tv_status"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_3" />
+
+        <TextView
+            android:id="@+id/tv_device_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/text_device_detail"
+            android:textColor="@color/primary_text"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_fishpond_detail"
+            app:layout_constraintTop_toBottomOf="@id/view_1" />
+
+        <TextView
+            android:id="@+id/tv_fishpond_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="@string/text_fishpond_detail"
+            android:textColor="@color/primary_text"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_1" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

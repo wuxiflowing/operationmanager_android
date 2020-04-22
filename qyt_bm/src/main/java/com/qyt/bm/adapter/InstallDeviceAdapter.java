@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bangqu.lib.base.BaseSimpleAdapter;
 import com.bangqu.lib.listener.ListItemOperaListener;
@@ -36,7 +37,7 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
     protected View getViewAtPosition(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_installdevice, null);
+            convertView = mInflater.inflate(R.layout.item_installdevice2, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -45,11 +46,14 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
         final EquipmentItem model = mData.get(position);
         viewHolder.pondName.setText(model.ITEM2);
         viewHolder.deviceIdentifier.setText(model.ITEM1);
+
+        viewHolder.deviceType.setText(model.ITEM4);
         viewHolder.deviceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listItemOperaListener != null) {
-                    listItemOperaListener.onItemOpera("dd", position, model.ITEM1);
+                    //返回设备类型、设备编号
+                    listItemOperaListener.onItemOpera(model.ITEM4, position, model.ITEM1);
                 }
             }
         });
@@ -61,6 +65,8 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
         TextView pondName;
         @BindView(R.id.device_identifier)
         TextView deviceIdentifier;
+        @BindView(R.id.device_type)
+        TextView deviceType;
         @BindView(R.id.device_detail)
         Button deviceDetail;
 

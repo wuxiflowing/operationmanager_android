@@ -133,6 +133,7 @@ public class ChoiceCustomerActivity extends BaseActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int fir = linearLayoutManager.findFirstVisibleItemPosition();
+                if (fir == -1) return;
                 letterNavi.setLetterFocused(String.valueOf(contactItemList.get(fir).index));
                 showLetterNotice(String.valueOf(contactItemList.get(fir).index));
                 if (move) {

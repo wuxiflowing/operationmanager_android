@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">运维管家</string>
+    <string name="app_name">运维管家（测）</string>
     <!--我的(测)-->
     <string name="mine_change_pass">修改密码</string>
     <string name="mine_about">关于庆渔堂</string>
@@ -43,7 +43,8 @@
     <string name="deal_type">处理方式</string>
     <string name="is_change_device">是否更换设备</string>
     <string name="config">配置</string>
-    <string name="add_fishpond_device">＋ 添加设备</string>
+    <string name="add_fishpond_device">＋ 添加KD326设备</string>
+    <string name="add_fishpond_device2">＋ 添加QY601设备</string>
     <string name="upload_service_take_files">上传服务费用收据</string>
     <string name="upload_deposit_take_files">上传押金费用收据</string>
     <string name="upload_install_confirm_form">上传确认单</string>
@@ -86,8 +87,8 @@
     <string name="limit_up">上限</string>
     <string name="limit_down1">下限1</string>
     <string name="limit_down2">下限2</string>
-    <string name="alarm_line1">警报线1</string>
-    <string name="alarm_line2">警报线2</string>
+    <string name="alarm_line1">报警线1</string>
+    <string name="alarm_line2">报警线2</string>
     <string name="sensor_unit">mg/L</string>
     <string name="hint_sensor_value">输入数值</string>
     <string name="control_type">控制类型</string>
@@ -106,7 +107,11 @@
     <string name="limit_current_down">电流下限</string>
     <string name="limit_voltage_up">电压上限</string>
     <string name="limit_voltage_down">电压下限</string>
+    <string name="limit_oxygen_up">溶解氧上限</string>
+    <string name="limit_oxygen_down">溶解氧下限</string>
+    <string name="control_switch">开关控制</string>
     <string name="control2_config">控制器2配置</string>
+
     <!--回收工单-->
     <string name="callback_order">回收工单</string>
     <string name="device_is_normal">设备是否完好</string>
@@ -133,7 +138,51 @@
     <string name="device_switch2">控制2状态</string>
     <string name="device_control_type">控制方式</string>
     <string name="click_device_detail">查看设备详情</string>
+
     <string name="pact_pay_type">支付方式</string>
     <string name="pay_crash">现金</string>
     <string name="pay_bank">银行汇款</string>
+
+    <!--Qy601-->
+    <string name="control3_config">控制器3配置</string>
+    <string name="control4_config">控制器4配置</string>
+    <string name="connection_mode_select">选择连接方式</string>
+    <string name="connection_mode_line">有线</string>
+    <string name="connection_mode_wireless">无线</string>
+    <string name="text_temperature">温度</string>
+    <string name="text_ph">PH值</string>
+    <string name="text_normal">正常</string>
+    <string name="text_auto">自动</string>
+    <string name="text_manual">手动</string>
+
+    <string name="device_change_kd">更改为KD326</string>
+    <string name="device_change_qy">更改为QY601</string>
+    <string name="text_add_contacts">＋ 添加联系人</string>
+    <string name="text_add_contact2">添加联系人</string>
+    <string name="text_contacts">联系人</string>
+    <string name="text_contact_number">联系电话</string>
+    <string name="text_day_contacts">白班鱼塘联系人/电话</string>
+    <string name="text_night_contacts">晚班鱼塘联系人/电话</string>
+    <string name="text_day_contacts_2">白班鱼塘备用联系人/电话</string>
+    <string name="text_night2_contacts_2">晚班鱼塘备用联系人/电话</string>
+    <string name="text_affirm">确认</string>
+    <string name="text_device_pair">配对</string>
+
+    <string name="text_fishpond_detail">鱼塘详情</string>
+    <string name="text_device_detail">设备详情</string>
+    <string name="text_device_pair_success">设备配对成功</string>
+    <string name="text_device_pair_fail">设备配对失败</string>
+    <string name="toast_device_pair_no">请先设备配对</string>
+    <string name="toast_input_device_id">请输入6位设备Id</string>
+
+    <!--设备告警-->
+    <string name="text_device_status">状态</string>
+    <string name="status_data_alarm1">数据告警1</string>
+    <string name="status_data_alarm2">数据告警2</string>
+    <string name="status_device_offline">不在线告警</string>
+    <string name="status_device_alarm">设备告警</string>
+    <string name="status_electricity_exception">电流异常</string>
+    <string name="status_outages_alarm">断电告警</string>
+    <string name="status_data_analysis_exception">数据解析异常</string>
+
 </resources>

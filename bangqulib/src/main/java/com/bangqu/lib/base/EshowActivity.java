@@ -15,6 +15,7 @@ import com.bangqu.lib.utils.AppUtils;
 import com.bangqu.lib.volley.GetRequest;
 import com.bangqu.lib.volley.GsonRequest;
 import com.bangqu.lib.volley.ResponseCallBack;
+import com.bangqu.lib.volley.ResponseCallBackRaw;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -88,6 +89,13 @@ public abstract class EshowActivity extends AppCompatActivity {
     }
 
     protected String putData(String url, ResponseCallBack callBack) {
+        GsonRequest gsonRequest = new GsonRequest(url, callBack);
+        gsonRequest.setShouldCache(false);
+        addToRequestQueue(gsonRequest);
+        return gsonRequest.getUrl();
+    }
+
+    protected String putData(String url, ResponseCallBackRaw callBack) {
         GsonRequest gsonRequest = new GsonRequest(url, callBack);
         gsonRequest.setShouldCache(false);
         addToRequestQueue(gsonRequest);

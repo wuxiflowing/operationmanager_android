@@ -9,8 +9,8 @@ import com.qyt.bm.BuildConfig;
  */
 public class HttpConfig {
 
-    private static final String HTTP_HOST = "http://api.celefish.com:8080";
-//    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
+//    private static final String HTTP_HOST = "http://api.celefish.com:8080";
+    private static final String HTTP_HOST = "http://apitest.celefish.com:8080";
     /*版本更新*/
     public static final String VERSION_UPDATE = HTTP_HOST + "/RESTAdapter/checkAPP/rBJkrQ87lHA8WB8q2KTwg5";
     /*登录*/
@@ -69,4 +69,10 @@ public class HttpConfig {
     public static final String CHECKIDCARD = HTTP_HOST + "/RESTAdapter/app/checkIdCard/";
     /*任务查询*/
     public static final String GET_QUERY_TASK = HTTP_HOST + "/RESTAdapter/queryTask/{loginid}/list/";
+
+    /*获取新设备QY601配置*/
+    public static final String DEVICE_TEST_CONFIG_NEW = HTTP_HOST + "/RESTAdapter/device/new/{id}";
+    /*鱼塘基础信息列表*/
+    public static final String PONDS_INFO_LIST = HTTP_HOST + "/RESTAdapter/app/mytask/{customerId}/customerPondData";
+
 }

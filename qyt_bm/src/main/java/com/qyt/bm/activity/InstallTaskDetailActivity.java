@@ -21,6 +21,7 @@ import com.bangqu.lib.widget.UnScrollListView;
 import com.bangqu.photos.GalleryActivity;
 import com.bumptech.glide.Glide;
 import com.qyt.bm.R;
+import com.qyt.bm.activity.device.DeviceNewDetailActivity;
 import com.qyt.bm.adapter.DeviceListAdapter;
 import com.qyt.bm.adapter.InstallDeviceAdapter;
 import com.qyt.bm.adapter.OrderItemAdapter;
@@ -312,11 +313,19 @@ public class InstallTaskDetailActivity extends BaseActivity {
                         @Override
                         public void onItemOpera(String tag, int position, Object value) {
                             Bundle bundle1 = new Bundle();
-                            bundle1.putString(Constants.INTENT_OBJECT, (String) value);
-                            goToActivity(DeviceDetailActivity.class, bundle1);
+                            String deviceType = (String) value;
+                            bundle1.putString(Constants.INTENT_OBJECT, deviceType);
+                            if (TextUtils.isEmpty(deviceType) || Constants.DEVICE_TYPE_KD326.equals(deviceType)) {
+                                goToActivity(DeviceDetailActivity.class, bundle1);
+                            } else if (Constants.DEVICE_TYPE_QY601.equals(tag)) {
+                                goToActivity(DeviceNewDetailActivity.class, bundle1);
+                            }
+
                         }
                     });
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -333,6 +342,8 @@ public class InstallTaskDetailActivity extends BaseActivity {
                         }
                     }
                 }).show();
+                break;
+            default:
                 break;
         }
     }

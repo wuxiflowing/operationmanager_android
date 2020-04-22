@@ -35,20 +35,22 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
     protected View getViewAtPosition(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_installdevice, null);
+            convertView = mInflater.inflate(R.layout.item_installdevice2, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final EquipmentItem model = mData.get(position);
+        //fixme
+        viewHolder.deviceType.setText(model.ITEM4);
         viewHolder.pondName.setText(model.ITEM2);
         viewHolder.deviceIdentifier.setText(model.ITEM1);
         viewHolder.deviceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listItemOperaListener != null) {
-                    listItemOperaListener.onItemOpera("dd", position, model.ITEM1);
+                    listItemOperaListener.onItemOpera(model.ITEM4, position, model.ITEM1);
                 }
             }
         });
@@ -60,6 +62,8 @@ public class InstallDeviceAdapter extends BaseSimpleAdapter<EquipmentItem> {
         TextView pondName;
         @BindView(R.id.device_identifier)
         TextView deviceIdentifier;
+        @BindView(R.id.device_type)
+        TextView deviceType;
         @BindView(R.id.device_detail)
         Button deviceDetail;
 

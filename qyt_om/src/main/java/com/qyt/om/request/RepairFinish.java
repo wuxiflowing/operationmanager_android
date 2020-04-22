@@ -22,4 +22,17 @@ public class RepairFinish {
     public ArrayList<String> repairUrls = new ArrayList<>();
     public ArrayList<String> payUrls = new ArrayList<>();
 
+    public ArrayList<DeviceBind> bindDeviceList = new ArrayList<>();
+
+    //
+    public String contacters;//               白班联系人姓名
+    public String contactPhone;//             白班联系人电话
+    public String standbyContactPhone;//      白班备用联系人姓名
+    public String standbyContact;//           白班备用联系人电话
+
+    public String nightContactPhone;//        晚班联系人姓名
+    public String nightContacters;//          晚班联系人电话
+    public String standbyNightContact;//      晚班备用联系人姓名
+    public String standbyNightContactPhone;// 晚班备用联系人电话
+
 }

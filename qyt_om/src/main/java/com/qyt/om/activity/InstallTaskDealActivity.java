@@ -37,7 +37,8 @@ import com.bumptech.glide.Glide;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.qyt.om.R;
-import com.qyt.om.adapter.BindDeviceAdapter;
+import com.qyt.om.activity.device.Device2ConfigActivity;
+import com.qyt.om.activity.device.FishpondInfoAdapter2;
 import com.qyt.om.adapter.DeviceListAdapter;
 import com.qyt.om.adapter.OrderItemAdapter;
 import com.qyt.om.adapter.PhotosChoiceAdapter;
@@ -46,9 +47,12 @@ import com.qyt.om.comm.Constants;
 import com.qyt.om.comm.HttpConfig;
 import com.qyt.om.model.BindDeviceInfo;
 import com.qyt.om.model.DeviceChoiceModel;
+import com.qyt.om.request.DeviceBind;
 import com.qyt.om.request.InstallFinish;
 import com.qyt.om.request.InstallSubmit;
 import com.qyt.om.request.UploadModel;
+import com.qyt.om.response.ChildDeviceListBean;
+import com.qyt.om.response.DeviceControlInfoBean;
 import com.qyt.om.response.EquipmentItem;
 import com.qyt.om.response.InstallTaskData;
 import com.qyt.om.utils.BaiduLocManager;
@@ -58,6 +62,7 @@ import com.qyt.om.utils.MapNaviUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -124,8 +129,9 @@ public class InstallTaskDealActivity extends BaseActivity {
     private OrderItemAdapter orderItemAdapter;
     private ArrayList<DeviceChoiceModel> deviceItems = new ArrayList<>();
     private DeviceListAdapter deviceListAdapter;
-    private ArrayList<BindDeviceInfo> deviceModels = new ArrayList<>();
-    private BindDeviceAdapter deviceAdapter;
+    //private ArrayList<BindDeviceInfo> deviceModels = new ArrayList<>();
+    //private BindDeviceAdapter deviceAdapter;
+
     private PhotosChoiceAdapter serviceAdapter;
     private ArrayList<String> servicePhotos = new ArrayList<>();
     private PhotosChoiceAdapter depositAdapter;
@@ -136,6 +142,8 @@ public class InstallTaskDealActivity extends BaseActivity {
     private File cameraFile;
     private final int REQUEST_DEVICE_CONFIG1 = 1000;
     private final int REQUEST_DEVICE_CONFIG2 = 1001;
+    private final int REQUEST_DEVICE_CONFIG3 = 1002;
+    private final int REQUEST_DEVICE_CONFIG4 = 1003;
     private String farmerID;
     private InstallSubmit installSubmit = new InstallSubmit();
     final int REQUEST_FORM_PHOTO = 30001;
@@ -154,6 +162,9 @@ public class InstallTaskDealActivity extends BaseActivity {
     private String takID, mobile;
     private InstallTaskData taskData;
     private int count = -1;
+
+    private FishpondInfoAdapter2 fishpondInfoAdapter2;
+    private List<ChildDeviceListBean> mChildDeviceList;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {
@@ -174,13 +185,23 @@ public class InstallTaskDealActivity extends BaseActivity {
         installOrderInfo.setAdapter(orderItemAdapter);
         deviceListAdapter = new DeviceListAdapter(this, deviceItems);
         installDeviceList.setAdapter(deviceListAdapter);
-        ArrayList<BindDeviceInfo> deviceInfos = sharedPref.getJsonInfo(takID, new TypeToken<ArrayList<BindDeviceInfo>>() {
+
+        mChildDeviceList = new ArrayList<>();
+        ArrayList<ChildDeviceListBean> deviceInfos = sharedPref.getJsonInfo(takID, new TypeToken<ArrayList<ChildDeviceListBean>>() {
         }.getType());
         if (deviceInfos != null && deviceInfos.size() > 0) {
-            deviceModels.addAll(deviceInfos);
+            //deviceModels.addAll(deviceInfos);
+            mChildDeviceList.addAll(deviceInfos);
         }
-        deviceAdapter = new BindDeviceAdapter(this, deviceModels);
-        installFishpondList.setAdapter(deviceAdapter);
+        //fixme
+        //deviceAdapter = new BindDeviceAdapter(this, deviceModels);
+        //installFishpondList.setAdapter(deviceAdapter);
+
+        fishpondInfoAdapter2 = new FishpondInfoAdapter2(this, mChildDeviceList);
+        fishpondInfoAdapter2.setType(1);
+        installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+        installFishpondList.setAdapter(fishpondInfoAdapter2);
+
         serviceAdapter = new PhotosChoiceAdapter(this, servicePhotos);
         takeServiceFiles.setLayoutManager(
                 new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
@@ -258,27 +279,62 @@ public class InstallTaskDealActivity extends BaseActivity {
 
             }
         });
-        deviceAdapter.setListItemOperaListener(new ListItemOperaListener<BindDeviceInfo>() {
+        fishpondInfoAdapter2.setOperaListener(new ListItemOperaListener<String>() {
             @Override
-            public void onItemOpera(String tag, final int position, BindDeviceInfo value) {
+            public void onItemOpera(String tag, final int position, String value) {
                 switch (tag) {
-                    case "del":
+                    case "fishpond":
                         new ConfirmDialog(mContext, "是否删除该设备？", new DialogConfirmListener() {
                             @Override
                             public void onDialogConfirm(boolean result, Object value) {
                                 if (result) {
-                                    deviceModels.remove(position);
-                                    deviceAdapter.notifyDataSetChanged();
+                                    mChildDeviceList.remove(position);
+                                    fishpondInfoAdapter2.notifyDataSetChanged();
+                                    installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+
                                 }
                             }
                         }).show();
                         break;
-                    case "config":
+                    case "device":
                         pos = position;
                         Bundle bundle1 = new Bundle();
                         bundle1.putString(Constants.INTENT_OBJECT, farmerID);
-                        bundle1.putParcelable("info", value);
-                        goToActivityForResult(DeviceConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG2);
+                        ChildDeviceListBean childDevice = mChildDeviceList.get(position);
+
+                        if (Constants.DEVICE_TYPE_KD326.equals(childDevice.type)) {
+                            BindDeviceInfo bindDeviceInfo = childDeviceListBean2BindDeviceInfo(childDevice);
+
+                            bundle1.putParcelable("info", bindDeviceInfo);
+                            bundle1.putString("contacters", childDevice.contacters);
+                            bundle1.putString("contactPhone", childDevice.contactPhone);
+                            bundle1.putString("standbyContact", childDevice.standbyContact);
+                            bundle1.putString("standbyContactPhone", childDevice.standbyContactPhone);
+
+                            bundle1.putString("nightContacters", childDevice.nightContacters);
+                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
+                            bundle1.putString("standbyNightContact", childDevice.standbyNightContact);
+                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
+
+                            goToActivityForResult(DeviceConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG2);
+                        } else if (Constants.DEVICE_TYPE_QY601.equals(childDevice.type)) {
+
+                            bundle1.putParcelable("info", childDevice);
+                            bundle1.putString("contacters", childDevice.contacters);
+                            bundle1.putString("contactPhone", childDevice.contactPhone);
+                            bundle1.putString("standbyContact", childDevice.standbyContact);
+                            bundle1.putString("standbyContactPhone", childDevice.standbyContactPhone);
+
+                            bundle1.putString("nightContacters", childDevice.nightContacters);
+                            bundle1.putString("nightContactPhone", childDevice.nightContactPhone);
+                            bundle1.putString("standbyNightContact", childDevice.standbyNightContact);
+                            bundle1.putString("standbyNightContactPhone", childDevice.standbyNightContactPhone);
+
+
+                            goToActivityForResult(Device2ConfigActivity.class, bundle1, REQUEST_DEVICE_CONFIG4);
+                        }
+                        break;
+                    default:
                         break;
                 }
             }
@@ -300,6 +356,8 @@ public class InstallTaskDealActivity extends BaseActivity {
                         } else {
                             installServiceInfo.setVisibility(View.GONE);
                         }
+                        break;
+                    default:
                         break;
                 }
             }
@@ -374,12 +432,13 @@ public class InstallTaskDealActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.install_customer_call, R.id.install_add_fishpond, R.id.install_save, R.id.install_finish, R.id.install_pond_address})
+    @OnClick({R.id.install_customer_call, R.id.install_add_fishpond, R.id.install_add_fishpond2,
+            R.id.install_save, R.id.install_finish, R.id.install_pond_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.install_save:
-                if (deviceModels.size() > 0) {
-                    sharedPref.setJsonInfo(takID, deviceModels);
+                if (mChildDeviceList.size() > 0) {
+                    sharedPref.setJsonInfo(takID, mChildDeviceList);
                     showToast("保存成功");
                 }
                 break;
@@ -401,6 +460,12 @@ public class InstallTaskDealActivity extends BaseActivity {
                 bundle.putString(Constants.INTENT_OBJECT, farmerID);
                 bundle.putString(Constants.INTENT_FLAG, taskData.txtFarmer);
                 goToActivityForResult(DeviceConfigActivity.class, bundle, REQUEST_DEVICE_CONFIG1);
+                break;
+            case R.id.install_add_fishpond2:
+                Bundle bundle2 = new Bundle();
+                bundle2.putString(Constants.INTENT_OBJECT, farmerID);
+                bundle2.putString(Constants.INTENT_FLAG, taskData.txtFarmer);
+                goToActivityForResult(Device2ConfigActivity.class, bundle2, REQUEST_DEVICE_CONFIG3);
                 break;
             case R.id.install_pond_address:
                 if (taskData != null && !TextUtils.isEmpty(taskData.latitude) && !TextUtils.isEmpty(taskData.longitude)) {
@@ -428,15 +493,17 @@ public class InstallTaskDealActivity extends BaseActivity {
                     showToast("未获取到经纬度信息");
                 }
                 break;
+            default:
+                break;
         }
     }
 
     private void submitInstallTask() {
-        if (deviceModels.size() == 0) {
+        if (mChildDeviceList.size() == 0) {
             showToast("未安装设备");
             return;
         }
-        if (deviceModels.size() != count) {
+        if (mChildDeviceList.size() != count) {
             showToast("安装设备数量不符");
             return;
         }
@@ -458,23 +525,10 @@ public class InstallTaskDealActivity extends BaseActivity {
         installSubmit.appData.payDepositMethod = depositPayCrash.isChecked() ? "现金" : "银行汇款";
         installSubmit.appData.serviceNote = installServiceRemark.getText().toString();
         installSubmit.appData.depositNote = installDepositRemark.getText().toString();
-        installSubmit.appData.bindDeviceList.clear();
-        HashSet<String> deviceSet = new HashSet<>();
-        for (BindDeviceInfo bindInfo : deviceModels) {
-            if (deviceSet.contains(bindInfo.deviceIdentifier)) {
-                showToast("安装设备重复");
-                return;
-            } else {
-                deviceSet.add(bindInfo.deviceIdentifier);
-            }
-            InstallFinish.DeviceBind deviceBind = installSubmit.appData.new DeviceBind();
-            deviceBind.deviceId = bindInfo.deviceIdentifier;
-            deviceBind.pondId = bindInfo.pondId;
-            deviceBind.pondName = bindInfo.pondName;
-            deviceBind.pondAddr = bindInfo.pondAddr;
-            deviceBind.latitude = bindInfo.latitude;
-            deviceBind.longitude = bindInfo.longitude;
-            installSubmit.appData.bindDeviceList.add(deviceBind);
+
+        //设备列表
+        if (!submitDeviceList()) {
+            return;
         }
         showLoading();
         uploadPhotoList();
@@ -536,28 +590,29 @@ public class InstallTaskDealActivity extends BaseActivity {
 
     private void createCustomer() {
         LogInfo.error(installSubmit.toString());
-        postData(HttpConfig.CONFIRM_TASK_FINISH.replace("{taskid}", takID), installSubmit.toString(), new ResponseCallBack<JsonElement>() {
-            @Override
-            public void onSuccessResponse(JsonElement d, String msg) {
-                LogInfo.error(d);
-                sharedPref.removeKey(takID);
-                sharedPref.removeKey(taskData.txtFarmer);
-                onBackPressed();
-                dismissLoading();
-            }
+        postData(HttpConfig.CONFIRM_TASK_FINISH.replace("{taskid}", takID),
+                installSubmit.toString(), new ResponseCallBack<JsonElement>() {
+                    @Override
+                    public void onSuccessResponse(JsonElement d, String msg) {
+                        LogInfo.error(d);
+                        sharedPref.removeKey(takID);
+                        sharedPref.removeKey(taskData.txtFarmer);
+                        onBackPressed();
+                        dismissLoading();
+                    }
 
-            @Override
-            public void onFailResponse(String msg) {
-                showToast(msg);
-                dismissLoading();
-            }
+                    @Override
+                    public void onFailResponse(String msg) {
+                        showToast(msg);
+                        dismissLoading();
+                    }
 
-            @Override
-            public void onVolleyError(int code, String msg) {
-                showToast(msg);
-                dismissLoading();
-            }
-        });
+                    @Override
+                    public void onVolleyError(int code, String msg) {
+                        showToast(msg);
+                        dismissLoading();
+                    }
+                });
     }
 
     private void showPickHeaderMenu(final String tag) {
@@ -620,17 +675,49 @@ public class InstallTaskDealActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_DEVICE_CONFIG1:
                     BindDeviceInfo info = data.getParcelableExtra(Constants.INTENT_OBJECT);
-                    deviceModels.add(info);
-                    deviceAdapter.notifyDataSetChanged();
+                    ChildDeviceListBean bean = bindDeviceInfo2ChildDeviceListBean(info);
+                    if (mChildDeviceList.contains(bean)) {
+                        showToast("设备重复安装");
+                        return;
+                    }
+                    mChildDeviceList.add(bean);
+                    fishpondInfoAdapter2.notifyDataSetChanged();
+                    installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+
+                    handleLinkMan(data, bean);
                     break;
                 case REQUEST_DEVICE_CONFIG2:
                     BindDeviceInfo info1 = data.getParcelableExtra(Constants.INTENT_OBJECT);
-                    deviceModels.remove(pos);
-                    deviceModels.add(pos, info1);
-                    deviceAdapter.notifyDataSetChanged();
+
+                    ChildDeviceListBean bean1 = bindDeviceInfo2ChildDeviceListBean(info1);
+                    mChildDeviceList.set(pos, bean1);
+                    fishpondInfoAdapter2.notifyDataSetChanged();
+                    installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+
+                    handleLinkMan(data, bean1);
+                    break;
+                case REQUEST_DEVICE_CONFIG3:
+                    ChildDeviceListBean bean2 = data.getParcelableExtra(Constants.INTENT_OBJECT);
+                    if (mChildDeviceList.contains(bean2)) {
+                        showToast("设备重复安装");
+                        return;
+                    }
+                    mChildDeviceList.add(bean2);
+                    fishpondInfoAdapter2.notifyDataSetChanged();
+                    installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+
+                    handleLinkMan(data, bean2);
+                    break;
+                case REQUEST_DEVICE_CONFIG4:
+                    ChildDeviceListBean bean3 = data.getParcelableExtra(Constants.INTENT_OBJECT);
+                    mChildDeviceList.set(pos, bean3);
+                    fishpondInfoAdapter2.notifyDataSetChanged();
+                    installFishpondList.setVisibility(mChildDeviceList.size() == 0 ? View.GONE : View.VISIBLE);
+
+                    handleLinkMan(data, bean3);
                     break;
                 case REQUEST_FORM_CAMERA:
-                    lubanCompress(REQUEST_FORM_CAMERA,cameraFile);
+                    lubanCompress(REQUEST_FORM_CAMERA, cameraFile);
 //                    confirmPhotos.clear();
 //                    ImageSelect.mSelectedImage.add(cameraFile.getPath());
 //                    confirmPhotos.addAll(ImageSelect.mSelectedImage);
@@ -642,7 +729,7 @@ public class InstallTaskDealActivity extends BaseActivity {
                     confirmAdapter.notifyDataSetChanged();
                     break;
                 case REQUEST_FARMER_CAMERA:
-                    lubanCompress(REQUEST_FARMER_CAMERA,cameraFile);
+                    lubanCompress(REQUEST_FARMER_CAMERA, cameraFile);
 //                    servicePhotos.clear();
 //                    ImageSelect.mSelectedImage.add(cameraFile.getPath());
 //                    servicePhotos.addAll(ImageSelect.mSelectedImage);
@@ -654,7 +741,7 @@ public class InstallTaskDealActivity extends BaseActivity {
                     serviceAdapter.notifyDataSetChanged();
                     break;
                 case REQUEST_POND_CAMERA:
-                    lubanCompress(REQUEST_POND_CAMERA,cameraFile);
+                    lubanCompress(REQUEST_POND_CAMERA, cameraFile);
 //                    depositPhotos.clear();
 //                    ImageSelect.mSelectedImage.add(cameraFile.getPath());
 //                    depositPhotos.addAll(ImageSelect.mSelectedImage);
@@ -665,8 +752,34 @@ public class InstallTaskDealActivity extends BaseActivity {
                     depositPhotos.addAll(ImageSelect.mSelectedImage);
                     depositAdapter.notifyDataSetChanged();
                     break;
+                default:
+                    break;
             }
         }
+    }
+
+    private void handleLinkMan(Intent data, ChildDeviceListBean bean) {
+        String contacters = data.getStringExtra("contacters");
+        String contactPhone = data.getStringExtra("contactPhone");
+        String nightContacters = data.getStringExtra("nightContacters");
+        String nightContactPhone = data.getStringExtra("nightContactPhone");
+
+        String standbyContact = data.getStringExtra("standbyContact");
+        String standbyContactPhone = data.getStringExtra("standbyContactPhone");
+        String standbyNightContact = data.getStringExtra("standbyNightContact");
+        String standbyNightContactPhone = data.getStringExtra("standbyNightContactPhone");
+
+        bean.contacters = contacters;
+        bean.contactPhone = contactPhone;
+        bean.nightContacters = nightContacters;
+        bean.nightContactPhone = nightContactPhone;
+
+        bean.standbyContact = standbyContact;
+        bean.standbyContactPhone = standbyContactPhone;
+        bean.standbyNightContact = standbyNightContact;
+        bean.standbyNightContactPhone = standbyNightContactPhone;
+
+
     }
 
     private void lubanCompress(final int code, File file) {
@@ -708,6 +821,8 @@ public class InstallTaskDealActivity extends BaseActivity {
                                 depositPhotos.addAll(ImageSelect.mSelectedImage);
                                 depositAdapter.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
                         }
                     }
 
@@ -733,9 +848,129 @@ public class InstallTaskDealActivity extends BaseActivity {
                                 depositPhotos.addAll(ImageSelect.mSelectedImage);
                                 depositAdapter.notifyDataSetChanged();
                                 break;
+                            default:
+                                break;
                         }
                     }
                 }).launch();
+    }
+
+    /**
+     * bean 转换
+     *
+     * @param info
+     * @return
+     */
+    private ChildDeviceListBean bindDeviceInfo2ChildDeviceListBean(BindDeviceInfo info) {
+        ChildDeviceListBean bean = new ChildDeviceListBean();
+        bean.pondId = info.pondId;//鱼塘Id
+        bean.pondName = info.pondName;//鱼塘名称
+        bean.pondAddr = info.pondAddr;
+        bean.longitude = info.longitude;
+        bean.latitude = info.latitude;
+        bean.id = info.deviceId;//设备Id
+        bean.identifier = info.deviceIdentifier;//设备identifier
+        bean.type = info.deviceModel;//设备型号
+        bean.workStatus = info.state;//设备状态
+        bean.oxy = !TextUtils.isEmpty(info.oxyValue) ? info.oxyValue.replace("mg/L", "") : "";//溶氧值
+        bean.temp = !TextUtils.isEmpty(info.temperature) ? info.temperature.replace("℃", "") : "";//温度
+        bean.ph = info.ph;//PH
+        List<DeviceControlInfoBean> deviceControls = new ArrayList<>();
+
+        DeviceControlInfoBean controlsBean = new DeviceControlInfoBean();
+        controlsBean.controlId = 0;
+        controlsBean.open = "开".equals(info.control1) ? "1" : "0";
+        controlsBean.auto = (TextUtils.isEmpty(info.automatic) || "1".equals(info.automatic)) ? 1 : 0;
+        deviceControls.add(controlsBean);
+
+        DeviceControlInfoBean controlsBean1 = new DeviceControlInfoBean();
+        controlsBean1.controlId = 1;
+        controlsBean1.open = "开".equals(info.control2) ? "1" : "0";
+        controlsBean1.auto = (TextUtils.isEmpty(info.automatic) || "1".equals(info.automatic)) ? 1 : 0;
+        deviceControls.add(controlsBean1);
+
+        DeviceControlInfoBean controlsBean2 = new DeviceControlInfoBean();
+        controlsBean2.controlId = 2;
+        controlsBean2.open = null;
+        deviceControls.add(controlsBean2);
+
+        DeviceControlInfoBean controlsBean3 = new DeviceControlInfoBean();
+        controlsBean3.controlId = 3;
+        controlsBean3.open = null;
+        deviceControls.add(controlsBean3);
+
+        bean.deviceControlInfoBeanList = deviceControls;
+        return bean;
+    }
+
+    private BindDeviceInfo childDeviceListBean2BindDeviceInfo(ChildDeviceListBean info) {
+        BindDeviceInfo bean = new BindDeviceInfo();
+        bean.pondId = info.pondId;//鱼塘Id
+        bean.pondName = info.pondName;//鱼塘名称
+        bean.pondAddr = info.pondAddr;
+        bean.longitude = info.longitude;
+        bean.latitude = info.latitude;
+        bean.pondId = info.pondId;//鱼塘Id
+        bean.pondName = info.pondName;//鱼塘名称
+        bean.pondAddr = info.pondAddr;
+        bean.longitude = info.longitude;
+        bean.latitude = info.latitude;
+        bean.deviceId = info.id;//设备Id
+        bean.deviceIdentifier = info.identifier;//设备identifier
+        bean.deviceModel = info.type;//设备型号
+        bean.state = info.workStatus;//设备状态      workStatus
+        bean.oxyValue = info.oxy;//溶氧值
+        bean.temperature = info.temp;//温度
+        bean.ph = info.ph;//PH
+        DeviceControlInfoBean deviceControl = info.deviceControlInfoBeanList.get(0);
+
+        bean.control1 = "1".equals(deviceControl.open) ? "开" : "关";//控制器1    开 关
+        bean.control2 = "1".equals(deviceControl.open) ? "开" : "关";//控制器2
+        bean.automatic = deviceControl.auto + "";//手动自动
+        return bean;
+    }
+
+    /**
+     * 添加设备列表
+     */
+    private boolean submitDeviceList() {
+        installSubmit.appData.bindDeviceList.clear();
+        HashSet<String> deviceSet = new HashSet<>();
+        for (ChildDeviceListBean bindInfo : mChildDeviceList) {
+            if (deviceSet.contains(bindInfo.identifier)) {
+                showToast("安装设备重复");
+                return false;
+            } else {
+                deviceSet.add(bindInfo.identifier);
+            }
+            DeviceBind deviceBind = new DeviceBind();
+            deviceBind.deviceId = bindInfo.identifier;
+            deviceBind.pondId = bindInfo.pondId;
+            deviceBind.pondName = bindInfo.pondName;
+            deviceBind.pondAddr = bindInfo.pondAddr;
+            deviceBind.latitude = bindInfo.latitude;
+            deviceBind.longitude = bindInfo.longitude;
+
+            deviceBind.contacters = bindInfo.contacters;//               白班联系人姓名
+            deviceBind.contactPhone = bindInfo.contactPhone;//             白班联系人电话
+            deviceBind.standbyContactPhone = bindInfo.standbyContactPhone;//      白班备用联系人姓名
+            deviceBind.standbyContact = bindInfo.standbyContact;//           白班备用联系人电话
+
+            deviceBind.nightContactPhone = bindInfo.nightContactPhone;//        晚班联系人姓名
+            deviceBind.nightContacters = bindInfo.nightContacters;//          晚班联系人电话
+            deviceBind.standbyNightContact = bindInfo.standbyNightContact;//      晚班备用联系人姓名
+            deviceBind.standbyNightContactPhone = bindInfo.standbyNightContactPhone;// 晚班备用联系人电话
+
+            installSubmit.appData.bindDeviceList.add(deviceBind);
+        }
+        return true;
+    }
+
+    /**
+     * 判断设备清单
+     */
+    private void aaa() {
+
     }
 
     @Override

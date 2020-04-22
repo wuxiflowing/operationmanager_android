@@ -45,6 +45,12 @@ public class GsonRequest<T extends JsonElement> extends JsonRequest<T> {
         mListener = responseCallBack.listener;
     }
 
+    public GsonRequest(String url, ResponseCallBackRaw responseCallBack) {
+        super(Method.PUT, url, "", responseCallBack.listener, responseCallBack.errorListener);
+        mGson = new Gson();
+        mListener = responseCallBack.listener;
+    }
+
     @Override
     protected Response parseNetworkResponse(NetworkResponse response) {
         try {

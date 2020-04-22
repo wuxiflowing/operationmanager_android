@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/horizontal_padding_style"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white">
+
+    <TextView
+        android:id="@+id/pond_name"
+        style="@style/text_primary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center_vertical"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/device_type"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/device_type"
+        style="@style/text_primary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/pond_name"
+        app:layout_constraintRight_toLeftOf="@id/device_identifier"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/device_identifier"
+        style="@style/text_primary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@id/device_type"
+        app:layout_constraintRight_toLeftOf="@id/device_detail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/device_detail"
+        style="@style/text_theme_14"
+        android:layout_width="75dp"
+        android:layout_height="28dp"
+        android:background="@drawable/btn_r5_stroke_primary"
+        android:gravity="center"
+        android:text="@string/device_detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/device_identifier"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

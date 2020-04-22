@@ -17,7 +17,7 @@ public class DeviceConfigInfo {
     public String ph;
     public boolean enabled;
     public boolean automatic;
-    public int workStatus;
+    public String workStatus;
     public String oxyLimitUp;
     public String oxyLimitDownOne;
     public String oxyLimitDownTwo;
@@ -26,4 +26,6 @@ public class DeviceConfigInfo {
     public boolean scheduled;
     public ArrayList<AeratorControlItem> aeratorControlList;
 
+    public transient String pondName;
+    public transient String pondId;
 }

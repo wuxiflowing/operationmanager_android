@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <!--用户信息-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,9 +27,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:src="@mipmap/contacts_header" />
 
                 <LinearLayout
@@ -86,7 +86,7 @@
                     android:background="@color/divider" />
 
             </RelativeLayout>
-
+            <!--故障工单-->
             <RelativeLayout
                 android:id="@+id/install_choice_customer"
                 style="@style/horizontal_padding_style"
@@ -113,22 +113,22 @@
             </RelativeLayout>
 
             <View style="@style/horizontal_line" />
-
+            <!--鱼塘位置-->
             <com.bangqu.lib.widget.TextViewPlus
                 android:id="@+id/repair_pond_address"
                 style="@style/text_primary_14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
-                android:drawablePadding="8dp"
                 android:drawableRight="@mipmap/icon_address_blue"
-                android:paddingBottom="8dp"
+                android:drawablePadding="8dp"
                 android:paddingLeft="16dp"
+                android:paddingTop="8dp"
                 android:paddingRight="16dp"
-                android:paddingTop="8dp" />
+                android:paddingBottom="8dp" />
 
             <View style="@style/horizontal_line" />
-
+            <!--鱼塘信息-->
             <com.bangqu.lib.widget.UnScrollListView
                 android:id="@+id/install_order_info"
                 android:layout_width="match_parent"
@@ -136,9 +136,9 @@
                 android:background="@color/color_white"
                 android:divider="@color/color_white"
                 android:dividerHeight="4dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp" />
-
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
+            <!--报修图片-->
             <LinearLayout
                 style="@style/horizontal_padding_style"
                 android:layout_width="match_parent"
@@ -176,17 +176,36 @@
                     android:gravity="center_vertical"
                     android:text="@string/repair_device" />
 
+
                 <Button
-                    android:id="@+id/repair_change_device"
+                    android:id="@+id/repair_change_device2"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/btn_r5_solid_primary"
-                    android:text="@string/device_change"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="@string/device_change_qy"
                     android:textColor="@color/color_white"
                     android:textSize="14sp"
                     android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/repair_change_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@id/repair_change_device2"
+                    android:background="@drawable/btn_r5_solid_primary"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="@string/device_change_kd"
+                    android:textColor="@color/color_white"
+                    android:textSize="14sp"
+                    android:visibility="visible" />
+
             </RelativeLayout>
 
             <View style="@style/horizontal_line" />
@@ -205,12 +224,20 @@
                     android:text="@string/device_id" />
 
                 <TextView
+                    android:id="@+id/repair_device_type"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+                <TextView
                     android:id="@+id/repair_device_id"
                     style="@style/text_primary_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:text="--" />
             </RelativeLayout>
 
             <LinearLayout
@@ -469,10 +496,10 @@
                 android:id="@+id/repair_finish"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/btn_r5_solid_primary"
                 android:text="@string/repair_finish"
                 android:textColor="@color/color_white" />

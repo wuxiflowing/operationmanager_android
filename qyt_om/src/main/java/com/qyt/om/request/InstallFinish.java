@@ -16,17 +16,10 @@ public class InstallFinish {
     public String payDepositMethod;
     public String serviceNote;
     public String depositNote;
+
     public ArrayList<String> confirmUrls = new ArrayList<>();
     public ArrayList<String> servicePayUrls = new ArrayList<>();
     public ArrayList<String> depositPayUrls = new ArrayList<>();
     public ArrayList<DeviceBind> bindDeviceList = new ArrayList<>();
 
-    public class DeviceBind {
-        public String deviceId;
-        public String pondId;
-        public String pondName;
-        public String pondAddr;
-        public String longitude;
-        public String latitude;
-    }
 }

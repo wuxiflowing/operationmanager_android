@@ -14,6 +14,7 @@ import com.qyt.bm.base.BaseActivity;
 import com.qyt.bm.comm.Constants;
 import com.qyt.bm.model.InfoMap;
 import com.qyt.bm.response.FishPondInfo;
+import com.qyt.bm.response.FishPondInfo2;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class FishpondInfoActivity extends BaseActivity {
 
     private ArrayList<InfoMap> mapItems = new ArrayList<>();
     private InfoMapAdapter infoMapAdapter;
-    private FishPondInfo fishPondInfo;
+    private FishPondInfo2 fishPondInfo;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {

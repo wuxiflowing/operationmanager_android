@@ -28,9 +28,9 @@
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:src="@mipmap/ic_home_search" />
 
             <EditText
@@ -57,7 +57,12 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_slip_recyclerview" />
+    <include
+        layout="@layout/layout_slip_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 </LinearLayout>
 

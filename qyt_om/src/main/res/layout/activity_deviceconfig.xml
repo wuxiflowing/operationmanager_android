@@ -105,8 +105,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/shape_r0_strock_gray"
-                    android:drawablePadding="8dp"
                     android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
                     android:hint="@string/please_choice"
                     android:paddingLeft="8dp"
@@ -152,6 +152,145 @@
                     android:gravity="center_vertical|right" />
 
             </RelativeLayout>
+
+            <View style="@style/horizontal_line" />
+            <!--联系人-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_day_contacts" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_day"
+                    style="@style/text_secondary_14"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_night_contacts" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_night"
+                    style="@style/text_secondary_14"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_day_contacts_2" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_day2"
+                    style="@style/text_secondary_14"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:id="@+id/infomap_label"
+                    style="@style/text_primary_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/text_night2_contacts_2" />
+
+                <com.bangqu.lib.widget.TextViewPlus
+                    android:id="@+id/tv_linkman_night2"
+                    style="@style/text_secondary_14"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_r2_stroke_gray"
+                    android:drawableRight="@mipmap/arrow_bottom_gray"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tv_add_contacts"
+                style="@style/text_theme_14"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_selector_light"
+                android:gravity="center"
+                android:text="@string/text_add_contacts" />
 
             <View style="@style/horizontal_line" />
 

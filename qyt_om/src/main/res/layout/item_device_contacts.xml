@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white">
+
+    <TextView
+        android:id="@+id/infomap_label"
+        style="@style/text_primary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginLeft="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/text_day_contacts" />
+
+    <com.bangqu.lib.widget.TextViewPlus
+        android:id="@+id/infomap_value"
+        style="@style/text_secondary_14"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/shape_r2_stroke_gray"
+        android:drawableRight="@mipmap/arrow_bottom_gray"
+        android:gravity="center_vertical"
+        android:minWidth="160dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="" />
+
+</RelativeLayout>

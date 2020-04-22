@@ -129,13 +129,15 @@ public class DeviceDetailActivity extends BaseActivity {
             public void onSuccessResponse(DeviceConfigInfo d, String msg) {
                 dismissLoading();
                 if (d != null) {
-                    devicedetailId.setText(d.identifier + "");
-                    if (d != null && d.workStatus == 0) {
+                    devicedetailId.setText(d.identifier);
+                    if ("0".equals(d.workStatus)) {
                         devicedetailState.setTextColor(Color.GREEN);
                     } else {
                         devicedetailState.setTextColor(Color.RED);
                     }
-                    devicedetailState.setText(Constants.DEVICE_STATE.get(d.workStatus));
+                    String status = Constants.showDeviceStatus(mContext, d.workStatus);
+                    devicedetailState.setText(status);
+//                    devicedetailState.setText(Constants.DEVICE_STATE.get(d.workStatus));
                     sensorItems.clear();
                     sensorItems.add(new InfoMap("上限1", d.oxyLimitUp + "mg/L"));
                     sensorItems.add(new InfoMap("下限1", d.oxyLimitDownOne + "mg/L"));

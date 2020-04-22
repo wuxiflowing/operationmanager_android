@@ -1,14 +1,27 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
         applicationId "com.qyt.bm"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 26
-        versionName "1.1.4.2"
+        //正式版本号
+//        versionCode 27
+//        versionName "1.1.5"
+        //测试版本号
+        versionCode 42
+        versionName "v3.0.0628"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 GETUI_APP_ID : "FNYJcyC5q8A070BwYhy7i3",
@@ -33,7 +46,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir 'src/main/jniLibs'
@@ -44,6 +56,7 @@ android {
             outputFileName = defaultConfig.applicationId + "-" + buildType.name + "-V" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk";
         }
     }
+
 }
 
 dependencies {
@@ -51,6 +64,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
     implementation rootProject.ext.dependencies.appCompat
     implementation rootProject.ext.dependencies.butterknife
     annotationProcessor rootProject.ext.dependencies.butterknife_compiler
@@ -60,13 +75,13 @@ dependencies {
     implementation rootProject.ext.dependencies.glide
     implementation rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.cardView
-    compile 'com.tencent.bugly:crashreport:2.6.6'
-    compile 'com.contrarywind:Android-PickerView:3.2.7'
-    compile 'com.github.promeg:tinypinyin:2.0.3'
+    implementation 'com.tencent.bugly:crashreport:2.6.6'
+    implementation 'com.contrarywind:Android-PickerView:3.2.7'
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
     implementation project(':bangqulib')
     implementation project(':photoslib')
     implementation project(':downloadlib')
     implementation files('libs/BaiduLBS_Android.jar')
-    compile 'com.getui:sdk:2.12.4.0'
+    implementation 'com.getui:sdk:2.12.4.0'
     implementation 'top.zibin:Luban:1.1.8'
 }
