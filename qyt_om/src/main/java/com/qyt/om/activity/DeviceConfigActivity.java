@@ -176,6 +176,7 @@ public class DeviceConfigActivity extends BaseActivity {
                 installPondAddress.setEnabled(false);
                 bindDeviceInfo.latitude = pondsLatitude;
                 bindDeviceInfo.longitude = pondsLongitude;
+                findViewById(R.id.install_location).setClickable(false);
             }
             getPondLinkManSetting(pondsId);
         } else {

@@ -182,9 +182,9 @@
                     android:background="@drawable/shape_r2_stroke_gray"
                     android:drawableRight="@mipmap/arrow_bottom_gray"
                     android:gravity="center_vertical"
-                    android:singleLine="true"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
+                    android:singleLine="true"
                     android:text="" />
 
             </RelativeLayout>
@@ -213,9 +213,9 @@
                     android:background="@drawable/shape_r2_stroke_gray"
                     android:drawableRight="@mipmap/arrow_bottom_gray"
                     android:gravity="center_vertical"
-                    android:singleLine="true"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
+                    android:singleLine="true"
                     android:text="" />
 
             </RelativeLayout>
@@ -277,9 +277,9 @@
                     android:background="@drawable/shape_r2_stroke_gray"
                     android:drawableRight="@mipmap/arrow_bottom_gray"
                     android:gravity="center_vertical"
-                    android:singleLine="true"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
+                    android:singleLine="true"
                     android:text="" />
 
             </RelativeLayout>

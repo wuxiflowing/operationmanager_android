@@ -251,6 +251,7 @@ public class Device2ConfigActivity extends BaseActivity {
                 installPondAddress.setEnabled(false);
                 mChildDeviceListBean.latitude = pondsLatitude;
                 mChildDeviceListBean.longitude = pondsLongitude;
+                findViewById(R.id.install_location).setClickable(false);
             }
             getPondLinkManSetting(pondsId);
         } else {
