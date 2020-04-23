@@ -161,6 +161,9 @@ public class DeviceConfigActivity extends BaseActivity {
         if (isRepair) {
             String pond = getIntent().getStringExtra("pondsName");
             String pondsId = getIntent().getStringExtra("pondsId");
+            String pondsAddr = getIntent().getStringExtra("pondsAddr");
+            String pondsLatitude = getIntent().getStringExtra("pondsLatitude");
+            String pondsLongitude = getIntent().getStringExtra("pondsLongitude");
             configFishpond.setText(pond);
             if (!TextUtils.isEmpty(id)) {
                 title.setText("设备配置");
@@ -169,6 +172,10 @@ public class DeviceConfigActivity extends BaseActivity {
             } else {
                 title.setText("更换设备");
                 isChange = true;
+                installPondAddress.setText(pondsAddr);
+                installPondAddress.setEnabled(false);
+                bindDeviceInfo.latitude = pondsLatitude;
+                bindDeviceInfo.longitude = pondsLongitude;
             }
             getPondLinkManSetting(pondsId);
         } else {
@@ -183,21 +190,24 @@ public class DeviceConfigActivity extends BaseActivity {
                 bindDeviceInfo = new BindDeviceInfo();
             }
         }
-        BaiduLocManager.getInstance(getApplicationContext()).startLocation(new BaiduLocManager.OnLocationComplete() {
-            @Override
-            public void onLocationComplete(BDLocation location) {
-                String province = location.getProvince();    //获取省份
-                String city = location.getCity();    //获取城市
-                String district = location.getDistrict();    //获取区县
-                String street = location.getStreet();    //获取街道信息
-                if (!TextUtils.isEmpty(location.getProvince()) && !"null".equals(location.getProvince())) {
-                    installPondAddress.setText(province + city + district + street);
-                    bindDeviceInfo.pondAddr = province + city + district + street;
-                    bindDeviceInfo.latitude = location.getLatitude() + "";
-                    bindDeviceInfo.longitude = location.getLongitude() + "";
+        if (!isChange) {
+            // 更换设备无需更换鱼塘地址
+            BaiduLocManager.getInstance(getApplicationContext()).startLocation(new BaiduLocManager.OnLocationComplete() {
+                @Override
+                public void onLocationComplete(BDLocation location) {
+                    String province = location.getProvince();    //获取省份
+                    String city = location.getCity();    //获取城市
+                    String district = location.getDistrict();    //获取区县
+                    String street = location.getStreet();    //获取街道信息
+                    if (!TextUtils.isEmpty(location.getProvince()) && !"null".equals(location.getProvince())) {
+                        installPondAddress.setText(province + city + district + street);
+                        bindDeviceInfo.pondAddr = province + city + district + street;
+                        bindDeviceInfo.latitude = location.getLatitude() + "";
+                        bindDeviceInfo.longitude = location.getLongitude() + "";
+                    }
                 }
-            }
-        });
+            });
+        }
         mLinkManList = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         String contacters = bundle.getString("contacters");

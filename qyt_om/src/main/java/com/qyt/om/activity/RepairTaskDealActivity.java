@@ -50,7 +50,6 @@ import com.qyt.om.request.RepairFinish;
 import com.qyt.om.request.RepairSubmit;
 import com.qyt.om.request.UploadModel;
 import com.qyt.om.response.ChildDeviceListBean;
-import com.qyt.om.response.PondLinkMan;
 import com.qyt.om.response.RepairTaskData;
 import com.qyt.om.utils.BaiduLocManager;
 import com.qyt.om.utils.LogInfo;
@@ -138,6 +137,10 @@ public class RepairTaskDealActivity extends BaseActivity {
 
     //TODO 设备类型
     private String mDeviceType;
+    //当前鱼塘地址
+    private String mPondsAddr;
+    private String mPondsLatitude;
+    private String mPondsLongitude;
 
     @Override
     protected void setLayoutView(Bundle savedInstanceState) {
@@ -384,6 +387,8 @@ public class RepairTaskDealActivity extends BaseActivity {
         repairDeviceType.setText("");
         deviceId = d.txtRepairEqpID;
         mRepairFinish.oldDeviceId = deviceId;
+        // 设备地址，更换时候无需修改
+        mPondsAddr = d.txtPondAddr;
     }
 
     @OnClick({R.id.install_customer_call, R.id.repair_finish, R.id.repair_change_device,
@@ -409,6 +414,9 @@ public class RepairTaskDealActivity extends BaseActivity {
                 bundle.putBoolean("isRepair", true);
                 bundle.putString("pondsName", pondsName);
                 bundle.putString("pondsId", pondsId);
+                bundle.putString("pondsAddr", mPondsAddr);
+                bundle.putString("pondsLatitude", mPondsLatitude);
+                bundle.putString("pondsLongitude", mPondsLongitude);
                 bundle.putString("deviceIdentifier", TextUtils.isEmpty(mRepairFinish.newDeviceId) ? mRepairFinish.oldDeviceId : mRepairFinish.newDeviceId);
                 mDeviceType = Constants.DEVICE_TYPE_KD326;
                 bundle.putString(Constants.INTENT_OBJECT, farmerID);
@@ -420,6 +428,9 @@ public class RepairTaskDealActivity extends BaseActivity {
                 bundle21.putBoolean("isRepair", true);
                 bundle21.putString("pondsName", pondsName);
                 bundle21.putString("pondsId", pondsId);
+                bundle21.putString("pondsAddr", mPondsAddr);
+                bundle21.putString("pondsLatitude", mPondsLatitude);
+                bundle21.putString("pondsLongitude", mPondsLongitude);
                 bundle21.putString("deviceIdentifier", TextUtils.isEmpty(mRepairFinish.newDeviceId) ? mRepairFinish.oldDeviceId : mRepairFinish.newDeviceId);
                 mDeviceType = Constants.DEVICE_TYPE_QY601;
                 bundle21.putString(Constants.INTENT_OBJECT, farmerID);
@@ -444,6 +455,9 @@ public class RepairTaskDealActivity extends BaseActivity {
                 bundle1.putString("standbyNightContactPhone", mRepairFinish.standbyNightContactPhone);
                 bundle1.putString("standbyNightContact", mRepairFinish.standbyNightContact);
 
+                bundle1.putString("pondsAddr", mPondsAddr);
+                bundle1.putString("pondsLatitude", mPondsLatitude);
+                bundle1.putString("pondsLongitude", mPondsLongitude);
                 bundle1.putString(Constants.INTENT_OBJECT, farmerID);
                 //fixme :根据设备类型跳转
                 if (TextUtils.isEmpty(mDeviceType) || Constants.DEVICE_TYPE_KD326.equals(mDeviceType)) {

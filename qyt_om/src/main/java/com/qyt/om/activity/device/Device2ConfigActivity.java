@@ -235,6 +235,10 @@ public class Device2ConfigActivity extends BaseActivity {
         if (isRepair) {
             String pond = getIntent().getStringExtra("pondsName");
             String pondsId = getIntent().getStringExtra("pondsId");
+            String pondsAddr = getIntent().getStringExtra("pondsAddr");
+            String pondsLatitude = getIntent().getStringExtra("pondsLatitude");
+            String pondsLongitude = getIntent().getStringExtra("pondsLongitude");
+
             configFishpond.setText(pond);
             if (!TextUtils.isEmpty(id)) {
                 title.setText("设备配置");
@@ -243,6 +247,10 @@ public class Device2ConfigActivity extends BaseActivity {
             } else {
                 title.setText("更换设备");
                 isChange = true;
+                installPondAddress.setText(pondsAddr);
+                installPondAddress.setEnabled(false);
+                mChildDeviceListBean.latitude = pondsLatitude;
+                mChildDeviceListBean.longitude = pondsLongitude;
             }
             getPondLinkManSetting(pondsId);
         } else {
@@ -257,22 +265,24 @@ public class Device2ConfigActivity extends BaseActivity {
                 mChildDeviceListBean = new ChildDeviceListBean();
             }
         }
-        BaiduLocManager.getInstance(getApplicationContext()).startLocation(new BaiduLocManager.OnLocationComplete() {
-            @Override
-            public void onLocationComplete(BDLocation location) {
-                String province = location.getProvince();    //获取省份
-                String city = location.getCity();    //获取城市
-                String district = location.getDistrict();    //获取区县
-                String street = location.getStreet();    //获取街道信息
-                if (!TextUtils.isEmpty(location.getProvince()) && !"null".equals(location.getProvince())) {
-                    installPondAddress.setText(province + city + district + street);
-                    mChildDeviceListBean.pondAddr = province + city + district + street;
-                    mChildDeviceListBean.latitude = location.getLatitude() + "";
-                    mChildDeviceListBean.longitude = location.getLongitude() + "";
+        if (!isChange) {
+            // 更换设备无需修改设备地址
+            BaiduLocManager.getInstance(getApplicationContext()).startLocation(new BaiduLocManager.OnLocationComplete() {
+                @Override
+                public void onLocationComplete(BDLocation location) {
+                    String province = location.getProvince();    //获取省份
+                    String city = location.getCity();    //获取城市
+                    String district = location.getDistrict();    //获取区县
+                    String street = location.getStreet();    //获取街道信息
+                    if (!TextUtils.isEmpty(location.getProvince()) && !"null".equals(location.getProvince())) {
+                        installPondAddress.setText(province + city + district + street);
+                        mChildDeviceListBean.pondAddr = province + city + district + street;
+                        mChildDeviceListBean.latitude = location.getLatitude() + "";
+                        mChildDeviceListBean.longitude = location.getLongitude() + "";
+                    }
                 }
-            }
-        });
-
+            });
+        }
         mLinkManList = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         String contacters = bundle.getString("contacters");
@@ -1000,7 +1010,7 @@ public class Device2ConfigActivity extends BaseActivity {
                                 showToast("1".equals(isOpen) ? "打开成功" : "关闭成功");
                                 mControlOpenMap.put(controlId, isOpen);
                                 updateUIOpenStatus(controlId, isOpen);
-                               // delay5sGetInfo();
+                                // delay5sGetInfo();
                             } else {
                                 showToast("1".equals(isOpen) ? "打开失败" : "关闭失败");
                             }
@@ -1141,6 +1151,7 @@ public class Device2ConfigActivity extends BaseActivity {
                     }
                 });
     }
+
     private void updateUIOpenStatus(final String controlId, final String isOpen) {
         switch (controlId) {
             case "0":
